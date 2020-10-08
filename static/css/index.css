@@ -1,0 +1,483 @@
+/* Tab panels */
+
+/* @font-face{
+    font-family: "Myriad-Pro";  
+    src: url(http://www.anaveer.in/honda/font/MYRIADPRO-REGULAR.OTF) format("truetype");
+} */
+
+
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700&display=swap');
+
+
+
+
+.nav-link.active.index{
+    background-color: #08306b!important;
+}
+
+.nav-link.active.matrix{
+    background-color: #2171b5!important;
+}
+
+.nav-link.active.first{
+    background-color: #6baed6!important;
+}
+
+.nav-link.active.second{
+    background-color: #9ecae1!important;
+}
+
+
+#home-wrapper{
+	width: 100%;
+	height: 100%;
+    position: relative;
+}
+
+#omics-tide-information{
+	width: 100%;
+	height: 50%;
+	padding-left: 1%;
+	padding-top: 1%;
+	border: 1px solid lightgrey;
+	margin-bottom: 2%;
+	position: relative;
+	font-size: 20px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+#omics-tide-information-header{
+	height: 10%;
+	width: 100%;
+	position: relative;
+}
+
+#omics-tide-information-content{
+	height: 90%;
+	width: 100%;
+	position: relative;
+	display: flex;
+	padding-bottom: 1.25%;
+}
+
+#omics-tide-information-content-img1, #omics-tide-information-content-img2, #omics-tide-information-content-img3, #omics-tide-information-content-img4{
+	height: 100%;
+	width: 15%;
+	position: relative;
+}
+
+#image-spacer1, #image-spacer2, #image-spacer3{
+	height: 100%;
+	width: 2.5%;
+	position: relative;
+}
+
+#left-spacer, #right-spacer{
+	height: 100%;
+	width: 20%;
+	position: relative;
+}
+
+
+
+#omics-tide-information-h2{
+	font-size: 15pt;
+}
+
+#input-wrapper{
+	width: 100%;
+	height: 50%;
+	position: relative;
+	padding-left: 1%;
+	padding-top: 1%;
+	border: 1px solid lightgrey;
+	font-size: 15px;
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+#loading-wrapper{
+	width: 100%;
+	height: 10%;
+	position: relative;
+	
+}
+
+#radio-wrapper{
+	width: 100%;
+	height: 90%;
+	position: relative;
+	display: flex;
+}
+
+#input-header{
+	width:100%;
+	height:10%;
+	position: relative;
+	font-size: 20px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+#pills-home{
+	height: 75vh;
+	position: relative;
+}
+
+
+#dashboard-header-h2{
+	background: linear-gradient(to right, #08306b 0%, #c6dbef 100%);
+	color: white;
+	font-size: 17.5pt;
+	font-weight: 500;
+	padding-left: 2.5%;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+}
+
+#data-loading-wrapper{
+	margin: 2.5%;
+}
+
+
+.stretch-y {
+  transform: scale(1, 1.5);
+}
+.stretch-rotate {
+  transform: rotate(45deg) scale(1,1.5);
+}
+
+
+.multi-data-form {
+	width: 400px;
+}
+
+#multiple-files-accordion{
+	position: relative;
+	width: 100%;
+	height: 90%;
+}
+
+#clustered-file-content{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#single-file-accordion{
+	position: relative;
+	width: 100%;
+	height: 90%;
+}
+
+#files-for-clustering{
+	position: relative;
+	width: 40%;
+	height: 100%;
+}
+
+.file-loading-div{
+	width:50%;
+	height:100%;
+}
+
+#variance-slider-h2{
+	font-size: 12.5pt;
+	color: grey;
+}
+
+#k-slider-h2{
+	font-size: 12.5pt;
+	color: grey;
+}
+
+#files-for-clustering-h2{
+	font-size: 12.5pt;
+	color: grey;
+}
+
+#loading-h2{
+	font-size: 15pt;
+	color: grey;
+}
+
+#files-for-clustering-wrapper{
+	margin:1.5% 1.5% 1.5% 2%;
+}
+
+#files-for-clustering-content{
+	position: relative;
+	height: 100%;
+	width: 100%
+}
+
+#clustered-file{
+	position: relative;
+	width: 40%;
+	height: 100%;
+}
+
+#spacer-one{
+	position: relative;
+	width: 5%;
+	height: 100%;
+}
+
+#spacer-two{
+	position: relative;
+	width: 5%;
+	height: 100%;
+}
+
+#clustered-file-h2{
+	font-size: 12.5pt;
+	color: grey;
+}
+
+
+
+
+#variance-slider-box{
+	width:35%;
+	margin:1.5% 1.5% 1.5% 2%;
+}
+
+#k-slider-box{
+	width:35%;
+	margin:1.5% 1.5% 1.5% 2%;
+}
+
+#variance-slider-input-wrapper{
+	margin-top: 2%;
+}
+
+#k-slider-input-wrapper{
+	margin-top: 2%;
+}
+
+#overlay-index{	
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height:100%;
+	display: none;
+	background: rgba(0,0,0,0.6);
+}
+.cv-spinner-index {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;  
+}
+.spinner-index {
+	width: 40px;
+	height: 40px;
+	border: 4px #ddd solid;
+	border-top: 4px #2e93e6 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear;
+}
+@keyframes sp-anime {
+	100% { 
+		transform: rotate(360deg); 
+	}
+}
+.is-hide{
+	display:none;
+}
+
+
+.accordion{
+    width: 100%;
+    height: 9%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(225,225,225,1);
+    overflow: hidden;
+    transition: height 0.3s ease;
+    margin-bottom: 2%;
+}
+
+.accordion.multiple-files{
+    width: 100%;
+    height: 9%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(225,225,225,1);
+    overflow: hidden;
+    transition: height 0.3s ease;
+    margin-bottom: 2%;
+}
+
+.accordion.single-file{
+    width: 100%;
+    height: 9%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(225,225,225,1);
+    overflow: hidden;
+    transition: height 0.3s ease;
+    margin-bottom: 2%;
+}
+
+.accordion .accordion_tab{
+	padding: 1.5%;
+	cursor: pointer;
+	user-select: none;
+	font-size: 20px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative;
+  }
+  
+
+.accordion .accordion_tab.multiple-files{
+	padding: 0%;
+	cursor: pointer;
+	user-select: none;
+	font-size: 15px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative;
+}
+
+.accordion .accordion_tab.single-file{
+	padding: 0%;
+	cursor: pointer;
+	user-select: none;
+	font-size: 15px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative;
+}
+
+
+.accordion.active.diagram{
+	height: 20%;
+	position: relative;
+}
+
+.accordion.active.abundance{
+	 height: 50%;
+	 position: relative;
+}
+
+.accordion.active.gene{
+	height: 50%;
+	position: relative;
+}
+
+.accordion.active.selection{
+	height: 50%;
+	position: relative;
+}
+
+.accordion.active.analysis{
+	height: 20%;
+	position: relative;
+}
+
+.accordion.active.go{
+	height: 40%;
+	position: relative;
+}
+
+.accordion.active.export{
+	height: 20%;
+	position: relative;
+}
+
+.accordion.active.multiple-input{
+	height: 30%;
+	position: relative;
+}
+
+.accordion.active.variance-filter{
+	height: 45%;
+	position: relative;
+}
+
+.accordion.active.init-cluster{
+	height: 45%;
+	position: relative;
+}
+
+.accordion.active.submit-multiple{
+	height: 25%;
+	position: relative;
+}
+
+.accordion.active.single-input{
+	height: 25%;
+	position: relative;
+}
+
+.accordion.active.submit-single{
+	height: 25%;
+	position: relative;
+}
+
+
+.accordion .accordion_content.multiple-files{
+	padding: 0.5%;
+	height: 100%;
+	width: 100%;
+	padding-left: 5%;
+	position: relative;
+	border-top: 1px solid #e9e9e9;
+}
+
+.accordion .accordion_content.single-file{
+	padding: 0.5%;
+	height: 100%;
+	width: 100%;
+	padding-left: 5%;
+	position: relative;
+	border-top: 1px solid #e9e9e9;
+}
+
+.accordion .accordion_content{
+	padding: 5%;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	border-top: 1px solid #e9e9e9;
+  }
+  
+
+.accordion .accordion_content .accordion_item{
+  margin-bottom: 3%;
+}
+
+.accordion .accordion_content .accordion_item.multiple-file{
+ margin-bottom: 0;
+}  
+
+.accordion .accordion_content .accordion_item.single-file{
+	margin-bottom: 0;
+   }  
+   
+
+
+.accordion .accordion_content .accordion_item p.item_title{
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #6adda2;
+}
+
+.accordion .accordion_content .accordion_item p:last-child{
+  color: #9a9b9f;
+  font-size: 14px;
+  line-height: 20px;
+}

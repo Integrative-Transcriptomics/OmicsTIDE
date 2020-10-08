@@ -1,0 +1,29 @@
+
+.intersecting-wrapper {
+	border : 5px solid transparent;
+	-webkit-filter: grayscale(0%);
+  	filter: grayscale(100%);
+
+}
+
+.intersecting-wrapper:hover {
+	border : 5px solid red;
+	cursor: pointer;
+	-webkit-filter: grayscale(0%);
+  	filter: grayscale(0%);
+}
+
+.non-intersecting-wrapper {
+	border : 5px solid transparent;
+	-webkit-filter: grayscale(0%);
+  	filter: grayscale(100%);
+	
+}
+
+.non-intersecting-wrapper:hover{
+	border : 5px solid red;	
+	cursor: pointer;
+	-webkit-filter: grayscale(0%);
+  	filter: grayscale(0%);
+}
+

@@ -1,0 +1,14 @@
+.my-custom-scrollbar {
+position: relative;
+height: 100%;
+margin-left: 5%;
+margin-right: 5%;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+.table{
+	font-size: 10px;
+}

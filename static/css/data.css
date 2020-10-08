@@ -1,0 +1,109 @@
+/* Tab panels */
+
+#matrix-information{
+	background-color: #FFFFFF;
+    height: 85vh;
+    position: relative;
+}
+
+#matrix-information-wrapper{
+	padding: 0.5%;
+}
+
+.matrix-information_cell{
+	border: 1px solid lightgrey;
+	padding: 1%;
+}
+
+.detail-container{
+	background-color: #F7F7F6;
+	border-radius: 10px;
+	font-family: Roboto;
+}
+
+
+.tab-content{
+	background-color: white;
+}
+
+.matrix-information_cell{
+	border-color: #F7F7F6;
+	border-radius: 10px;
+	background-color: #F7F7F6;
+	padding: 0.5%;
+}
+
+
+.intersecting-wrapper{
+	padding: 0.5%;
+}
+
+#detail-info{
+	width: 100%;
+	height: 80%;
+	margin-top: 20px;
+	display: flex;	
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+#detail-info-all{
+	width: 49%;
+	height: 100%;
+	display: block;	
+	margin-right: auto;
+	position: relative;
+}
+
+#detail-info-intersect{
+	width: 49%;
+	height: 100%;
+	float: left;
+	display: block;	
+	margin-left: auto;
+	position: relative;
+}
+
+.detail-container-data-div:hover{
+	background-color: red;
+	transition: 0.3s;
+}
+
+.total-genes-p{
+	font-size:20px;
+	margin-bottom: 0rem;
+}
+
+.gene-count-p{
+	color: grey;
+	font-weight: 900;
+	font-size: 30px;
+}
+
+.container-header{
+	background-color: #6CA5F7;
+	border-radius: 10px 10px 0px 0px;
+	font-size:20px;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#detail-container-header{
+	width:100%;
+	height:20%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#general-information{
+	width: 100%;
+	height: 20%;
+	display: block;	
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+
