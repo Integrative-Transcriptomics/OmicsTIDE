@@ -24,6 +24,7 @@ user@example:~/path/to/venv-parent-dir$ python -m venv <your-venv>
 ### 3) Required Python packages
 Install required Python packages by using pip install referring to the requirements.txt-file.
 ```console
+user@example:~$ . <your-venv>/bin/activate
 (<your-venv>) user@example:~$ pip install -r <path/to/OmicsTIDE>/requirements.txt
 ```
 
