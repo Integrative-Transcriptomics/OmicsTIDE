@@ -2,7 +2,6 @@
 
 ## Welcome to OmicsTIDE!
 
-
 ## Setting Up OmicsTIDE
 
 ### 1) Python Version
@@ -29,7 +28,7 @@ git clone https://github.com/julian-fra/OmicsTIDE.git
 #### 2) Install required Python packages
 ```
 
-### Activate venv
+## 3) Run OmicsTIDE
 ```bash
 . <your-venv>/bin/activate
 
