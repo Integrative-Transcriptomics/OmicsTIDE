@@ -9,7 +9,7 @@ The tab-based and dynamic design of OmicsTIDE enables to break down large-scale 
   <img src="combined.svg" />
 </p>
 
-A detailed description of the tool can be found in Tutorial.md.
+A detailed description of the tool can be found in the [tutorial](TUTORIAL.md).
 
 ## Installation Guide
 
