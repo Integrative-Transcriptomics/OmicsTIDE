@@ -10,7 +10,6 @@ Python and pip version should be >= 3.6.10 and >= 20.1.1, respectively.
 ```console
 user@example:~$ python --version
 Python 3.6.10
-
 user@example:~$ pip --version
 pip 20.1.1
 ```
