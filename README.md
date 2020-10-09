@@ -4,7 +4,7 @@
 
 ## Setting Up OmicsTIDE
 
-### 1) Python Version
+### 1) Basic Requirements
 ```console
 user@example:~$ python --version
 Python 3.6.10 (or higher)
