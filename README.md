@@ -26,7 +26,7 @@ user@example:~$ cd <path/to/venv-dir>
 
 user@example:~$ python -m venv <your-venv>
 
-user@example:~$ pip install -r path/to/omicstide-dir/requirements.txt
+user@example:~$ pip install -r <path/to/parent-dir>/requirements.txt
 ```
 
 
