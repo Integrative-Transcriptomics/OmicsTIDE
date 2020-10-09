@@ -22,7 +22,7 @@ user@example:~/path/to/omicstide-dir$ git clone https://github.com/julian-fra/Om
 
 ### 3) Setting up Virtual Environment (venv)
 ```console
-user@example:~$ cd path/to/venv-dir
+user@example:~$ cd <path/to/venv-dir>
 
 user@example:~$ python -m venv <your-venv>
 
