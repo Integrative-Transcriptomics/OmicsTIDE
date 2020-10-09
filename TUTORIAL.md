@@ -1,13 +1,15 @@
 # OmicsTIDE Tutorial
 This tutorial gives some basic information
 
-## Data formats
+## Basics: Requried Data formats
+
+### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
+picture here
 
 ### normalized abundant data
 gene identifier
 
-### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
-picture here
+
 
 ## Data Loading (Home Tab)
 
