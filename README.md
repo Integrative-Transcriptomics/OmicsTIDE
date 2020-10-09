@@ -6,7 +6,7 @@ OmicsTIDE combines the benefits of data- and hypothesis-driven analysis by using
 The tab-based and dynamic design of OmicsTIDE enables to break down large-scale data sets to a manageable and clear number of genes within three major analysis steps while keeping the option to review, refine or remove (previous) analysis steps.
 
 <p align="center">
-  src="combined.svg">
+  <img src="combined.svg" />
 </p>
 
 A detailed description of the tool can be found in Tutorial.md.
