@@ -38,6 +38,6 @@ Activate venv and run OmicsTIDE.py
 
 ```console
 user@example:~$ . <your-venv>/bin/activate
-user@example:~$ python path/to/omicsTIDE/OmicsTIDE.py
+user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
 ```
 
