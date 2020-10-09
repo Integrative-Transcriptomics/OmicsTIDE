@@ -29,7 +29,7 @@ user@example:~$ . <your-venv>/bin/activate
 ```
 
 ## Running OmicsTIDE
-Activate venv and run OmicsTIDE.py which will open the program in your browser. 
+Activate venv and run OmicsTIDE.py which will open the web application in a new browser window. 
 ```console
 user@example:~$ . <your-venv>/bin/activate
 (<your-venv>) user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
