@@ -30,10 +30,10 @@ git clone https://github.com/julian-fra/OmicsTIDE.git
 
 ## 3) Run OmicsTIDE
 ```bash
+# activate venv
 . <your-venv>/bin/activate
 
-### Run OmicsTIDE
-```bash
+# run OmicsTIDE.py
 python path/to/omicsTIDE/OmicsTIDE.py
 ```
 
