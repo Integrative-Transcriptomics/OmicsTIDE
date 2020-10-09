@@ -9,7 +9,35 @@
 
 ## Choose your pairwise trend comparison (Data Matrix Tab)
 
+### hover trend comparison
+
+### toggle non-intersecting
+
+
+
+
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
+### First impression
+
+### Change Diagrams
+
+### Apply abundance filters
+
+### find genes
+
+### create subselection
+
+
+
+
 ## Explore subselection (2nd Level Analysis Tab)
+
+### Browse subselection
+hover genes, go to NCBI
+
+### GO Enrichment
+
+### Export Results
+
 
