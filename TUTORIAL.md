@@ -5,7 +5,7 @@ This tutorial
 
 ### normalized 
 
-### * **P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
+### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
 
 
 ## Data Loading (Home Tab)
