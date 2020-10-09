@@ -17,7 +17,7 @@ pip 20.1.1
 ### 2) Clone Repository
 ```console
 user@example:~$ cd <path/to/parent-dir>
-user@example:~</path/to/omicstide-dir>$ git clone https://github.com/julian-fra/OmicsTIDE.git
+user@example:~/path/to/parent-dir$ git clone https://github.com/julian-fra/OmicsTIDE.git
 ```
 
 ### 3) Setting up Virtual Environment (venv)
