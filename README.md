@@ -30,10 +30,8 @@ user@example:~$ . <your-venv>/bin/activate
 
 ## Running OmicsTIDE
 Activate venv and run OmicsTIDE.py which will open the program in your browser. 
-
-OmicsTIDE requires a stable internet connection to load the front-end frameworks (D3, Bootstrap, jQuery) and to request data from NCBI (https://www.ncbi.nlm.nih.gov/) and Panther (http://www.pantherdb.org/). 
-
 ```console
 user@example:~$ . <your-venv>/bin/activate
 (<your-venv>) user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
 ```
+OmicsTIDE requires a stable internet connection to load the front-end frameworks (D3, Bootstrap, jQuery) and to request data from NCBI (https://www.ncbi.nlm.nih.gov/) and Panther (http://www.pantherdb.org/). 
