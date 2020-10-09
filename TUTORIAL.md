@@ -1,4 +1,12 @@
 # OmicsTIDE Tutorial
+This tutorial 
+
+## Data formats
+
+### normalized 
+
+### * **P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
+
 
 ## Data Loading (Home Tab)
 
