@@ -26,7 +26,7 @@ user@example:~$ pip install -r <path/to/OmicsTIDE>/requirements.txt
 ```
 
 ## Running OmicsTIDE
-Activate venv and run OmicsTIDE.py
+Activate venv and run OmicsTIDE.py which will open the program in your browser
 
 ```console
 user@example:~$ . <your-venv>/bin/activate
