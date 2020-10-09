@@ -5,7 +5,13 @@
 ## Setting Up OmicsTIDE
 
 ### 1) Python Version
-Version 3.6.10
+```python
+python --version
+>> Python >= 3.6.10
+
+pip --version
+>> pip >= 20.1.1
+```
 
 ### 2) Clone Repository
 ```bash
