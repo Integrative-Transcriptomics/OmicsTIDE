@@ -1,5 +1,5 @@
 # Welcome to OmicsTIDE!
-The Omics Trend-comparing Interactive Data Explorer (OmicsTIDE) is a web-based application for the exploration of trend comparisons in omics data sets.   
+The Omics Trend-comparing Interactive Data Explorer (OmicsTIDE) is a web-based application to study the pairwise regulatory patterns in omics data sets.
 
 ## Installation
 
