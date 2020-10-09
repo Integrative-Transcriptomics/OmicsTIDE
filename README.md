@@ -1,5 +1,3 @@
-# OmicsTIDE
-
 ## Welcome to OmicsTIDE!
 
 ## Setting Up OmicsTIDE
@@ -32,7 +30,6 @@ Install required Python packages by using pip install.
 user@example:~$ pip install -r <path/to/parent-dir>/requirements.txt
 ```
 
-
 ## Running OmicsTIDE
 Activate venv and run OmicsTIDE.py
 
@@ -40,4 +37,3 @@ Activate venv and run OmicsTIDE.py
 user@example:~$ . <your-venv>/bin/activate
 user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
 ```
-
