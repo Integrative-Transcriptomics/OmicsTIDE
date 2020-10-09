@@ -3,45 +3,38 @@
 ## Welcome to OmicsTIDE!
 
 
+## Setting Up OmicsTIDE
 
-## Getting Started
-
-### Setting Up OmicsTIDE
-
-#### 1) Python Version
+### 1) Python Version
 Version 3.6.10
 
-#### 2) Create virtual environment (venv)
+### 2) Setting up Virtual Environment (venv)
 ```bash
 # cd to where you want to create your venv
 cd path/to/venv-dir
 
-# create directory for
+# create venv 
+python -m venv <your-venv>
 ```
 
-#### 3) Clone Repository
+### 3) Clone Repository
 ```bash
 # cd to where you want to clone OmicsTIDE repository to
 cd path/to/omicstide-dir
 
 # clone
-git clone
+git clone https://github.com/julian-fra/OmicsTIDE.git
 
 
 #### 2) Install required Python packages
-
-
-### Running OmicsTIDE
-
-#### Activate virtualenv and run OmicsTIDE
-
-```bash
-# activate venv
-source <your-venv>/bin/activate
-
-# start OmicsTIDE
-python OmicsTIDE.py
 ```
 
+### Activate venv
+```bash
+. <your-venv>/bin/activate
 
+### Run OmicsTIDE
+```bash
+python path/to/omicsTIDE/OmicsTIDE.py
+```
 
