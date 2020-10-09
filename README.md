@@ -25,7 +25,7 @@ cd path/to/venv-dir
 python -m venv <your-venv>
 
 # install required packages
-pip install -r requirements.txt
+pip install -r path/to/omicstide-dir/requirements.txt
 ```
 
 
