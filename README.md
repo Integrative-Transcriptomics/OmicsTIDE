@@ -5,12 +5,14 @@
 ## Setting Up OmicsTIDE
 
 ### 1) Basic Requirements
+Python and pip versions should be at >= 3.6.10 and >= 20.1.1
+
 ```console
 user@example:~$ python --version
-Python 3.6.10 (or higher)
+Python 3.6.10
 
 user@example:~$ pip --version
-pip 20.1.1 (or higher)
+pip 20.1.1
 ```
 
 ### 2) Clone Repository
