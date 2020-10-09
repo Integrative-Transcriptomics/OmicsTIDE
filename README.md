@@ -15,19 +15,19 @@ pip 20.1.1
 ```
 
 ### 2) Clone Repository
-cd to the parent directory where OmicsTIDE should be cloned to
+cd to the directory where OmicsTIDE should be cloned to
 ```console
 user@example:~$ cd <path/to/OmicsTIDE-parent-dir>
 user@example:~/path/to/OmicsTIDE-parent-dir$ git clone https://github.com/julian-fra/OmicsTIDE.git
 ```
 
 ### 3) Setting up Virtual Environment (venv)
-change to venv parent directory
+cd to the directory where the venv should be created
 ```console
-user@example:~$ cd <path/to/venv-dir>
-user@example:~$ python -m venv <your-venv>
+user@example:~$ cd <path/to/venv-parent-dir>
+user@example:~/path/to/venv-parent-dir$ python -m venv <your-venv>
 ```
-
+Install required Python packages by using pip install.
 ```console
 user@example:~$ pip install -r <path/to/parent-dir>/requirements.txt
 ```
