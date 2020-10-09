@@ -1,6 +1,6 @@
 # Welcome to OmicsTIDE!
 
-## Setting Up OmicsTIDE
+## Installation
 
 ### 1) Basic Requirements
 Python and pip version should be >= 3.6.10 and >= 20.1.1, respectively.
