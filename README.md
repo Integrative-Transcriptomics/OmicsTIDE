@@ -20,7 +20,7 @@ cd to the directory where the venv should be located and create the venv
 user@example:~$ cd <path/to/venv-parent-dir>
 user@example:~/path/to/venv-parent-dir$ python -m venv <your-venv>
 ```
-Install required Python packages by using pip install.
+Install required Python packages by using pip install referring to the requirements.txt-file.
 ```console
 user@example:~$ pip install -r <path/to/OmicsTIDE>/requirements.txt
 ```
