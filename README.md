@@ -11,7 +11,7 @@ The tab-based and dynamic design of OmicsTIDE enables to break down large-scale 
 
 OmicsTIDE is written in JavaScript using the D3.js and jQuery libraries as well as the Bootstrap framework to enable a clear and dynamic front-end design. For data loading, modification and major data modeling steps, like partitioning and the subsequent trend comparison, OmicsTIDE uses the Flask web framework as back end. 
 
-A detailed description of the tool can be found in the [tutorial](TUTORIAL.md).
+A detailed description of the tool can be found in the [tutorial](TUTORIAL.md) section.
 
 ## Installation Guide
 
