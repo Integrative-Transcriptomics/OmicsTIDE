@@ -28,7 +28,7 @@ git clone https://github.com/julian-fra/OmicsTIDE.git
 #### 2) Install required Python packages
 ```
 
-## 3) Run OmicsTIDE
+## Running OmicsTIDE
 ```bash
 # activate venv
 . <your-venv>/bin/activate
