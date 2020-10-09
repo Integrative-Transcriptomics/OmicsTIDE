@@ -20,7 +20,7 @@ user@example:~/path/to/OmicsTIDE-parent-dir$ git clone https://github.com/julian
 ```
 
 ### 3) Setting up Virtual Environment (venv)
-cd to the directory where the venv should be located and create venv
+cd to the directory where the venv should be located and create the venv
 ```console
 user@example:~$ cd <path/to/venv-parent-dir>
 user@example:~/path/to/venv-parent-dir$ python -m venv <your-venv>
