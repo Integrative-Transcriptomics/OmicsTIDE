@@ -14,7 +14,7 @@ user@example:~$ pip --version
 pip 20.1.1
 ```
 
-### 2) Setting up a Python virtual environment (venv)
+### 2) Setting up a Virtual Environment (venv) in Python
 cd to the directory where the venv should be located and create the venv
 ```console
 user@example:~$ cd <path/to/venv-parent-dir>
