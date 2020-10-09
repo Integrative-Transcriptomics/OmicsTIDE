@@ -27,7 +27,7 @@ user@example:~/path/to/venv-parent-dir$ python -m venv <your-venv>
 ```
 Install required Python packages by using pip install.
 ```console
-user@example:~$ pip install -r <path/to/parent-dir>/requirements.txt
+user@example:~$ pip install -r <path/to/OmicsTIDE>/requirements.txt
 ```
 
 ## Running OmicsTIDE
