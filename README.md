@@ -1,4 +1,4 @@
-## Welcome to OmicsTIDE!
+# Welcome to OmicsTIDE!
 
 ## Setting Up OmicsTIDE
 
