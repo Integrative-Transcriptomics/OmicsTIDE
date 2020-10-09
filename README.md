@@ -1,7 +1,7 @@
 # Welcome to OmicsTIDE!
 The ***Omics** **T**rend-comparing **I**nteractive **D**ata **E**xplorer* (OmicsTIDE) is a web-based application to study the concordance and the discordance in the regulatory trends between omics data sets. 
 
-OmicsTIDE combines the benefits of data- and hypothesis-driven analysis by using partitioning algorithms to detect regulatory trends across two data sets on the one hand and by allowing the user to contribute to the analysis based on prior knowledge in an interactive and exploratory manner on the other hand.
+OmicsTIDE combines the benefits of data- and hypothesis-driven analysis by using partitioning algorithms to detect regulatory trends between two data sets on the one hand and by allowing the user to contribute to the analysis based on prior knowledge in an interactive and exploratory manner on the other hand.
 
 The tab-based and dynamic design of OmicsTIDE enables to break down large-scale data sets to a manageable and clear number of genes following three major analysis steps while keeping the option to review, refine or remove (previous) analysis steps.
 
