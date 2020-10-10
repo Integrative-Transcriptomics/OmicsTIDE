@@ -4,7 +4,7 @@ This tutorial gives some basic information
 ## Background: Data formats
 
 ### Abundance Data
-The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats with the rows corresponding to the single records (genes) and the columns corresponding to the respective observation (e.g. condition) of the given record. The record requires an additional column as identifier (ID). 
+The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats with the rows corresponding to the single records (genes) and the columns (value1 to value2) corresponding to the respective n observations (e.g. conditions) of the given record. The record requires an additional column as identifier (ID). 
 
 <p align="center">
   <img src="qnorm-log2.png" />
