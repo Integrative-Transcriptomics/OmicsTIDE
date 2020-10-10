@@ -1,5 +1,5 @@
 # OmicsTIDE Tutorial
-This tutorial gives some basic information
+This tutorial will guide the user throught OmicsTIDE from the data loading, over the customized analysis to the final data export.
 
 ## Data 
 Test data is available [here](../static/data/test_data/).
