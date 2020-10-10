@@ -3,13 +3,16 @@ This tutorial gives some basic information
 
 ## Background: Required Data formats
 
+### normalized abundant data
+<p align="center">
+  <img src="qnorm_log2.png" />
+</p>
+
+
 ### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
 <p align="center">
   <img src="ptcf.png" />
 </p>
-
-### normalized abundant data
-gene identifier
 
 
 
