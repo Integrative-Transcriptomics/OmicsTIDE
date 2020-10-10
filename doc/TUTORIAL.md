@@ -5,7 +5,7 @@ This tutorial gives some basic information
 Detailed information on the data formats used in OmicsTIDE can be found [here](DATAFORMATS.md).
 
 ## Available Data
-Test data is available [here](../static/test_data/).
+Test data is available [here](../static/data/test_data/).
 
 ## Data Loading (Home Tab)
 
