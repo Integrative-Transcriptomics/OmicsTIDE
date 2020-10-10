@@ -2,7 +2,7 @@
 This tutorial gives some basic information
 
 ## Background: Data formats
-A detailed information on the data formats can be found [here](DATAFORMATS.md).
+A detailed information on the data formats used by OmicsTIDE can be found [here](DATAFORMATS.md) (reading recommended).
 
 ## Data Loading (Home Tab)
 
