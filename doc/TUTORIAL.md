@@ -4,6 +4,9 @@ This tutorial gives some basic information
 ## Background: Data formats
 Detailed information on the data formats used in OmicsTIDE can be found [here](DATAFORMATS.md).
 
+## Available Data
+Test data is available [here](../data).
+
 ## Data Loading (Home Tab)
 
 ### Option 1: Loading up to four files for running and exploring pairwise trend comparisons
@@ -17,7 +20,7 @@ The user can select a previously custome-generated [PTCF](DATAFORMATS.md) file.
 </p>
 
 ## Choose your pairwise trend comparison (Data Matrix Tab)
-Hovering the single comparisons in this tab will put color to the greyscaled graphs to allow the focus on one single pairwise comparison. Per default, the tab corresponding to the trend comparison of the **intersecting genes** is activated. The user can click on the **Non-Intersecting** tab to show the trend comparison of the non-intersecting genes, alternatively. 
+Hovering the single comparisons in this tab will put color to the greyscaled graphs to allow the focus on one single pairwise comparison. Per default, the tab corresponding to the trend comparison of the **intersecting genes** is activated. The user can click on the **non-Intersecting** tab to show the trend comparison of the non-intersecting genes, alternatively. 
 
 Once the user wants to study a given pairwise comparison in more detail, a click on the respective comparison will open a 1st level analysis tab (LINK!) that allows the user to interact with graph and to select sub sets of the data. 
 <p align="center">
@@ -25,6 +28,7 @@ Once the user wants to study a given pairwise comparison in more detail, a click
 </p>
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
+
 
 TEST
 <p align="center">
