@@ -39,28 +39,16 @@ In the most cases, the user might have already a given gene or a bundle of genes
 
 Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will add the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, a the diagram can be directly clicked to add the respective genes to the current selection table.
 
-If an selection of a subset of genes is done, a *new analysis tab* can be opened by clicking the corresponding tab and the **2nd level analysis** is activated. 
-
+If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd level analysis** is activated. 
 <p align="center">
   <img src="../images/Two.svg" />
 </p>
 
-
-
-
-
 ## Explore subselection (2nd Level Analysis Tab)
+The current selection will appear as profile diagrams. Note, that if the analysis is based on the non-intersecting genes, one diagrams might be empty if no corresponding data was chosen. The genes in the subselection are shown on the top right in a **detailed selection table**. By **hovering** the single profiles, the corresponding genes are highlighted and marked with a tool tip. For more detailed information, a click on the currently hovered profile will open the corresponding entry on the **NCBI** home page.
+
+Finding the similarities within a given selection can be done e.g. by performing a **GO enrichment**. Here, the user has to select the species of the current analysis in the drop-down menu, representing all currently [supported genomes (Panther API)](http://pantherdb.org/services/oai/pantherdb/supportedgenomes).
 
 <p align="center">
   <img src="../images/Three.svg" />
 </p>
-
-
-### Browse subselection
-hover genes, go to NCBI
-
-### GO Enrichment
-
-### Export Results
-
-
