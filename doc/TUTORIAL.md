@@ -2,7 +2,7 @@
 This tutorial will guide the user throught OmicsTIDE from the data loading, over the customized analysis to the final data export.
 
 ## Data 
-OmicsTIDE uses CSV files following given formats as input. Detailed information on the data formats used in OmicsTIDE can be found [here](DATAFORMATS.md). Test data is available [here](../static/data/test_data/).
+OmicsTIDE uses CSV files following given formats as input. Detailed information on the data formats used in OmicsTIDE can be found [here](DATAFORMATS.md). If no further information is required the user can directly run OmicsTIDE using the [provided data](../static/data/test_data/).
 
 ## Data Loading (Home Tab)
 
