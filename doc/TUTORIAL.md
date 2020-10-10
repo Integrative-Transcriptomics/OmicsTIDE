@@ -35,6 +35,7 @@ In the controls section on the right, the user can choose three different types 
 
 The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. 
 
+In the most cases, the user might have already a given gene or a bundle of genes in the mind. Hence, the **gene search** allows to highlight one or more genes by either using a text search, where single gene IDs can be simply concatenated by commas or by uploading a text file containing gene IDs separated by line breaks. Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are provided [here](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are taken from (LINK)
 
 
 <p align="center">
