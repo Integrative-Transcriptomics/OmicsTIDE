@@ -15,6 +15,7 @@ The user can select a previously custome-generated [PTCF](DATAFORMATS.md) file.
 <p align="center">
   <img src="../images/home.png" />
 </p>
+
 ## Choose your pairwise trend comparison (Data Matrix Tab)
 <p align="center">
   <img src="../images/One.svg" />
