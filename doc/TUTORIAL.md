@@ -13,6 +13,10 @@ Detailed information on the data formats used in OmicsTIDE can be found [here](D
 
 ## Choose your pairwise trend comparison (Data Matrix Tab)
 
+<p align="center">
+  <img src="../images/One.svg" />
+</p>
+
 ### hover trend comparison
 
 ### toggle non-intersecting
@@ -21,6 +25,11 @@ Detailed information on the data formats used in OmicsTIDE can be found [here](D
 
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
+
+<p align="center">
+  <img src="../images/Two.svg" />
+</p>
+
 
 ### First impression
 
@@ -36,6 +45,11 @@ Detailed information on the data formats used in OmicsTIDE can be found [here](D
 
 
 ## Explore subselection (2nd Level Analysis Tab)
+
+<p align="center">
+  <img src="../images/Three.svg" />
+</p>
+
 
 ### Browse subselection
 hover genes, go to NCBI
