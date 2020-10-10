@@ -47,7 +47,9 @@ If an selection of a subset of genes is done, a **new analysis tab** can be open
 ## Explore subselection (2nd Level Analysis Tab)
 The current selection will appear as profile diagrams. Note, that if the analysis is based on the non-intersecting genes, one diagrams might be empty if no corresponding data was chosen. The genes in the subselection are shown on the top right in a **detailed selection table**. By **hovering** the single profiles, the corresponding genes are highlighted and marked with a tool tip. For more detailed information, a click on the currently hovered profile will open the corresponding entry on the **NCBI** home page.
 
-Finding the similarities within a given selection can be done e.g. by performing a **GO enrichment**. Here, the user has to select the species of the current analysis in the drop-down menu, representing all currently [supported genomes (Panther API)](http://pantherdb.org/services/oai/pantherdb/supportedgenomes).
+Finding the similarities within a given selection can be done e.g. by performing a **GO enrichment**. Here, the user has to select the species of the current analysis in the drop-down menu, representing all currently [supported genomes (Panther API)](http://pantherdb.org/services/oai/pantherdb/supportedgenomes). the selection of a given species with send a request and the resulting data of the request will be plotted in horizontal bar charts of the 10 most significant hits for the three main categories. Hovering the bar charts will give more detailed information on the given GO terms. 
+
+The **data export** will allow the user to download a zip folder containing the two profile diagrams, the current selection in PTCF format and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits. 
 
 <p align="center">
   <img src="../images/Three.svg" />
