@@ -1,7 +1,7 @@
 # OmicsTIDE Tutorial
 This tutorial gives some basic information
 
-## Background: Required Data formats
+## Background: Data formats
 
 ### normalized abundant data
 <p align="center">
