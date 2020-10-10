@@ -3,7 +3,7 @@ This tutorial gives some basic information
 
 ## Background: Data formats
 
-### Normalized Abundance Data
+### Abundance Data
 The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with the rows corresponding to the single records (e.g. genes) and the columns corresponding to the corresponding observation of the given record (e.g. condition). 
 <p align="center">
   <img src="qnorm-log2.png" />
