@@ -5,6 +5,9 @@ This tutorial gives some basic information
 Detailed information on the data formats used in OmicsTIDE can be found [here](DATAFORMATS.md).
 
 ## Data Loading (Home Tab)
+<p align="center">
+  <img src="../images/home.png" />
+</p>
 
 ### Option 1: Loading up to four files for running and exploring pairwise trend comparisons
 
