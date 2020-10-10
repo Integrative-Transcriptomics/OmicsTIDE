@@ -49,7 +49,7 @@ The current selection will appear as profile diagrams. Note, that if the analysi
 
 Finding the similarities within a given selection can be done e.g. by performing a **GO enrichment**. Here, the user has to select the species of the current analysis in the drop-down menu, representing all currently [supported genomes (Panther API)](http://pantherdb.org/services/oai/pantherdb/supportedgenomes). the selection of a given species with send a request and the resulting data of the request will be plotted in horizontal bar charts of the 10 most significant hits for the three main categories. Hovering the bar charts will give more detailed information on the given GO terms. 
 
-The **data export** will allow the user to download a zip folder containing the two profile diagrams, the current selection in PTCF format and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits. 
+The **data export** will allow the user to download a zip folder containing the two profile diagrams, the current selection in PTCF and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits. 
 
 <p align="center">
   <img src="../images/Three.svg" />
