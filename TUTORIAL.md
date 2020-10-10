@@ -4,7 +4,7 @@ This tutorial gives some basic information
 ## Background: Data formats
 
 ### Abundance Data
-The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats where the rows corresponding to the single records (e.g. genes) and the columns corresponding to the respective observation (e.g. condition) of the given record. The record requires an additional column as identifier (ID). 
+The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats with the rows corresponding to the single records (genes) and the columns corresponding to the respective observation (e.g. condition) of the given record. The record requires an additional column as identifier (ID). 
 
 <p align="center">
   <img src="qnorm-log2.png" />
@@ -12,13 +12,15 @@ The fundament of the most algorithms and tools dealing with omics data is a well
 
 OmicsTIDE uses abundance data as one of its input options. The user should have already adapted the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
 
-**NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for the calculation of trend comparison (see input option1) it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be interactively done in the program.**
+**NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for the calculation of trend comparison (see input option1) it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be done in the program interactively.**
 
 **NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for trend comparison (see input option1) it should NOT be z-score-normalized, since this specific normalization is part the data modification in the program.**
 
-
-
 ### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
+The ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF) is the core of OmicsTIDE's data manangement and data modeling procedures. This data format is the result of the loading of abundance data (see option 1). The rows correspond to single records (genes). The columns correspond to the result a pairwise trend comparison of two data sets (ds). Each data set  
+
+**NOTE: (see input option 2).**
+
 <p align="center">
   <img src="ptcf.png" />
 </p>
