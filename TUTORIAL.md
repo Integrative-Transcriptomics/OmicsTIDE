@@ -12,9 +12,9 @@ The fundament of the most algorithms and tools dealing with omics data is a well
 
 OmicsTIDE uses abundance data as one of its input options. The user should have already adapted the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
 
-**NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for trend comparison it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be interactively done in the program.**
+**NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for the calculation of trend comparison (see input option1) it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be interactively done in the program.**
 
-**NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for trend comparison it should NOT be z-score-normalized, since this specific normalization is part the data modification in the program.**
+**NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for trend comparison (see input option1) it should NOT be z-score-normalized, since this specific normalization is part the data modification in the program.**
 
 
 
