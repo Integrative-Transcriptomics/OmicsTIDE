@@ -4,10 +4,14 @@ This tutorial gives some basic information
 ## Background: Data formats
 
 ### Abundance Data
-The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats where the rows corresponding to the single records (e.g. genes) and the columns corresponding to the corresponding observation of the given record (e.g. condition). The record requires an additional column as identifier. 
+The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats where the rows corresponding to the single records (e.g. genes) and the columns corresponding to the respective observation (e.g. condition) of the given record. The record requires an additional column as identifier (ID). 
+
 <p align="center">
   <img src="qnorm-log2.png" />
 </p>
+
+OmicsTIDE uses abundance data as one of its input options. The user should have already adapted the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. **NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for trend comparison it should not be z-score normalized, since the normalization is part the calculation.**
+
 
 
 ### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
