@@ -22,23 +22,26 @@ The user can select a previously custome-generated [PTCF](DATAFORMATS.md) file.
 ## Choose your pairwise trend comparison (Data Matrix Tab)
 Hovering the single comparisons in this tab will put color to the greyscaled graphs to allow the focus on one single pairwise comparison. Per default, the tab corresponding to the trend comparison of the **intersecting genes** is activated. The user can click on the **non-Intersecting** tab to show the trend comparison of the non-intersecting genes, alternatively. 
 
-Once the user wants to study a given pairwise comparison in more detail, a click on the respective comparison will open a 1st level analysis tab (LINK!) that allows the user to interact with graph and to select sub sets of the data. 
+Once the user wants to study a given pairwise comparison in more detail, a click on the respective comparison will open the clicked graph in a 1st level analysis tab (LINK!) that allows the user to interact with graph and to select sub sets of the data. 
 <p align="center">
   <img src="../images/One.svg" />
 </p>
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
-### Intersecting genes
-The choice
+If the pairwise comparison on the intersecting genes was chosen, the user can hover the single nodes and links of the Sankey diagram which will lead to only those diagrams highlighted corresponding to the currently hovered genes. The diagrams adjacent to the Sankey will be updated with the corresponding node or linked hovered and be reconstituted if the node or linked is unhovered. 
 
-TEST
+In the controls section on the right, the user can choose three different types of diagram to study the data in more detailed. The unfiltered data is studied best using the centroid diagrams activated by default or the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
+
+The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. 
+
+
+
 <p align="center">
   <img src="../images/Two.svg" />
 </p>
 
-### Non-intersecting genes
-If the non-intersecting genes are chosen, no
+
 
 
 ### First impression
