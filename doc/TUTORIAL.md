@@ -31,7 +31,7 @@ Once the user wants to study a given pairwise comparison in more detail, a click
 
 If the pairwise comparison on the intersecting genes was chosen, the user can hover the single nodes and links of the Sankey diagram which will lead to only those diagrams highlighted corresponding to the currently hovered genes. The diagrams adjacent to the Sankey will be updated with the corresponding node or linked hovered and be reconstituted if the node or linked is unhovered. 
 
-In the controls section on the right, the user can choose three different types of diagram to study the data in more detailed. The unfiltered data is studied best using the centroid diagrams activated by default or the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
+In the controls section on the right, the user can choose three different types of **diagram** to study the data in more detailed. The unfiltered data is studied best using the centroid diagrams activated by default or the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
 
 The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. 
 
