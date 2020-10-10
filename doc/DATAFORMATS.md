@@ -5,7 +5,7 @@
 The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats with the rows corresponding to the single records (genes) and the columns (value1 to value2) corresponding to the respective n observations (e.g. conditions) of the given record. The record requires an additional column as identifier (ID). 
 
 <p align="center">
-  <img src="qnorm-log2.png" />
+  <img src="images/qnorm-log2.png" />
 </p>
 
 OmicsTIDE uses abundance data as one of its input options. The user should have already adapted the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
@@ -22,7 +22,7 @@ Each gene in a PTCF file either corresponds to a gene occurring in both data set
 A detailed information on the calculation of trend comparisons in I-PTCF and NI-PTCF can be found [here](doc/TRENDCOMPARISON.md)
 
 <p align="center">
-  <img src="ptcf.png" />
+  <img src="images/ptcf.png" />
 </p>
 
 **NOTE: If the user decides to create an own PTCF file (see input option 2), it should be considered that a z-score normalization (additionally to other adjustments of the raw abundance data) should be applied .**
