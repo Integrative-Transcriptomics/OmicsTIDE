@@ -5,10 +5,6 @@ OmicsTIDE combines the benefits of data- and hypothesis-driven analysis by using
 
 The tab-based and dynamic design of OmicsTIDE enables to break down large-scale data sets to a manageable and clear number of genes following three major analysis steps (see figure below) while keeping the option to review, refine or remove (previous) analysis steps.
 
-<p align="center">
-  <img src="images/combined.svg" />
-</p>
-
 OmicsTIDE is written in JavaScript using the D3.js and jQuery libraries as well as the Bootstrap framework to enable a clear and dynamic front-end design. For data loading, modification and major data modeling steps, like partitioning and the subsequent trend comparison, OmicsTIDE uses the Flask web framework as back end. 
 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md) section.
