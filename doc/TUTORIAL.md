@@ -37,7 +37,9 @@ The user can customize the analysis - and thereby reducing the number of genes -
 
 In the most cases, the user might have already a given gene or a bundle of genes in the mind. Hence, the **gene search** allows to highlight one or more genes by either using a text search, where single gene IDs can be simply concatenated by commas or by uploading a text file containing gene IDs separated by line breaks. Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are provided [here](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are taken from (LINK)
 
-Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will add the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, a the diagram can be directly clicked to add the respective genes to the current selection table.  
+Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will add the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, a the diagram can be directly clicked to add the respective genes to the current selection table.
+
+If an selection of a subset of genes is done, a *new analysis tab* can be opened by clicking the corresponding tab and the **2nd level analysis** is activated. 
 
 <p align="center">
   <img src="../images/Two.svg" />
