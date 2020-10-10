@@ -1,7 +1,7 @@
 # OmicsTIDE Tutorial
 This tutorial gives some basic information
 
-## Basics: Requried Data formats
+## Background: Required Data formats
 
 ### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
 <p align="center">
