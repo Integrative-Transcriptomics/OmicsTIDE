@@ -1,1 +1,1 @@
-## Trend comparison
+## Trend Comparison
