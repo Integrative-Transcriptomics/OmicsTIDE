@@ -5,7 +5,7 @@ This tutorial gives some basic information
 Detailed information on the data formats used in OmicsTIDE can be found [here](DATAFORMATS.md).
 
 ## Available Data
-Test data is available [here](../data).
+Test data is available [here](../static/test_data).
 
 ## Data Loading (Home Tab)
 
@@ -29,11 +29,16 @@ Once the user wants to study a given pairwise comparison in more detail, a click
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
+### Intersecting genes
+The choice
 
 TEST
 <p align="center">
   <img src="../images/Two.svg" />
 </p>
+
+### Non-intersecting genes
+If the non-intersecting genes are chosen, no
 
 
 ### First impression
