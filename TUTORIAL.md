@@ -4,7 +4,9 @@ This tutorial gives some basic information
 ## Basics: Requried Data formats
 
 ### ***P**airwise **T**rend **C**omparison **F**ormat* (PTCF)
-picture here
+<p align="center">
+  <img src="ptcf.png" />
+</p>
 
 ### normalized abundant data
 gene identifier
