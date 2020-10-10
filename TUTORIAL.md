@@ -5,7 +5,7 @@ This tutorial gives some basic information
 
 ### normalized abundant data
 <p align="center">
-  <img src="qnorm_log2.png" />
+  <img src="qnorm-log2.png" />
 </p>
 
 
