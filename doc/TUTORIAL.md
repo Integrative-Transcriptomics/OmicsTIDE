@@ -14,12 +14,12 @@ If required, the data set can be filtered by adjusting the **range slider** to k
 
 By adjusting the **slider** for the initial clusters, the user can determine the further k-Means clustering step. 
 
-Examples files can be found [here](../static/data/test_data/qnorm_log2).
+Examples files can be found [here](../static/data/test_data/qnorm_log2) (*Streptomyces coelicolor*).
 
 ### Option 2: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
 
-An example file can be found [here](../static/data/test_data/ptcf).
+An example file can be found [here](../static/data/test_data/ptcf) (*Streptomyces coelicolor*).
 
 <p align="center">
   <img src="../images/home.png" />
@@ -34,13 +34,13 @@ Hovering the single comparisons in this tab will put color to the greyscaled gra
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
-If the pairwise comparison on the intersecting genes was chosen, the user can hover the single nodes and links of the Sankey diagram which will lead to only those diagrams corresponding to the currently hovered genes being highlighted. The diagrams adjacent to the Sankey will be updated with the corresponding node or linked hovered and be reconstituted if the node or linked is unhovered. For the non-intersecting genes, only adjacent diagrams but not the Sankey diagram is shown.
+If the pairwise comparison on the intersecting genes was chosen, the user can hover the single nodes and links of the Sankey diagram which will lead to only those diagrams corresponding to the currently hovered genes being highlighted. The diagrams adjacent to the Sankey will be updated with the data corresponding to the node or linked hovered and will be reconstituted if the node or linked is unhovered. For the non-intersecting genes, only adjacent diagrams are shown.
 
-In the controls section on the right, the user can choose three different types of **diagram** to study the data in more detailed. The unfiltered data is studied best using the centroid diagrams activated by default or the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
+In the controls section on the right, the user can choose three different types of **diagrams** to study the data in more detail. The unfiltered data is studied best using the default activated centroid diagrams the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
 
-The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. If the non-intersecting genes are studied, the filtering of the abundance is performed on each data set indivudually. *NOTE* that the abundance filtering step should be done prior to the sub selection in the workflow. Activating the abundance filtering will empty the current selection table.
+The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. If the non-intersecting genes are studied, the filtering of the abundance is performed on each data set indivudually. *NOTE* that the abundance filtering step should be done prior to the sub selection in the workflow. Activating the abundance filtering will empty the current selection table (see below).
 
-In the most cases, the user might have already a given gene or a bundle of genes in the mind. Hence, the **gene search** allows to highlight one or more genes by either using a text search, where single gene IDs can be simply concatenated by commas or by uploading a text file containing gene IDs separated by line breaks. Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are based on https://www.nature.com/articles/s41598-020-65087-w.
+In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene search** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are based on https://www.nature.com/articles/s41598-020-65087-w.
 
 Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will add the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, a the diagram can be directly clicked to add the respective genes to the current selection table.
 
