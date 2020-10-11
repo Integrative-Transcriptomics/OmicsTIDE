@@ -14,7 +14,7 @@ A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.m
 </p>
 
 ## Installation Guide
-The following steps are required to set up the requirements for properly running OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
+The following steps are required to set up and run OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
 
 **NOTE: Although it is recommended to work with a virtual environment to avoid package version conflicts, this step can also be skipped if the user is aware of potential conflicts.**
 
