@@ -7,7 +7,7 @@ OmicsTIDE uses CSV files following given formats. Detailed information on the da
 ## Data Loading (Home Tab)
 The user has two options for data loading. Either [abundance files](DATAFORMATS.md/###-Abundance-Data) can be loaded to calculate trends first and then explore the corresponding trend comparison or already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
 
-### Option 1: Loading up to four abundance files for pairwise trend comparisons
+### First option: Loading up to four abundance files for pairwise trend comparisons
 The user can select between two and four abundance file for pairwise comparisons. The number of files is restricted to four to ensure a clear overview in the Data Matrix tab with max. four pairwise combinations - i.e. six comparisons. 
 
 If required, the data set can be filtered by adjusting the **range slider** to keep only a given percentile range of genes to e.g. remove low-variant genes. The removal of low-variant genes will speed up the downstream analysis steps, as the number of genes decreases. 
@@ -16,7 +16,7 @@ By adjusting the **slider** for the initial clusters, the user can determine the
 
 Examples files can be found [here](../static/data/test_data/qnorm_log2) (*Streptomyces coelicolor*).
 
-### Option 2: Loading PTCF file to explore a pairwise trend comparison
+### Second option: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
 
 An example file can be found [here](../static/data/test_data/ptcf) (*Streptomyces coelicolor*).
