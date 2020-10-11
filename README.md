@@ -10,16 +10,18 @@ OmicsTIDE is written in JavaScript using the D3.js and jQuery libraries as well 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
 ## Installation Guide
-
+Follow the steps described in this section to install OmicsTIDE and the required packages. Although it is recommended to work with a virtual environment to avoid package version conflicts, the user can also run 
 
 ### 1) Basic Requirements
-Python and pip version should be >= 3.6.10 and >= 20.1.1, respectively.
+Python and pip version should be >= 3.6.10, >= 20.1.1 and >=20.0.23, respectively.
 
 ```console
 user@example:~$ python --version
 Python 3.6.10
 user@example:~$ pip --version
 pip 20.1.1
+user@example:~$ virtualenv --version
+pip 20.0.23
 ```
 
 ### 2) Setting up a Virtual Environment (venv) in Python
