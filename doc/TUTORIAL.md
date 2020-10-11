@@ -44,7 +44,7 @@ In the most cases, the user might have already a given gene or a bundle of genes
 
 Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are based on [a recent study in Streptomyces coelicolor](https://www.nature.com/articles/s41598-020-65087-w).
 
-Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will adds the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, diagrams can be directly clicked to add the respective genes to the current selection table.
+Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will adds the genes corresponding to the clicked element to the **current selection table**. Another click on an already selected element will remove it from the selection again. If the non-intersecting genes are studied, diagrams can be directly clicked to add the respective genes to the current selection table.
 
 If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
 <p align="center">
