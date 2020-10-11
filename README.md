@@ -15,7 +15,7 @@ The following steps are required to set up the requirements for properly running
 **NOTE: Although it is recommended to work with a virtual environment to avoid package version conflicts, the user can also skip this step if the user is aware of this and has the required packages installed**
 
 ### 1) Basic Requirements
-Python and pip version should be >= 3.6.10, >= 20.1.1 and >=20.0.23, respectively.
+Python, pip and virtualenv version should be >= 3.6.10, >= 20.1.1 and >=20.0.23, respectively.
 
 ```console
 user@example:~$ python --version
