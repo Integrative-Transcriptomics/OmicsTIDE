@@ -34,7 +34,7 @@ Hovering the single comparisons in this tab will put color to the greyscaled gra
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
-If the pairwise comparison on the intersecting genes was chosen, the user can hover the single nodes and links of the Sankey diagram which will lead to only those diagrams highlighted corresponding to the currently hovered genes. The diagrams adjacent to the Sankey will be updated with the corresponding node or linked hovered and be reconstituted if the node or linked is unhovered. For the non-intersecting genes, only adjacent diagrams but not the Sankey diagram is shown.
+If the pairwise comparison on the intersecting genes was chosen, the user can hover the single nodes and links of the Sankey diagram which will lead to only those diagrams corresponding to the currently hovered genes being highlighted. The diagrams adjacent to the Sankey will be updated with the corresponding node or linked hovered and be reconstituted if the node or linked is unhovered. For the non-intersecting genes, only adjacent diagrams but not the Sankey diagram is shown.
 
 In the controls section on the right, the user can choose three different types of **diagram** to study the data in more detailed. The unfiltered data is studied best using the centroid diagrams activated by default or the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
 
