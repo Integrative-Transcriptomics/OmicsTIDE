@@ -27,7 +27,7 @@ pip 20.1.1
 cd to the directory where the venv should be located and create the venv
 ```console
 user@example:~$ cd <path/to/venv-parent-dir>
-user@example:~/path/to/venv-parent-dir$ python -m venv <your-venv>
+user@example:~/path/to/venv-parent-dir$ virtualenv <your-venv>
 ```
 
 ### 3) Required Python packages
