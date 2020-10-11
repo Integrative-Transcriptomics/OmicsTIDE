@@ -17,7 +17,7 @@ By adjusting the **slider** for the initial clusters, the user can determine the
 Examples files can be found [here](../static/data/test_data/qnorm_log2).
 
 ### Option 2: Loading PTCF file to explore a pairwise trend comparison
-The user can select a PTCF file generated previously. 
+The user can directly upload one PTCF file and explore the trend comparisons. 
 
 An example file can be found [here](../static/data/test_data/ptcf).
 
