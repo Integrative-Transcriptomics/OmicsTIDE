@@ -8,7 +8,7 @@ The fundament of the most algorithms and tools dealing with omics data is a well
   <img src="../images/qnorm-log2.png" />
 </p>
 
-OmicsTIDE uses abundance data as one of its input options. The user should have already adapted the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
+OmicsTIDE uses abundance data as one of its input options. The user should have already modified the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
 
 **NOTE: If the adapted abundance data is directly loaded to OmicsTIDE for the calculation of trend comparison (see input option1) it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be done in the program interactively.**
 
