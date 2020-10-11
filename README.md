@@ -12,7 +12,7 @@ A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.m
 ## Installation Guide
 The following steps are required to set up the requirements for properly running OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
 
-**NOTE: Although it is recommended to work with a virtual environment to avoid package version conflicts, this step can also be skipped if the user is aware of potential conflicts and the appropiate package version (see requirements.txt) are installed.**
+**NOTE: Although it is recommended to work with a virtual environment to avoid package version conflicts, this step can also be skipped if the user is aware of potential conflicts.**
 
 ### 1) Basic Requirements
 Python, pip and virtualenv version should be >= 3.6.10, >= 20.1.1 and >=20.0.23, respectively.
