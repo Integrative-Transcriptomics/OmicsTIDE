@@ -40,21 +40,23 @@ In the controls section on the right, the user can choose three different types 
 
 The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. If the non-intersecting genes are studied, the filtering of the abundance is performed on each data set indivudually. *NOTE* that the abundance filtering step should be done prior to the sub selection in the workflow. Activating the abundance filtering will empty the current selection table (see below).
 
-In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene search** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are based on https://www.nature.com/articles/s41598-020-65087-w.
+In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene search** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. The highlighting can also be turned off by clicking the button again.
 
-Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will add the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, a the diagram can be directly clicked to add the respective genes to the current selection table.
+Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/test_data/genelist_Streptomyces_coelicolor). The gene lists are based on https://www.nature.com/articles/s41598-020-65087-w.
 
-If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd level analysis** is activated. 
+Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will adds the genes corresponding to the clicked element to the **current selection table**. If the non-intersecting genes are studied, diagrams can be directly clicked to add the respective genes to the current selection table.
+
+If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
 <p align="center">
   <img src="../images/Two.svg" />
 </p>
 
 ## Explore subselection (2nd Level Analysis Tab)
-The current selection will appear as profile diagrams. Note, that if the analysis is based on the non-intersecting genes, one diagrams might be empty if no corresponding data was chosen. The genes in the subselection are shown on the top right in a **detailed selection table**. By **hovering** the single profiles, the corresponding genes are highlighted and marked with a tool tip. For more detailed information, a click on the currently hovered profile will open the corresponding entry on the **NCBI** home page.
+The current selection will appear as profile diagrams. Note, that if the analysis is based on the non-intersecting genes, one diagrams of the two diagrams might be empty, depending on the chosen selection. The genes in the subselection are shown on the top right in a **detailed selection table**. By **hovering** the single profiles, the corresponding genes are highlighted and marked with a tool tip that shows the gene ID. For more detailed information, a click on the currently hovered profile will open the corresponding entry on the **NCBI** home page.
 
-Finding the similarities within a given selection can be done e.g. by performing a **GO enrichment**. Here, the user has to select the species of the current analysis in the drop-down menu, representing all currently [supported genomes (Panther API)](http://pantherdb.org/services/oai/pantherdb/supportedgenomes). the selection of a given species with send a request and the resulting data of the request will be plotted in horizontal bar charts of the 10 most significant hits for the three main categories. Hovering the bar charts will give more detailed information on the given GO terms. 
+Finding the similarities within a given selection can be done e.g. by performing a **GO enrichment**. Here, the user has to select the species of the current analysis in the drop-down menu, representing all currently [supported genomes (Panther API)](http://pantherdb.org/services/oai/pantherdb/supportedgenomes). The selection of a given species will send a request to Panther. The resulting data of the request will be plotted in horizontal bar charts showing the ten most significant hits for the three main categories, respectively. Hovering the bar charts will show more detailed information on the given GO terms in a tool tip.
 
-The **data export** will allow the user to download a zip folder containing the two profile diagrams, the current selection in PTCF and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits. 
+The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
 <p align="center">
   <img src="../images/Three.svg" />
