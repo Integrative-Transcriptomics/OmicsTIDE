@@ -10,7 +10,7 @@ OmicsTIDE is written in JavaScript using the D3.js and jQuery libraries as well 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
 <p align="center">
-  <img src="../images/combined.svg" />
+  <img src="images/combined.svg" />
 </p>
 
 ## Installation Guide
