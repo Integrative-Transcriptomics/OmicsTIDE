@@ -9,7 +9,9 @@ OmicsTIDE is written in JavaScript using the D3.js and jQuery libraries as well 
 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
-
+<p align="center">
+  <img src="../images/overview.svg" />
+</p>
 
 ## Installation Guide
 The following steps are required to set up the requirements for properly running OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
