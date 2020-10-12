@@ -592,10 +592,10 @@ def send_svg(filename):
 
 		print("POST!")
 
-		path1 = app.config['UPLOAD_FOLDER'] + '/dataset1.pdf'
-		path2 = app.config['UPLOAD_FOLDER'] + '/dataset2.pdf'
-		path_selection = app.config['UPLOAD_FOLDER'] + '/selection.csv'
-		path_go = app.config['UPLOAD_FOLDER'] + '/go.csv'
+		path1 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset1.pdf')
+		path2 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset2.pdf')
+		path_selection = os.path.join(app.config['UPLOAD_FOLDER'], 'selection.csv')
+		path_go = os.path.join(app.config['UPLOAD_FOLDER'], 'go.csv')
 
 
 		# path1 = 'home/julian/Desktop/dataset1.pdf'
@@ -644,7 +644,7 @@ def send_svg(filename):
 		time_id = time_id.replace(" ", "_")
 		time_id = time_id.split(".")[0]
 
-		zipObj = ZipFile(app.config['UPLOAD_FOLDER'] + "/" + filename + "_" + time_id, 'w')
+		zipObj = ZipFile(os.path.join(app.config['UPLOAD_FOLDER'], filename + "_" + time_id), 'w')
 
 		zipObj.write(path1)
 		zipObj.write(path2)
@@ -662,10 +662,9 @@ def send_svg(filename):
 
 		# get current go enrichment (row bound, ordered by fdr)
 
-		print(app.config['UPLOAD_FOLDER'])
-		print(filename + "_" + time_id)
+		timestamp_name = filename + "_" + time_id
 
-		return send_from_directory(app.config['UPLOAD_FOLDER'], filename + "_" + time_id, as_attachment=True)
+		return send_from_directory(app.config['UPLOAD_FOLDER'], timestamp_name, as_attachment=True)
 
 		#return send_from_directory()
 

@@ -262,7 +262,8 @@ async function addTab(tabName, hasCloseButton, tabId) {
     }
 
     if (document.getElementById("pills-" + tabName + "-tab")) {
-        console.log("Tab already created: " + tabName);
+        
+        alert("Tab already created: " + tabName + "\n" + "close selection first to open new");
     }
 
     else {

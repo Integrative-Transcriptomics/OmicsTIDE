@@ -58,8 +58,10 @@ function clearTable(parentDivId, comparison, tabId){
 
 	var parentDiv = document.getElementById(parentDivId);
 
-	parentDiv.innerHTML = "";
-
+	if(!parentDiv === null){
+		parentDiv.innerHTML = "";
+	}
+	
 	// remove old wrapper if already defined
 	if(document.getElementById("table-wrapper-" + comparison + "_" + tabId)){
 		let wrapperDiv = document.getElementById("table-wrapper-" + comparison +  "_" + tabId);
