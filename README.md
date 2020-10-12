@@ -27,7 +27,7 @@ Python 3.6.10
 user@example:~$ pip --version
 pip 20.1.1
 user@example:~$ virtualenv --version
-pip 20.0.23
+virtualenv 20.0.23
 ```
 
 ### 2) Setting up a Virtual Environment (venv) in Python
