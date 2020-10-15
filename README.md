@@ -19,7 +19,7 @@ The following steps are required to set up and run OmicsTIDE. The installation p
 **NOTE: Although it is recommended to work with a virtual environment to avoid package version conflicts, this step can also be skipped if the user is aware of potential conflicts.**
 
 ### 1) Basic Requirements
-Python, pip and virtualenv version should be >= 3.6.10, >= 20.1.1 and >=20.0.23, respectively.
+Python, pip and virtualenv version should be >= 3.6.12, >= 20.2.3 and >=20.0.23, respectively.
 
 ```console
 user@example:~$ python --version
