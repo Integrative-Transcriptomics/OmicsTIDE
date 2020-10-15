@@ -23,9 +23,9 @@ Python, pip and virtualenv version should be >= 3.6.10, >= 20.1.1 and >=20.0.23,
 
 ```console
 user@example:~$ python --version
-Python 3.6.10
+Python 3.6.12
 user@example:~$ pip --version
-pip 20.1.1
+pip 20.2.3
 user@example:~$ virtualenv --version
 virtualenv 20.0.23
 ```
