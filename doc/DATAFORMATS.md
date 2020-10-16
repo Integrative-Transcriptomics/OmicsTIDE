@@ -10,7 +10,7 @@ The fundament of the most algorithms and tools dealing with omics data is a well
 
 OmicsTIDE uses abundance data as one of its input options. The user should have already modified the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
 
-**NOTE: The ID (index) column should be named "gene".**
+**NOTE: The ID column has to be named "gene".**
 
 **NOTE: If the adapted abundance data is [directly loaded](TUTORIAL.md/###-First-option:-Loading-up-to-four-abundance-files-for-pairwise-trend-comparisons) to OmicsTIDE for the calculation of trend comparison it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be done in the program interactively).**
 
@@ -27,7 +27,7 @@ A detailed information on the calculation of trend comparisons in I-PTCF and NI-
   <img src="../images/ptcf.png" />
 </p>
 
-**NOTE: The ID (index) column should be named "gene".**
+**NOTE: The ID column has to be named "gene".**
 
 **NOTE: If the user decides to create an own [PTCF file](TUTORIAL.md/###-Second-option:-Loading-PTCF-file-to-explore-a-pairwise-trend-comparison)
 , it should be considered to perform a z-score normalization (additionally to other adjustments of the raw abundance data), especially if the data ranges differ - e.g. if transcriptome and proteome is compared.**
