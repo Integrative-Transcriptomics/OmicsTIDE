@@ -2,13 +2,15 @@
 ## Background: Data formats
 
 ### Abundance Data
-The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats with the rows corresponding to the single records (genes) and the columns (value1 to value2) corresponding to the respective n observations (e.g. conditions) of the given record. The record requires an additional ID column that has the column name **"gene"**. 
+The fundament of the most algorithms and tools dealing with omics data is a well-structured abundance matrix with non-negative integers or floats with the rows corresponding to the single records (genes) and the columns (value1 to value2) corresponding to the respective n observations (e.g. conditions) of the given record.
 
 <p align="center">
   <img src="../images/qnorm-log2.png" />
 </p>
 
 OmicsTIDE uses abundance data as one of its input options. The user should have already modified the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
+
+**NOTE: The ID (index) column should be named "gene".**
 
 **NOTE: If the adapted abundance data is [directly loaded](TUTORIAL.md/###-First-option:-Loading-up-to-four-abundance-files-for-pairwise-trend-comparisons) to OmicsTIDE for the calculation of trend comparison it might be beneficial NOT to remove low-variant genes before loading the abundance data, since the variance filtering of genes can be done in the program interactively).**
 
@@ -24,6 +26,8 @@ A detailed information on the calculation of trend comparisons in I-PTCF and NI-
 <p align="center">
   <img src="../images/ptcf.png" />
 </p>
+
+**NOTE: The ID (index) column should be named "gene".**
 
 **NOTE: If the user decides to create an own [PTCF file](TUTORIAL.md/###-Second-option:-Loading-PTCF-file-to-explore-a-pairwise-trend-comparison)
 , it should be considered to perform a z-score normalization (additionally to other adjustments of the raw abundance data), especially if the data ranges differ - e.g. if transcriptome and proteome is compared.**
