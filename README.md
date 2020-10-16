@@ -40,14 +40,14 @@ user@example:~/path/to/venv-parent-dir$ virtualenv <your-venv>
 ### 3) Required Python packages
 Install required Python packages by referring to the requirements.txt-file.
 ```console
-user@example:~$ . <your-venv>/bin/activate
+user@example:~$ source <your-venv>/bin/activate
 (<your-venv>) user@example:~$ pip install -r <path/to/OmicsTIDE>/requirements.txt
 ```
 
 ## Running OmicsTIDE
 Activate venv and run OmicsTIDE.py which will open the web application in a new browser window. 
 ```console
-user@example:~$ . <your-venv>/bin/activate
+user@example:~$ source <your-venv>/bin/activate
 (<your-venv>) user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
 ```
 OmicsTIDE requires a stable internet connection to load the front-end libraries and frameworks (D3.js, Bootstrap, jQuery) and to request data from [NCBI](https://www.ncbi.nlm.nih.gov/) and [Panther](http://www.pantherdb.org/). 
