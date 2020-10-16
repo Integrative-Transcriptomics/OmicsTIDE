@@ -36,6 +36,9 @@ function loadClusteredFile(){
 
             addTab("data", true, TabId.matrix);
         },
+        error: function(request){
+            alert("Invalid Data!\n" + request.responseJSON.message);
+        },
         complete: function(){
             $("#overlay-index").fadeOut(100);　
         }
@@ -78,6 +81,9 @@ function clusterData(){
                 
                 addTab("data", true, TabId.matrix);
 
+            },
+            error: function(request){
+                alert("Invalid Data!\n" + request.responseJSON.message);
             },
             complete: function(){
             $("#overlay-index").fadeOut(100);

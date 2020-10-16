@@ -53,13 +53,6 @@ function geneInDatasetOneOnly(row){
         return row.exp1_median !== null && row.exp2_median === null;
 }
 
-
-
-
-
-
-
-
 function geneInBothDatasets(row){
     return row.exp1_median !== null && row.exp2_median !== null;
 }
@@ -124,8 +117,6 @@ function updateXY(current){
   */
 function updateDiagram(current, tabId){
 
-    console.log(current);
-
     let value = current.value;
     let filteredData = JSON.parse(JSON.stringify(globalData))
     let tabDivId = current.id.split("-")[current.id.split("-").length-1];
@@ -133,13 +124,34 @@ function updateDiagram(current, tabId){
 
     filteredData[comparisonId][tabId]['data'] = filteredData[comparisonId][tabId]['data'].filter(function(d) { return d.highlighted === true});
 
-    // if(value === "centroid" || value === "profiles"){
-    //     profilePerCluster(filteredData, "clustered-data-information-data-profiles-left-" + tabDivId, "clustered-data-information-data-profiles-right-" + tabDivId, tabDivId)
+    // 15/10/20 commented to testing update instead
+    // if(tabId === "intersecting"){
+
+    //     detailDiagramsPerCluster(DiagramId[value], 
+    //         filteredData[comparisonId][tabId], 
+    //         "clustered-data-information-data-profiles-left-" + tabDivId, 
+    //         "clustered-data-information-data-profiles-right-" + tabDivId,
+    //         tabDivId,
+    //         TabId.intersecting);
     // }
 
-    // else if(value === "boxplot"){
-    //     boxplotPerCluster(filteredData, "clustered-data-information-data-profiles-left-" + tabDivId, "clustered-data-information-data-profiles-right-" + tabDivId, tabDivId)
+    // if(tabId === "nonIntersecting"){
+    //     detailDiagramsPerCluster(DiagramId[value], 
+    //         filteredData[comparisonId][tabId], 
+    //         "non-intersecting-information-data-left-" + tabDivId, 
+    //         "non-intersecting-information-data-right-" + tabDivId, 
+    //         tabDivId,
+    //         TabId.nonIntersecting);
     // }
+
+    
+    //detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId)
+    //updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId)
+
+    // --> update all!
+
+    
+
 
     if(tabId === "intersecting"){
 
@@ -149,15 +161,56 @@ function updateDiagram(current, tabId){
             "clustered-data-information-data-profiles-right-" + tabDivId,
             tabDivId,
             TabId.intersecting);
+
+        //updateAllDetailDiagrams(DiagramId[value], comparisonId, filteredData[comparisonId][tabId], tabDivId, TabId.intersecting);
     }
 
     if(tabId === "nonIntersecting"){
+
         detailDiagramsPerCluster(DiagramId[value], 
             filteredData[comparisonId][tabId], 
             "non-intersecting-information-data-left-" + tabDivId, 
             "non-intersecting-information-data-right-" + tabDivId, 
             tabDivId,
             TabId.nonIntersecting);
+        
+        //updateAllDetailDiagrams(DiagramId[value], comparisonId, filteredData[comparisonId][tabId], tabDivId, TabId.nonIntersecting);
     }
           
+
+    
 }
+
+
+
+//function updateAllDetailDiagrams(diagramId, data, experimentId, clusterNumber, tabDivId, tabId)
+
+// function updateAllDetailDiagrams(diagramId, comparisonId, data, tabDivId, tabId){
+
+//     let currentTrendsDsOne = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.exp1_cluster)));
+//     let currentTrendsDsTwo = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.exp2_cluster)));
+
+//     let experiments = [];
+//     let trends = [];
+//     for(let trend of currentTrendsDsOne){
+//         experiments.push(trend.split("_")[0]);
+//         trends.push(trend.split("_")[1]);
+//     }
+
+//     for(let trend of currentTrendsDsTwo){
+//         experiments.push(trend.split("_")[0]);
+//         trends.push(trend.split("_")[1]);
+//     }
+
+//     experiments = Array.from(new Set(experiments));
+//     trends = Array.from(new Set(trends));
+
+//     for(let exp of experiments){
+//         for(let trend of trends){
+//             updateDetailDiagram(diagramId, data, exp, trend, tabDivId, tabId)
+//         }
+//     }
+
+    
+
+// }

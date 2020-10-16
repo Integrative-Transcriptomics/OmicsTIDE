@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, request, session, redirect, url_for, send_from_directory, send_file, Response
 from jinja2 import Template
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 import csv
 import pandas as pd
 import numpy as np
@@ -67,7 +67,7 @@ def get_non_intersecting_ptcf_from_ptcf(ptcf):
 def extract_from_ptcf(ptcf_file, ptcf):
 
 	if not isinstance(ptcf_file, Ptcf_file):
-		raise TypeError('ptcf_file must either be I_PTCF or NI_PTCF')
+		return jsonify(message='File is neither I-PTCF nor NI-PTCF file!'),500
 
 	if ptcf_file == Ptcf_file.I_PTCF:
 		intersecting_genes = ptcf[~ptcf.isnull().any(1)]
@@ -202,7 +202,8 @@ def load_and_modify(file, from_file):
 		init = file
 
 	if not has_equal_number_of_timepoints(init):
-		raise Exception("number of conditions/time points in exp1 and exp2 has to be identical")
+		#raise Exception("number of conditions/time points in exp1 and exp2 has to be identical")
+		return jsonify(message = "number of conditions/time points in data set 1 and data set 2 has to be identical"),500
 
 	k = get_k_from_ptcf(init)
 
@@ -272,8 +273,12 @@ def preprocess_file(file):
 	"""
 
 	# load data 
-	file = pd.read_csv(file, index_col='gene')
+	try:
+		file = pd.read_csv(file, index_col='gene')
 
+	except ValueError:
+		return jsonify(message = "ID column has to be named 'gene'!"),500
+		
 	# remove columns with dot
 	file = remove_invalid_genes(file)
 
@@ -288,7 +293,6 @@ def get_genes_subset(file1, file2, comparison_type):
 
 	if not isinstance(comparison_type, ComparisonType):
 		raise TypeError('comparison_tye must either be INTERSECTING or NON_INTERSECTING')
-
 
 	file1_index = list(file1.index)
 	file2_index = list(file2.index)
@@ -319,7 +323,6 @@ def get_genes_subset(file1, file2, comparison_type):
 	file2.columns = tmp_col_list
 
 	combined = file1.append(file2)
-
 
 	return combined
 
@@ -415,7 +418,7 @@ def cluster(file1, file2, cluster, comparison_type):
 
 
 def filter_variance(data, lower, upper):
-	data['row_variance'] = data.var(axis=1);
+	data['row_variance'] = data.var(axis=1)
 
 	lower_quantile = data['row_variance'].quantile(round(lower/100, 1))
 	upper_quantile = data['row_variance'].quantile(round(upper/100, 1))
@@ -426,7 +429,24 @@ def filter_variance(data, lower, upper):
 
 	return quantile_filtered
 
+def has_gene_column(f):
 	
+	if("gene" in list(f)):
+		return True
+	
+	else:
+		return jsonify(message = "ID column has to be named 'gene'!"),500
+
+
+def equal_number_of_columns(f1, f2):
+
+	if(len(list(f1)) == len(list(f2))):
+		return True
+
+	else:
+		return jsonify(message = "Number of columns/conditions has to be identical across all loaded files!"),500
+
+
 		
 
 
@@ -444,57 +464,64 @@ def load_k():
 
 			tmp_file1 = str(combination[0])
 			tmp_file2 = str(combination[1])
-			
-			print(files[tmp_file1])
 
 			# get file without NA
-			exp1_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file1]))
-			exp2_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file2]))
+			try:
+				exp1_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file1]))
+				exp2_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file2]))
 
-			# initial colnames
-			exp1_colnames = list(exp1_file)
-			exp2_colnames = list(exp2_file)
+				# validity check
+				equal_number_of_columns(exp1_file, exp2_file)
 
-			print("before filtering: " + str(len(exp1_file.index)))
-			print("before filtering: " + str(len(exp2_file.index)))
+				# initial colnames
+				exp1_colnames = list(exp1_file)
+				exp2_colnames = list(exp2_file)
 
-			# variance filtering
-			exp1_file = filter_variance(exp1_file, lower_variance_percentile, upper_variance_percentile)
-			exp2_file = filter_variance(exp2_file, lower_variance_percentile, upper_variance_percentile)
+				print("before filtering: " + str(len(exp1_file.index)))
+				print("before filtering: " + str(len(exp2_file.index)))
 
+				# variance filtering
+				exp1_file = filter_variance(exp1_file, lower_variance_percentile, upper_variance_percentile)
+				exp2_file = filter_variance(exp2_file, lower_variance_percentile, upper_variance_percentile)
 
-			print("after filtering: " + str(len(exp1_file.index)))
-			print("after filtering: " + str(len(exp2_file.index)))
+				print("after filtering: " + str(len(exp1_file.index)))
+				print("after filtering: " + str(len(exp2_file.index)))
 
-			# zscore
-			exp1_file = exp1_file.T.apply(stats.zscore).T
-			exp2_file = exp2_file.T.apply(stats.zscore).T
+				# zscore
+				exp1_file = exp1_file.T.apply(stats.zscore).T
+				exp2_file = exp2_file.T.apply(stats.zscore).T
 
+				clustering_intersecting = cluster(exp1_file, exp2_file, k, ComparisonType.INTERSECTING)
+				clustering_non_intersecting = cluster(exp1_file, exp2_file, k, ComparisonType.NON_INTERSECTING)
 
-			clustering_intersecting = cluster(exp1_file, exp2_file, k, ComparisonType.INTERSECTING)
-			clustering_non_intersecting = cluster(exp1_file, exp2_file, k, ComparisonType.NON_INTERSECTING)
+				ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, exp1_colnames, exp2_colnames)
 
-			ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, exp1_colnames, exp2_colnames)
+				### could be outsourced to function
 
+				ptcf = add_additional_columns(ptcf)
 
-			### could be outsourced to function
+				i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
+				ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
 
-			ptcf = add_additional_columns(ptcf)
+				intersecting_genes = ptcf_to_json(i_ptcf)
+				non_intersecting_genes = ptcf_to_json(ni_ptcf)
 
-			i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
-			ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
+				info = get_info(tmp_file1, tmp_file2, files[tmp_file1], files[tmp_file2], i_ptcf, ni_ptcf)
 
-			intersecting_genes = ptcf_to_json(i_ptcf)
-			non_intersecting_genes = ptcf_to_json(ni_ptcf)
+				data[combination[0] + "_" + combination[1]] = {
+					'intersecting' : intersecting_genes,
+					'nonIntersecting' : non_intersecting_genes,
+					'info' : info,
+					'k' : k
+				}
 
-			info = get_info(tmp_file1, tmp_file2, files[tmp_file1], files[tmp_file2], i_ptcf, ni_ptcf)
+			except TypeError as te:
+				if str(te) == "object of type 'builtin_function_or_method' has no len()":
+					return jsonify(message='ID column has to be named "gene"'),500
 
-			data[combination[0] + "_" + combination[1]] = {
-				'intersecting' : intersecting_genes,
-				'nonIntersecting' : non_intersecting_genes,
-				'info' : info,
-				'k' : k
-			}
+			except ValueError as ve:
+				if str(ve).startswith("Length mismatch: Expected axis has"):
+					return jsonify(message='Number of columns/conditions for the loaded files not identical!'),500
 
 		return data
 
