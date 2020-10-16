@@ -14,7 +14,7 @@ from itertools import combinations
 from Bio import SeqIO, Entrez
 from enum import Enum
 from pathlib import Path
-import cairosvg
+#import cairosvg
 from zipfile import ZipFile
 from datetime import datetime
 
@@ -657,8 +657,8 @@ def send_svg():
 		#remove unneccessary column
 		selection.drop(columns=['highlighted', 'profile_selected', 'exp1_median', 'exp2_median'], inplace=True)
 
-		cairosvg.svg2pdf(dataset1, write_to=path1)
-		cairosvg.svg2pdf(dataset2, write_to=path2)
+		#cairosvg.svg2pdf(dataset1, write_to=path1)
+		#cairosvg.svg2pdf(dataset2, write_to=path2)
 		selection.to_csv(path_selection)
 
 		try:
@@ -676,8 +676,8 @@ def send_svg():
 
 		zipObj = ZipFile(os.path.join(app.config['UPLOAD_FOLDER'], "OmicsTIDE_" + str(time_id)), 'w')
 
-		zipObj.write(path1)
-		zipObj.write(path2)
+		#zipObj.write(path1)
+		#zipObj.write(path2)
 		zipObj.write(path_selection)
 
 		try:
