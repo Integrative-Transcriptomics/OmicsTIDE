@@ -613,8 +613,8 @@ def selection_intersecting():
 def selection_non_intersecting():
 	return render_template('selection_non_intersecting.html')
 
-@app.route('/send_svg/<path:filename>', methods=['GET', 'POST'])
-def send_svg(filename):
+@app.route('/send_svg', methods=['GET', 'POST'])
+def send_svg():
 	if request.method == 'POST':
 
 		print("POST!")
@@ -671,7 +671,10 @@ def send_svg(filename):
 		time_id = time_id.replace(" ", "_")
 		time_id = time_id.split(".")[0]
 
-		zipObj = ZipFile(os.path.join(app.config['UPLOAD_FOLDER'], filename + "_" + time_id), 'w')
+		print("### TIME_ID: " + str(time_id))
+		print("### PATH: " + os.path.join(app.config['UPLOAD_FOLDER'], "OmicsTIDE_" + str(time_id)))
+
+		zipObj = ZipFile(os.path.join(app.config['UPLOAD_FOLDER'], "OmicsTIDE_" + str(time_id)), 'w')
 
 		zipObj.write(path1)
 		zipObj.write(path2)
@@ -689,7 +692,7 @@ def send_svg(filename):
 
 		# get current go enrichment (row bound, ordered by fdr)
 
-		timestamp_name = filename + "_" + time_id
+		timestamp_name = "OmicsTIDE_" + time_id
 
 		return send_from_directory(app.config['UPLOAD_FOLDER'], timestamp_name, as_attachment=True)
 

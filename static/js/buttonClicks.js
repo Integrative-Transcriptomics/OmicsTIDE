@@ -193,7 +193,7 @@ $(document).on('click', '.export-button', function(event) {
 
 
 		$.ajax({
-            url: '/send_svg/test.zip',
+            url: '/send_svg',
             type: 'POST',
             xhrFields: {
             responseType: 'blob'
