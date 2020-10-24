@@ -669,6 +669,7 @@ def send_svg():
 
 		time_id = str(datetime.now())
 		time_id = time_id.replace(" ", "_")
+		time_id = time_id.replace(":", "_")
 		time_id = time_id.split(".")[0]
 
 		print("### TIME_ID: " + str(time_id))
