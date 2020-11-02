@@ -120,8 +120,8 @@ function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
 
     // TODO: automatically assign color
     var color = d3.scaleOrdinal()
-        .domain(["exp1_1", "exp1_2", "exp1_3", "exp1_4", "exp1_5", "exp1_6", "exp2_1", "exp2_2", "exp2_3","exp2_4", "exp2_5", "exp2_6"])
-        .range(["#1b9e77", "#d95f02", "#7570b3", "#e7298a", "#66a61e", "#e6ab02","#1b9e77", "#d95f02", "#7570b3", "#e7298a", "#66a61e", "#e6ab02"]);
+        .domain(["ds1_1", "ds1_2", "ds1_3", "ds1_4", "ds1_5", "ds1_6", "ds2_1", "ds2_2", "ds2_3","ds2_4", "ds2_5", "ds2_6"])
+        .range(["#1b9e77", "#eb914d", "#7570b3", "#735363", "#66a61e", "#e6ab02","#1b9e77", "#eb914d", "#7570b3", "#735363", "#66a61e", "#e6ab02"]);
 
     this.nodes = graph.nodes;
     this.links = graph.links;
@@ -385,8 +385,8 @@ function render(data, divID, tabId, tabName) {
 
     d3.select("#sankey_svg_" + divID).remove();
 
-    //keys = ['highlighted', 'exp1_cluster', 'exp2_cluster']
-    keys = ['exp1_cluster', 'exp2_cluster']
+    //keys = ['highlighted', 'ds1_cluster', 'ds2_cluster']
+    keys = ['ds1_cluster', 'ds2_cluster']
 
     let graph1 = new graph(keys, data);
     let chart1 = new chart(graph1, data, divID, tabId, tabName);

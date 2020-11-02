@@ -76,7 +76,7 @@ function initPlotMatrix(divID){
   */
 function createPills(divID){
 
-	let textSize = "15px";
+	let textSize = "10px";
 
 	let currentParentDiv = document.getElementById(divID);
 
@@ -691,7 +691,7 @@ function GenesByDiagramClick(clickedId, data){
 
 	let comparisonTypeId = clickedId.split("_")[7];
 
-	globalData[clickedComparison][comparisonTypeId]['selection'] = updateSelection(data.filter(d => (d.exp1_cluster === dataset + "_" + cluster || d.exp2_cluster === dataset + "_" + cluster)), 
+	globalData[clickedComparison][comparisonTypeId]['selection'] = updateSelection(data.filter(d => (d.ds1_cluster === dataset + "_" + cluster || d.ds2_cluster === dataset + "_" + cluster)), 
 		globalData[clickedComparison][comparisonTypeId]['selection']);
 
 }

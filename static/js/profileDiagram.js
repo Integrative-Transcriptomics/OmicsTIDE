@@ -32,7 +32,7 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
     // calling axis
     currentXScale.domain(currentXDomain);
     currentSvg.selectAll(".x_axis")
-        .attr("transform", "translate(0," + (curr_height - margin.bottom) + ")")
+        .attr("transform", "translate(0," + (curr_height - marginRelative.bottom) + ")")
         //.transition()
         //.duration(500)
         .call(d3.axisBottom(currentXScale));
@@ -105,12 +105,12 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
 		// 	lines
 						.on("mouseover", function(d){
 
-			                d3.select("#" + tabDivId + "_lineplot_exp1_" + d.key.toString())
+			                d3.select("#" + tabDivId + "_lineplot_ds1_" + d.key.toString())
                             .raise()
 			                .attr("stroke", "red")
 			                .attr("stroke-width", 4)
 
-			                d3.select("#" + tabDivId + "_lineplot_exp2_" + d.key.toString())
+			                d3.select("#" + tabDivId + "_lineplot_ds2_" + d.key.toString())
                             .raise()
 			                .attr("stroke", "red")
 			                .attr("stroke-width", 4)
@@ -125,12 +125,12 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
 			            })
 			            .on("mouseout", function(d){                
 
-			                d3.select("#" + tabDivId + "_lineplot_exp1_" + d.key.toString())
+			                d3.select("#" + tabDivId + "_lineplot_ds1_" + d.key.toString())
                             .lower()
 			                .attr("stroke", d => color(d.values[0].experimentAndCluster))
 			                .attr("stroke-width", 2)
 
-			                d3.select("#" + tabDivId + "_lineplot_exp2_" + d.key.toString())
+			                d3.select("#" + tabDivId + "_lineplot_ds2_" + d.key.toString())
                             .lower()
 			                .attr("stroke", d => color(d.values[0].experimentAndCluster))
 			                .attr("stroke-width", 2)
@@ -174,12 +174,12 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
             })
             .on("mouseover", function(d){
 
-                d3.select("#" + tabDivId + "_lineplot_highlighted_exp1_" + d.key.toString())
+                d3.select("#" + tabDivId + "_lineplot_highlighted_ds1_" + d.key.toString())
                 .raise()
                 .attr("stroke", "red")
                 .attr("stroke-width", 4)
 
-                d3.select("#" + tabDivId + "_lineplot_highlighted_exp2_" + d.key.toString())
+                d3.select("#" + tabDivId + "_lineplot_highlighted_ds2_" + d.key.toString())
                 .raise()
                 .attr("stroke", "red")
                 .attr("stroke-width", 4)
@@ -194,12 +194,12 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
             })
             .on("mouseout", function(d){                
 
-                d3.select("#" + tabDivId + "_lineplot_highlighted_exp1_" + d.key.toString())
+                d3.select("#" + tabDivId + "_lineplot_highlighted_ds1_" + d.key.toString())
                 .raise()
                 .attr("stroke", "red")
                 .attr("stroke-width", 2)
 
-                d3.select("#" + tabDivId + "_lineplot_highlighted_exp2_" + d.key.toString())
+                d3.select("#" + tabDivId + "_lineplot_highlighted_ds2_" + d.key.toString())
                 .raise()
                 .attr("stroke", "red")
                 .attr("stroke-width", 2)
@@ -241,7 +241,7 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
     // calling axis
     currentXScale.domain(currentXDomain);
     currentSvg.selectAll(".x_axis")
-        .attr("transform", "translate(0," + (curr_height - margin.bottom) + ")")
+        .attr("transform", "translate(0," + (curr_height - marginRelative.bottom) + ")")
         //.transition()
         //.duration(500)
         .call(d3.axisBottom(currentXScale));
@@ -278,12 +278,12 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
 
                      d3.select(this).style("cursor", "pointer"); 
 
-                     d3.select("#_lineplot_exp1_" + d.key.toString())
+                     d3.select("#_lineplot_ds1_" + d.key.toString())
                      .raise()
                      .attr("stroke-width", 4)
                      .attr("stroke", "red")
 
-                     d3.select("#_lineplot_exp2_" + d.key.toString())
+                     d3.select("#_lineplot_ds2_" + d.key.toString())
                      .raise()
                      .attr("stroke-width", 4)
                      .attr("stroke", "red")
@@ -298,12 +298,12 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
                  })
           .on("mouseout", function(d){                
 
-                     d3.select("#_lineplot_exp1_" + d.key.toString())
+                     d3.select("#_lineplot_ds1_" + d.key.toString())
                      .lower()
                      .attr("stroke-width", 2)
                      .attr("stroke", d => color(d.values[0].experimentAndCluster))
 
-                     d3.select("#_lineplot_exp2_" + d.key.toString())
+                     d3.select("#_lineplot_ds2_" + d.key.toString())
                      .lower()
                      .attr("stroke-width", 2)
                      .attr("stroke", d => color(d.values[0].experimentAndCluster))
@@ -340,12 +340,12 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
 
                      d3.select(this).style("cursor", "pointer"); 
 
-                     d3.select("#_lineplot_highlighted_exp1_" + d.key.toString())
+                     d3.select("#_lineplot_highlighted_ds1_" + d.key.toString())
                      .raise()
                      .attr("stroke-width", 4)
                      .attr("stroke", "red")
 
-                     d3.select("#_lineplot_highlighted_exp2_" + d.key.toString())
+                     d3.select("#_lineplot_highlighted_ds2_" + d.key.toString())
                      .raise()
                      .attr("stroke-width", 4)
                      .attr("stroke", "red")
@@ -360,12 +360,12 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
                  })
           .on("mouseout", function(d){                
 
-                     d3.select("#_lineplot_higlighted_exp1_" + d.key.toString())
+                     d3.select("#_lineplot_higlighted_ds1_" + d.key.toString())
                      .raise()
                      .attr("stroke-width", 2)
                      .attr("stroke", "red")
 
-                     d3.select("#_lineplot_highlighted_exp2_" + d.key.toString())
+                     d3.select("#_lineplot_highlighted_ds2_" + d.key.toString())
                      .raise()
                      .attr("stroke-width", 2)
                      .attr("stroke", "red")

@@ -40,30 +40,30 @@ function createDetailTable(parentDivId, selection){
 				trHead.setAttribute("class", "tr-head");
 				trHead.setAttribute("id", "tr-head-" + parentDivId);
 
-					let thExp1 = document.createElement("TH");
-					thExp1.setAttribute("scope", "col");
-					thExp1.setAttribute("class", "th");
-					thExp1.setAttribute("id", "th-" + parentDivId);
+					let thDs1 = document.createElement("TH");
+					thDs1.setAttribute("scope", "col");
+					thDs1.setAttribute("class", "th");
+					thDs1.setAttribute("id", "th-" + parentDivId);
 
-						let thExp1Text = document.createTextNode("Gene");
-						thExp1.appendChild(thExp1Text);
+						let thDs1Text = document.createTextNode("Gene");
+						thDs1.appendChild(thDs1Text);
 
-					trHead.appendChild(thExp1);
+					trHead.appendChild(thDs1);
 
-					let thExp2 = document.createElement("TH");
-					thExp2.setAttribute("scope", "col");
-					thExp2.setAttribute("class", "th-text");
-					thExp2.setAttribute("id", "th-text-2-" + parentDivId);
+					let thDs2 = document.createElement("TH");
+					thDs2.setAttribute("scope", "col");
+					thDs2.setAttribute("class", "th-text");
+					thDs2.setAttribute("id", "th-text-2-" + parentDivId);
 
-						let thExp2Text = document.createTextNode("Dataset1");
-						thExp2.appendChild(thExp2Text);
+						let thDs2Text = document.createTextNode("Dataset1");
+						thDs2.appendChild(thDs2Text);
 					
-					trHead.appendChild(thExp2);
+					trHead.appendChild(thDs2);
 
 					let thCount = document.createElement("TH");
 					thCount.setAttribute("scope", "col");
-					thExp2.setAttribute("class", "th-text");
-					thExp2.setAttribute("id", "th-text-3-" + parentDivId);
+					thDs2.setAttribute("class", "th-text");
+					thDs2.setAttribute("id", "th-text-3-" + parentDivId);
 
 						let thCountText = document.createTextNode("Dataset2");
 						thCount.appendChild(thCountText);
@@ -84,15 +84,15 @@ function createDetailTable(parentDivId, selection){
 					eval( "td_" + String(gene['gene']) + "_gene.appendChild(document.createTextNode('" + String(gene['gene']) + "'))" );
 					eval( "tr_" + String(gene['gene']) + ".appendChild(td_" + String(gene['gene']) + "_gene)" );
 
-					eval( "var td_" + String(gene['gene']) + "_exp1 = document.createElement('TD')" );
-					eval( "td_" + String(gene['gene']) + "_exp1.style.backgroundColor='" + color(String(gene['exp1_cluster'])) + "'" );
-					eval( "td_" + String(gene['gene']) + "_exp1.appendChild(document.createTextNode('" + String(gene['exp1_cluster']) + "'))" );
-					eval( "tr_" + String(gene['gene']) + ".appendChild(td_" + String(gene['gene']) + "_exp1)" );
+					eval( "var td_" + String(gene['gene']) + "_ds1 = document.createElement('TD')" );
+					eval( "td_" + String(gene['gene']) + "_ds1.style.backgroundColor='" + color(String(gene['ds1_cluster'])) + "'" );
+					eval( "td_" + String(gene['gene']) + "_ds1.appendChild(document.createTextNode('" + String(gene['ds1_cluster']) + "'))" );
+					eval( "tr_" + String(gene['gene']) + ".appendChild(td_" + String(gene['gene']) + "_ds1)" );
 
-					eval( "var td_" + String(gene['gene']) + "_exp2 = document.createElement('TD')" );
-					eval( "td_" + String(gene['gene']) + "_exp2.style.backgroundColor='" + color(String(gene['exp2_cluster'])) + "'" );
-					eval( "td_" + String(gene['gene']) + "_exp2.appendChild(document.createTextNode('" + String(gene['exp2_cluster']) + "'))" );
-					eval( "tr_" + String(gene['gene']) + ".appendChild(td_" + String(gene['gene']) + "_exp2)" );
+					eval( "var td_" + String(gene['gene']) + "_ds2 = document.createElement('TD')" );
+					eval( "td_" + String(gene['gene']) + "_ds2.style.backgroundColor='" + color(String(gene['ds2_cluster'])) + "'" );
+					eval( "td_" + String(gene['gene']) + "_ds2.appendChild(document.createTextNode('" + String(gene['ds2_cluster']) + "'))" );
+					eval( "tr_" + String(gene['gene']) + ".appendChild(td_" + String(gene['gene']) + "_ds2)" );
 
 
 			tableBody.appendChild(eval( "tr_" + String(gene['gene'])) );

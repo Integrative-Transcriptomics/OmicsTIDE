@@ -16,7 +16,7 @@
 // 	var myTableData = []
 
 // 	for(row of selection){
-// 		myTableData.push({'gene': row.gene, 'exp1_cluster': row.exp1_cluster, 'exp2_cluster': row.exp2_cluster})
+// 		myTableData.push({'gene': row.gene, 'ds1_cluster': row.ds1_cluster, 'ds2_cluster': row.ds2_cluster})
 // 	}
 
 // 	var tableChart = document.getElementById(tabId + "-information-controls-table-wrapper-" + comparison + "_" + tabId);
@@ -25,14 +25,14 @@
 // 	var tableHeight = tableChart.offsetHeight;
 
 // 	var textFunc = function(data) { return data.gene; }
-// 	var valueFunc = function(data) { return data.exp1_cluster; }
-// 	var exp2 = function(data) { return data.exp2_cluster; }
-// 	//var columns = ['Gene', 'Exp1', 'Exp2'];
-// 	var columns = ['gene', 'exp1', 'exp2'];
+// 	var valueFunc = function(data) { return data.ds1_cluster; }
+// 	var ds2 = function(data) { return data.ds2_cluster; }
+// 	//var columns = ['Gene', 'ds1', 'ds2'];
+// 	var columns = ['gene', 'ds1', 'ds2'];
 
 // 	let id = tabId + "-information-controls-table-wrapper-" + comparison + "_"  + tabId;
 
-// 	drawTable(myTableData, id, { tableWidth: tableWidth, tableHeight: tableHeight }, valueFunc, textFunc, exp2, columns);
+// 	drawTable(myTableData, id, { tableWidth: tableWidth, tableHeight: tableHeight }, valueFunc, textFunc, ds2, columns);
 // }
 
 
@@ -43,10 +43,10 @@
 //   * @param{} dimensions
 //   * @param{} valueFunc
 //   * @param{} textFunc
-//   * @param{} exp2
+//   * @param{} ds2
 //   * @param{} columns
 //   */
-// function drawTable(data, tableid, dimensions, valueFunc, textFunc, exp2, columns) {
+// function drawTable(data, tableid, dimensions, valueFunc, textFunc, ds2, columns) {
 
 //     var sortValueAscending = function (a, b) { return valueFunc(a) - valueFunc(b) }
 //     var sortValueDescending = function (a, b) { return valueFunc(b) - valueFunc(a) }
@@ -102,15 +102,15 @@
 // 	    .enter()
 // 	    .append("tr")
 // 	    .attr("id", function(d) {
-// 	    	return "row_ " + d.gene + "_" + d.exp1_cluster + "_" + d.exp2_cluster;
+// 	    	return "row_ " + d.gene + "_" + d.ds1_cluster + "_" + d.ds2_cluster;
 // 	    })
 // 	    .on("mouseover", function(d){
 
 
 // 			var hovered_element = d3.select(this).attr("id").split("_");
 // 			var hovered_gene = hovered_element[1].trim();
-// 			var hovered_exp1_cluster = hovered_element[2].trim() + "_" + hovered_element[3].trim();
-// 			var hovered_exp2_cluster = hovered_element[4].trim() + "_" + hovered_element[5].trim();
+// 			var hovered_ds1_cluster = hovered_element[2].trim() + "_" + hovered_element[3].trim();
+// 			var hovered_ds2_cluster = hovered_element[4].trim() + "_" + hovered_element[5].trim();
 
 // 			//console.log("#lineplot_" + hovered_element[2].trim() + "_" + hovered_gene)
 
@@ -118,11 +118,11 @@
 // 				.style("cursor", "pointer")
 // 			 	.style("background-color", "lightgrey")
 
-// 			d3.select("#col_" + hovered_gene + "_" + hovered_exp1_cluster)
+// 			d3.select("#col_" + hovered_gene + "_" + hovered_ds1_cluster)
 // 				.style("cursor", "pointer")
 // 			 	.style("background-color", "lightgrey")
 
-// 			d3.select("#col_" + hovered_gene + "_" + hovered_exp2_cluster)
+// 			d3.select("#col_" + hovered_gene + "_" + hovered_ds2_cluster)
 // 				.style("cursor", "pointer")
 // 			 	.style("background-color", "lightgrey")
 
@@ -141,8 +141,8 @@
 // 		.on("mouseout", function(d){
 // 			var hovered_element = d3.select(this).attr("id").split("_");
 // 			var hovered_gene = hovered_element[1].trim();
-// 			var hovered_exp1_cluster = hovered_element[2].trim() + "_" + hovered_element[3].trim();
-// 			var hovered_exp2_cluster = hovered_element[4].trim() + "_" + hovered_element[5].trim();
+// 			var hovered_ds1_cluster = hovered_element[2].trim() + "_" + hovered_element[3].trim();
+// 			var hovered_ds2_cluster = hovered_element[4].trim() + "_" + hovered_element[5].trim();
 
 // 			// get currently highlighted genes
 // 			currently_selected_profiles = global_selection.filter(d => d.highlighted && d.profile_selected).map(e => e.gene)
@@ -150,11 +150,11 @@
 // 			d3.select("#col_" + hovered_gene)
 // 			 	.style("background-color", (currently_selected_profiles.includes(hovered_gene)) ? "red" : "transparent")
 
-// 			d3.select("#col_" + hovered_gene + "_" + hovered_exp1_cluster)
-// 			 	.style("background-color", color(hovered_exp1_cluster))
+// 			d3.select("#col_" + hovered_gene + "_" + hovered_ds1_cluster)
+// 			 	.style("background-color", color(hovered_ds1_cluster))
 
-// 			d3.select("#col_" + hovered_gene + "_" + hovered_exp2_cluster)
-// 			 	.style("background-color", color(hovered_exp2_cluster))
+// 			d3.select("#col_" + hovered_gene + "_" + hovered_ds2_cluster)
+// 			 	.style("background-color", color(hovered_ds2_cluster))
 
 
 // 			// if(currently_selected_profiles.includes(hovered_gene)){
@@ -172,12 +172,12 @@
 // 			// else{
 // 			// 	d3.select("#lineplot_" + hovered_element[2].trim() + "_" + hovered_gene)
 // 			// 		.lower()
-// 			// 		.attr('stroke', color(hovered_exp1_cluster))
+// 			// 		.attr('stroke', color(hovered_ds1_cluster))
 // 			// 		.attr('stroke-width', 2)
 
 // 			// 	d3.select("#lineplot_" + hovered_element[4].trim() + "_" + hovered_gene)
 // 			// 		.lower()
-// 			// 		.attr('stroke', color(hovered_exp2_cluster))
+// 			// 		.attr('stroke', color(hovered_ds2_cluster))
 // 			// 		.attr('stroke-width', 2)
 // 			// }
 			
@@ -189,7 +189,7 @@
 //     var cells = rows.selectAll("td")
 //         .data(function (d) {
 //             return columns.map(function (column) {
-//                 return { column: column, text: textFunc(d), value: valueFunc(d), value2: exp2(d)};
+//                 return { column: column, text: textFunc(d), value: valueFunc(d), value2: ds2(d)};
 //             });
 //         })
 //         .enter()

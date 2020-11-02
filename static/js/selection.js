@@ -8,7 +8,7 @@
 
 function genesByLink(link, data){
 
-    return data.filter(d => (d.exp1_cluster === link.source.name) && (d.exp2_cluster === link.target.name));
+    return data.filter(d => (d.ds1_cluster === link.source.name) && (d.ds2_cluster === link.target.name));
 }
 
 
@@ -62,13 +62,13 @@ function unHighlightLinksByNode(d){
 
 function getInverseClusterSelectionLinks(d, comparison, tabId){
 
-    let exp1Clusters = globalData[comparison][tabId]['data'].map(d => d.exp1_cluster);
+    let ds1Clusters = globalData[comparison][tabId]['data'].map(d => d.ds1_cluster);
 
-    let exp2Clusters = globalData[comparison][tabId]['data'].map(d => d.exp2_cluster);
+    let ds2Clusters = globalData[comparison][tabId]['data'].map(d => d.ds2_cluster);
 
     let inverse = [];
 
-    for(cluster of Array.from(new Set(exp1Clusters.concat(exp2Clusters)))){
+    for(cluster of Array.from(new Set(ds1Clusters.concat(ds2Clusters)))){
         if(cluster !== d.source.name && cluster !== d.target.name){
             inverse.push(cluster)
         }
@@ -106,14 +106,14 @@ function getAllActiveNodes(d){
 
 function getInverseClusterSelectionNode(nodeSelection, comparison, tabId){
 
-    let exp1Clusters = globalData[comparison][tabId]['data'].map(d => d.exp1_cluster);
+    let ds1Clusters = globalData[comparison][tabId]['data'].map(d => d.ds1_cluster);
 
-    let exp2Clusters = globalData[comparison][tabId]['data'].map(d => d.exp2_cluster);
+    let ds2Clusters = globalData[comparison][tabId]['data'].map(d => d.ds2_cluster);
 
     let inverse = [];
 
 
-    for(cluster of Array.from(new Set(exp1Clusters.concat(exp2Clusters)))){
+    for(cluster of Array.from(new Set(ds1Clusters.concat(ds2Clusters)))){
         if(!nodeSelection.includes(cluster)){
             inverse.push(cluster)
         }
@@ -175,7 +175,7 @@ function removeActivityFromNodes(inverseSelection, comparison, tabId){
         .duration(1000)
         .style('opacity', 0.2)
     }
-    //node_exp1_1_clustered-data-information-data-sankey-file_1_file_2_intersecting
+    //node_ds1_1_clustered-data-information-data-sankey-file_1_file_2_intersecting
 }
 
 function addActivityToNodes(inverseSelection, comparison, tabId){
@@ -197,16 +197,16 @@ function currentlyClickedGenesByNode(activeNodes, comparison, tabId, globalDataD
     console.log(tabId);
     console.log(globalDataData);
 
-    let exp1Nodes = activeNodes.filter( d => d.startsWith("exp1"));
+    let ds1Nodes = activeNodes.filter( d => d.startsWith("ds1"));
 
-    let exp2Nodes = activeNodes.filter( d => d.startsWith("exp2"));
+    let ds2Nodes = activeNodes.filter( d => d.startsWith("ds2"));
 
-    console.log(exp1Nodes);
-    console.log(exp2Nodes);
+    console.log(ds1Nodes);
+    console.log(ds2Nodes);
 
     let globalDataDataFiltered = globalDataData.filter( d => d.highlighted === true);
 
-    return globalDataDataFiltered.filter( d => exp1Nodes.includes(d.exp1_cluster) && exp2Nodes.includes(d.exp2_cluster))
+    return globalDataDataFiltered.filter( d => ds1Nodes.includes(d.ds1_cluster) && ds2Nodes.includes(d.ds2_cluster))
 
 }
 
@@ -295,7 +295,7 @@ function unhighlightHoveredLink(d, id){
 function getCurrentSelectionGenes(names_list, comparison, tabId){
 
     genes = [];
-    curr_selection = globalData[comparison][tabId]['data'].filter(function(d) {return (names_list[0] === d.exp1_cluster && names_list[1] === d.exp2_cluster)});
+    curr_selection = globalData[comparison][tabId]['data'].filter(function(d) {return (names_list[0] === d.ds1_cluster && names_list[1] === d.ds2_cluster)});
 
     for(row of curr_selection){
         genes.push(row.gene)
@@ -326,7 +326,7 @@ function getGenesByClusterId(cluster, comparison, tabId){
     genes = [];
 
     for(row of globalData[comparison][tabId]['data']){
-        if(row.exp1_cluster === cluster || row.exp2_cluster === cluster){
+        if(row.ds1_cluster === cluster || row.ds2_cluster === cluster){
             genes.push(row.gene);
         }
     }
@@ -474,11 +474,11 @@ function updatePlot(d, tabName, tabId){
 
     filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return allGenes.includes(d.gene) && d.highlighted === true })
 
-    let exp1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.exp1_cluster })))[0].split("_")[1];
-    let exp2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.exp2_cluster })))[0].split("_")[1];
+    let ds1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.ds1_cluster })))[0].split("_")[1];
+    let ds2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.ds2_cluster })))[0].split("_")[1];
 
-    updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp1", exp1Cluster, tabName, TabId.intersecting);
-    updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp2", exp2Cluster, tabName, TabId.intersecting);
+    updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds1", ds1Cluster, tabName, TabId.intersecting);
+    updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds2", ds2Cluster, tabName, TabId.intersecting);
 
 
 
@@ -512,21 +512,21 @@ function updatePlotByNode(d, tabName, tabId){
 
     filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return allGenes.includes(d.gene) && d.highlighted === true });
 
-    let exp1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.exp1_cluster })))[0].split("_")[1];
-    let exp2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.exp2_cluster })))[0].split("_")[1];
+    let ds1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.ds1_cluster })))[0].split("_")[1];
+    let ds2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(function(d) { return d.ds2_cluster })))[0].split("_")[1];
 
     // update hovered diagram
     // updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], d.name.split("_")[0], d.name.split("_")[1], tabName, TabId.intersecting);
 
     let connectedLinks = [];
 
-    if(d.name.startsWith("exp1")){
+    if(d.name.startsWith("ds1")){
         for(let sourceTarget of d.sourceLinks){
             connectedLinks.push(sourceTarget.target.name)
         }
     }
 
-    if(d.name.startsWith("exp2")){
+    if(d.name.startsWith("ds2")){
         for(let sourceTarget of d.targetLinks){
             connectedLinks.push(sourceTarget.source.name)
         }
@@ -555,10 +555,10 @@ function updatePlotByNode(d, tabName, tabId){
     // filtered_data.column=work_data.column;
 
     // // second filtering
-    // exp1 = [... new Set(filtered_data.map(function(d) { return d.exp1_cluster }))]
-    // exp2 = [... new Set(filtered_data.map(function(d) { return d.exp2_cluster }))]
+    // ds1 = [... new Set(filtered_data.map(function(d) { return d.ds1_cluster }))]
+    // ds2 = [... new Set(filtered_data.map(function(d) { return d.ds2_cluster }))]
 
-    // combined = exp1.concat(exp2);
+    // combined = ds1.concat(ds2);
 
     // for(let entry of combined){
     //     if(value === "centroid" || value === "profiles"){
@@ -600,15 +600,15 @@ function restoreCentroidByNode(d, tabName, tabId){
     filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return d.highlighted === true});
  
     // get clusters of diagram 
-    let exp1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.exp1_cluster)));
-    let exp2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.exp2_cluster)));
+    let ds1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.ds1_cluster)));
+    let ds2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.ds2_cluster)));
 
-    for(let cluster of exp1Cluster){
-        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp1", cluster.split("_")[1], tabName, TabId.intersecting);
+    for(let cluster of ds1Cluster){
+        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds1", cluster.split("_")[1], tabName, TabId.intersecting);
     }
 
-    for(let cluster of exp2Cluster){
-        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp2", cluster.split("_")[1], tabName, TabId.intersecting);
+    for(let cluster of ds2Cluster){
+        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds2", cluster.split("_")[1], tabName, TabId.intersecting);
     }
 }
 
@@ -630,15 +630,15 @@ function restoreCentroid(tabName, tabId){
     filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return d.highlighted === true});
  
     // get clusters of diagram 
-    let exp1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.exp1_cluster)));
-    let exp2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.exp2_cluster)));
+    let ds1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.ds1_cluster)));
+    let ds2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.ds2_cluster)));
 
-    for(let cluster of exp1Cluster){
-        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp1", cluster.split("_")[1], tabName, TabId.intersecting);
+    for(let cluster of ds1Cluster){
+        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds1", cluster.split("_")[1], tabName, TabId.intersecting);
     }
 
-    for(let cluster of exp2Cluster){
-        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp2", cluster.split("_")[1], tabName, TabId.intersecting);
+    for(let cluster of ds2Cluster){
+        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds2", cluster.split("_")[1], tabName, TabId.intersecting);
     }
 }
 
@@ -760,9 +760,9 @@ function updateAllDetailDiagramsByFilteredData(data, comparison, tabId, diagramI
     
     let filteredData = filteredDataSubset(data, comparison, tabId)   
 
-    for(let exp of ['exp1', 'exp2']){
+    for(let ds of ['ds1', 'ds2']){
         for(let cluster = 1; cluster <= filteredData[comparison][tabId]['cluster_count']; cluster++ ){
-            updateDetailDiagram(diagramId, filteredData[comparison][tabId], exp, cluster, comparison + "_" + tabId, tabId);
+            updateDetailDiagram(diagramId, filteredData[comparison][tabId], ds, cluster, comparison + "_" + tabId, tabId);
         }
     }
 
@@ -825,9 +825,9 @@ function updateHighlightLines(geneList, tabName){
 
     let filteredData = JSON.parse(JSON.stringify(globalData));
 
-    for(let exp of ['exp1', 'exp2']){
+    for(let ds of ['ds1', 'ds2']){
         for(let cluster = 1; cluster <= filteredData[comparison][tabId]['cluster_count']; cluster++){
-            updateDetailDiagram(diagramId, filteredData[comparison][tabId], exp, cluster, tabName, tabId);
+            updateDetailDiagram(diagramId, filteredData[comparison][tabId], ds, cluster, tabName, tabId);
         }
     }
 }
@@ -881,11 +881,11 @@ function geneArrayFromGeneString(geneString, separator){
 
 //     for (gene of inverse_selection) {
 
-//         d3.selectAll(".dot_exp1"+"_"+gene)
+//         d3.selectAll(".dot_ds1"+"_"+gene)
 //             .transition().duration(300)
 //             .style('opacity', non_selected_opacity)
 
-//         d3.selectAll(".dot_exp2"+"_"+gene)
+//         d3.selectAll(".dot_ds2"+"_"+gene)
 //             .transition().duration(300)
 //             .style('opacity', non_selected_opacity)
 //     }
@@ -897,11 +897,11 @@ function geneArrayFromGeneString(geneString, separator){
 
 //     for (gene of inverse_selection) {
 
-//         d3.selectAll(".dot_exp1"+"_"+gene)
+//         d3.selectAll(".dot_ds1"+"_"+gene)
 //             .transition().duration(1000)
 //             .style('opacity', 1)
 
-//         d3.selectAll(".dot_exp2"+"_"+gene)
+//         d3.selectAll(".dot_ds2"+"_"+gene)
 //             .transition().duration(1000)
 //             .style('opacity', 1)
 //     }
@@ -920,11 +920,11 @@ function geneArrayFromGeneString(geneString, separator){
 
 //     for (gene of inverse_selection) {
 
-//         d3.selectAll(".heatmap_exp1_map"+"_"+gene)
+//         d3.selectAll(".heatmap_ds1_map"+"_"+gene)
 //             .transition().duration(300)
 //             .style('opacity', non_selected_opacity)
 
-//         d3.selectAll(".heatmap_exp2_map"+"_"+gene)
+//         d3.selectAll(".heatmap_ds2_map"+"_"+gene)
 //             .transition().duration(300)
 //             .style('opacity', non_selected_opacity)
 //     }
@@ -935,11 +935,11 @@ function geneArrayFromGeneString(geneString, separator){
 
 //     for (gene of inverse_selection) {
 
-//         d3.selectAll(".heatmap_exp1_map"+"_"+gene)
+//         d3.selectAll(".heatmap_ds1_map"+"_"+gene)
 //             .transition().duration(100)
 //             .style('opacity', 1)
 
-//         d3.selectAll(".heatmap_exp2_map"+"_"+gene)
+//         d3.selectAll(".heatmap_ds2_map"+"_"+gene)
 //             .transition().duration(100)
 //             .style('opacity', 1)
 //     }
@@ -955,29 +955,29 @@ function geneArrayFromGeneString(geneString, separator){
 // function isComparative(data){
 //     colnames = Object.keys(data[0]);
 //     condition_count = 0;
-//     exp1_counter = 0;
-//     exp2_counter = 0;
+//     ds1_counter = 0;
+//     ds2_counter = 0;
 
 //     for(entry of colnames){
-//         if(entry.includes("exp1_value")){
-//             exp1_counter++;
+//         if(entry.includes("ds1_value")){
+//             ds1_counter++;
 //         }
 
-//         if(entry.includes("exp2_value")){
-//             exp2_counter++;
+//         if(entry.includes("ds2_value")){
+//             ds2_counter++;
 //         }
 //     }
 
-//     if(exp1_counter === 0 && exp2_counter === 0){
+//     if(ds1_counter === 0 && ds2_counter === 0){
 //         throw new Error("at least one conditions has to be set per experiment")
 //     }
 
 
-//     if(exp1_counter !== exp2_counter){
+//     if(ds1_counter !== ds2_counter){
 //         throw new Error("unequal numbers of conditions in the experiments not possible!")
 //     }
 
-//     if(exp1_counter === 2 && exp2_counter === 2){
+//     if(ds1_counter === 2 && ds2_counter === 2){
 //         return true;
 
 //         // do boxplot

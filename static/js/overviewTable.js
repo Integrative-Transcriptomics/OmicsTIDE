@@ -4,7 +4,7 @@ function clusterCombinations(selection){
 	let combinations = [];
 
 	for(let gene of selection){
-		combinations.push(gene.exp1_cluster + "-" + gene.exp2_cluster);
+		combinations.push(gene.ds1_cluster + "-" + gene.ds2_cluster);
 	}
 
 	return combinations
@@ -34,7 +34,7 @@ function countOverview(combinationCounts){
 	let finalObject = [];
 
 	for(let key of Object.keys(combinationCounts)){
-		finalObject.push({ exp1 : key.split('-')[0], exp2 : key.split('-')[1], count : combinationCounts[key] })
+		finalObject.push({ ds1 : key.split('-')[0], ds2 : key.split('-')[1], count : combinationCounts[key] })
 	}
 
 	return finalObject;
@@ -75,7 +75,7 @@ function clearTable(parentDivId, comparison, tabId){
 
 
 function combinationToString(clusterCombinations){
-	return "_" + clusterCombinations.exp1 + "_" + clusterCombinations.exp2;
+	return "_" + clusterCombinations.ds1 + "_" + clusterCombinations.ds2;
 }
 
 
@@ -106,30 +106,30 @@ function createTable(parentDivId, clusterCombinations, comparison, tabId){
 				trHead.setAttribute("class", "tr-head");
 				trHead.setAttribute("id", "tr-head-" + comparison + "_" + tabId);
 
-					var thExp1 = document.createElement("TH");
-					thExp1.setAttribute("scope", "col");
-					thExp1.setAttribute("class", "th");
-					thExp1.setAttribute("id", "th-" + comparison + "_" + tabId);
+					var thDs1 = document.createElement("TH");
+					thDs1.setAttribute("scope", "col");
+					thDs1.setAttribute("class", "th");
+					thDs1.setAttribute("id", "th-" + comparison + "_" + tabId);
 
-						var thExp1Text = document.createTextNode("from");
-						thExp1.appendChild(thExp1Text);
+						var thDs1Text = document.createTextNode("from");
+						thDs1.appendChild(thDs1Text);
 
-					trHead.appendChild(thExp1);
+					trHead.appendChild(thDs1);
 
-					var thExp2 = document.createElement("TH");
-					thExp2.setAttribute("scope", "col");
-					thExp2.setAttribute("class", "th-text");
-					thExp2.setAttribute("id", "th-text-2-" + comparison + "_" + tabId);
+					var thDs2 = document.createElement("TH");
+					thDs2.setAttribute("scope", "col");
+					thDs2.setAttribute("class", "th-text");
+					thDs2.setAttribute("id", "th-text-2-" + comparison + "_" + tabId);
 
-						var thExp2Text = document.createTextNode("to");
-						thExp2.appendChild(thExp2Text);
+						var thDs2Text = document.createTextNode("to");
+						thDs2.appendChild(thDs2Text);
 					
-					trHead.appendChild(thExp2);
+					trHead.appendChild(thDs2);
 
 					var thCount = document.createElement("TH");
 					thCount.setAttribute("scope", "col");
-					thExp2.setAttribute("class", "th-text");
-					thExp2.setAttribute("id", "th-text-3-" + comparison + "_" + tabId);
+					thDs2.setAttribute("class", "th-text");
+					thDs2.setAttribute("id", "th-text-3-" + comparison + "_" + tabId);
 
 						var thCountText = document.createTextNode("Count");
 						thCount.appendChild(thCountText);
@@ -148,15 +148,15 @@ function createTable(parentDivId, clusterCombinations, comparison, tabId){
 
 				eval( "var tr" + combinationToString(combination) + "_" + comparison + "_" + tabId + " = document.createElement('TR')" );
 
-					eval( "var td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp1 = document.createElement('TD')" );
-					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp1.style.backgroundColor='" + color(String(combination['exp1'])) + "'" );
-					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp1.appendChild(document.createTextNode('" + String(combination['exp1']) + "'))" );
-					eval( "tr" + combinationToString(combination) + "_" + comparison + "_" + tabId + ".appendChild(td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp1)" );
+					eval( "var td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds1 = document.createElement('TD')" );
+					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds1.style.backgroundColor='" + color(String(combination['ds1'])) + "'" );
+					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds1.appendChild(document.createTextNode('" + String(combination['ds1']) + "'))" );
+					eval( "tr" + combinationToString(combination) + "_" + comparison + "_" + tabId + ".appendChild(td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds1)" );
 
-					eval( "var td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp2 = document.createElement('TD')" );
-					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp2.style.backgroundColor='" + color(String(combination['exp2'])) + "'" );
-					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp2.appendChild(document.createTextNode('" + String(combination['exp2']) + "'))" );
-				    eval( "tr" + combinationToString(combination) + "_" + comparison + "_" + tabId + ".appendChild(td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_exp2)" );
+					eval( "var td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds2 = document.createElement('TD')" );
+					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds2.style.backgroundColor='" + color(String(combination['ds2'])) + "'" );
+					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds2.appendChild(document.createTextNode('" + String(combination['ds2']) + "'))" );
+				    eval( "tr" + combinationToString(combination) + "_" + comparison + "_" + tabId + ".appendChild(td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds2)" );
 					
 					eval( "var td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_count = document.createElement('TD')" );
 					eval( "td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_count.appendChild(document.createTextNode('" + String(combination['count']) + "'))" );

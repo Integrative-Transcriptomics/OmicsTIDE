@@ -14,16 +14,16 @@ var matrixCellSelected = false;
  */
 function update(data, tabName, tabId){
 
-    let exp1Min = +document.getElementById('exp1_slider-' + tabName).noUiSlider.get()[0];
-    let exp1Max = +document.getElementById('exp1_slider-' + tabName).noUiSlider.get()[1];
-    let exp2Min = +document.getElementById('exp2_slider-' + tabName).noUiSlider.get()[0];
-    let exp2Max = +document.getElementById('exp2_slider-' + tabName).noUiSlider.get()[1];
+    let ds1Min = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[0];
+    let ds1Max = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[1];
+    let ds2Min = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[0];
+    let ds2Max = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[1];
 
     if (tabId === TabId.intersecting){
         for(let d of data){
             d.highlighted =
-                ((parseFloat(d.exp1_median) >= exp1Min) && (parseFloat(d.exp1_median) <= exp1Max)) &&
-                ((parseFloat(d.exp2_median) >= exp2Min) && (parseFloat(d.exp2_median) <= exp2Max))
+                ((parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max)) &&
+                ((parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max))
                 ? true
                 : false;
         }
@@ -35,9 +35,9 @@ function update(data, tabName, tabId){
             (
                 (geneInDatasetOneOnly(d) ? 
                     // case: genes only in dataset1 
-                    ( ( (parseFloat(d.exp1_median) >= exp1Min) && (parseFloat(d.exp1_median) <= exp1Max) ) ? true : false) :
+                    ( ( (parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max) ) ? true : false) :
                             // case: genes only in dataset2
-                            ( ( (parseFloat(d.exp2_median) >= exp2Min) && (parseFloat(d.exp2_median) <= exp2Max) ) ? true : false))
+                            ( ( (parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max) ) ? true : false))
             )
         }
         
@@ -50,19 +50,19 @@ function update(data, tabName, tabId){
 
 
 function geneInDatasetOneOnly(row){
-        return row.exp1_median !== null && row.exp2_median === null;
+        return row.ds1_median !== null && row.ds2_median === null;
 }
 
 function geneInBothDatasets(row){
-    return row.exp1_median !== null && row.exp2_median !== null;
+    return row.ds1_median !== null && row.ds2_median !== null;
 }
 
 function geneInNeitherDatasets(row){
-    return row.exp1_median !== null && row.exp2_median !== null;
+    return row.ds1_median !== null && row.ds2_median !== null;
 }
 
 
-function checkNonIntersecting(row, exp1Min, exp1Max, exp2Min, exp2Max){
+function checkNonIntersecting(row, ds1Min, ds1Max, ds2Min, ds2Max){
 
     // should not happend
     if(geneInBothDatasets(row) || geneInNeitherDatasets(row)){
@@ -72,17 +72,17 @@ function checkNonIntersecting(row, exp1Min, exp1Max, exp2Min, exp2Max){
     }
 
     // gene only in experiment 1
-    if(row.exp1_median !== null && row.exp2_median === null){
-        console.log("exp1 only!")
+    if(row.ds1_median !== null && row.ds2_median === null){
+        console.log("ds1 only!")
 
-        return (parseFloat(row.exp1_median) >= exp1Min) && (parseFloat(row.exp1_median) <= exp1Max) ? true : false;
+        return (parseFloat(row.ds1_median) >= ds1Min) && (parseFloat(row.ds1_median) <= ds1Max) ? true : false;
     }
 
     // gene only in experiment 2
-    if(row.exp1_median === null && row.exp2_median !== null){
-        console.log("exp2 only!")
+    if(row.ds1_median === null && row.ds2_median !== null){
+        console.log("ds2 only!")
 
-        return (parseFloat(row.exp2_median) >= exp2Min) && (parseFloat(row.exp2_median) <= exp2Max) ? true : false;
+        return (parseFloat(row.ds2_median) >= ds2Min) && (parseFloat(row.ds2_median) <= ds2Max) ? true : false;
     }
 }
 
@@ -99,10 +99,10 @@ function updateXY(current){
 
     let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
 
-    for(let exp of ["exp1", "exp2"]){
+    for(let ds of ["ds1", "ds2"]){
         for(let i=1; i <= globalData[comparison][tabId]['cluster_count']; i++){
         
-            updateDetailDiagram(diagramId, globalData[comparison][tabId], exp, i, tabName, tabId);
+            updateDetailDiagram(diagramId, globalData[comparison][tabId], ds, i, tabName, tabId);
         }
     }
 }
@@ -187,8 +187,8 @@ function updateDiagram(current, tabId){
 
 // function updateAllDetailDiagrams(diagramId, comparisonId, data, tabDivId, tabId){
 
-//     let currentTrendsDsOne = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.exp1_cluster)));
-//     let currentTrendsDsTwo = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.exp2_cluster)));
+//     let currentTrendsDsOne = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.ds1_cluster)));
+//     let currentTrendsDsTwo = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.ds2_cluster)));
 
 //     let experiments = [];
 //     let trends = [];

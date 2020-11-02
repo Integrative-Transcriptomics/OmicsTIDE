@@ -17,7 +17,7 @@ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, current
 
 	currentXScale.domain(currentXDomain);
     currentSvg.selectAll(".x_axis")
-        .attr("transform", "translate(0," + (curr_height - margin.bottom) + ")")
+        .attr("transform", "translate(0," + (curr_height - marginRelative.bottom) + ")")
         .transition()
         .duration(500)
         .call(d3.axisBottom(currentXScale));
@@ -102,6 +102,8 @@ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, current
         .attr("opacity", 0.5)
 
 }
+
+
 
 
 /**

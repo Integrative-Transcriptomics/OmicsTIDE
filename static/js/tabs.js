@@ -500,8 +500,8 @@ function renderPlots(data, tabName, tabId) {
 
     if (tabId === TabId.selectionIntersecting) {
 
-        detailDiagramCombined("selection-intersecting-diagrams-profiles-dataset1-" + tabName, "exp1", data[comparison]['intersecting']);
-        detailDiagramCombined("selection-intersecting-diagrams-profiles-dataset2-" + tabName, "exp2", data[comparison]['intersecting']);
+        detailDiagramCombined("selection-intersecting-diagrams-profiles-dataset1-" + tabName, "ds1", data[comparison]['intersecting']);
+        detailDiagramCombined("selection-intersecting-diagrams-profiles-dataset2-" + tabName, "ds2", data[comparison]['intersecting']);
 
         createDetailTable("selection-intersecting-table-" + tabName, data[comparison]['intersecting']['selection']);
 
@@ -510,8 +510,8 @@ function renderPlots(data, tabName, tabId) {
 
     if (tabId === TabId.selectionNonIntersecting) {
 
-        detailDiagramCombined("selection-nonIntersecting-diagrams-profiles-dataset1-" + tabName, "exp1", data[comparison]['nonIntersecting']);
-        detailDiagramCombined("selection-nonIntersecting-diagrams-profiles-dataset2-" + tabName, "exp2", data[comparison]['nonIntersecting']);
+        detailDiagramCombined("selection-nonIntersecting-diagrams-profiles-dataset1-" + tabName, "ds1", data[comparison]['nonIntersecting']);
+        detailDiagramCombined("selection-nonIntersecting-diagrams-profiles-dataset2-" + tabName, "ds2", data[comparison]['nonIntersecting']);
 
         createDetailTable("selection-nonIntersecting-table-" + tabName, data[comparison]['nonIntersecting']['selection']);
 

@@ -8,6 +8,7 @@ import json
 import sys
 import copy
 import os
+import svgutils
 from sklearn.cluster import KMeans
 from scipy import stats
 from itertools import combinations
@@ -17,6 +18,7 @@ from pathlib import Path
 #import cairosvg
 from zipfile import ZipFile
 from datetime import datetime
+
 
 # set enum
 class Ptcf_file(Enum):
@@ -71,12 +73,12 @@ def extract_from_ptcf(ptcf_file, ptcf):
 
 	if ptcf_file == Ptcf_file.I_PTCF:
 		intersecting_genes = ptcf[~ptcf.isnull().any(1)]
-		intersecting_genes = intersecting_genes.sort_values(['exp1_cluster', 'exp2_cluster'])
+		intersecting_genes = intersecting_genes.sort_values(['ds1_cluster', 'ds2_cluster'])
 		return intersecting_genes
 
 	else:
 		non_intersecting_genes = ptcf[ptcf.isnull().any(1)]
-		non_intersecting_genes = non_intersecting_genes.sort_values(['exp1_cluster', 'exp2_cluster'])
+		non_intersecting_genes = non_intersecting_genes.sort_values(['ds1_cluster', 'ds2_cluster'])
 		return  non_intersecting_genes
 
 
@@ -88,25 +90,25 @@ def combine_to_ptcf(i_ptcf, ni_ptcf, file1_colnames, file2_colnames):
 
 def has_equal_number_of_timepoints(data):
 
-	return get_time_points(data, "exp1") == get_time_points(data, "exp2")
+	return get_time_points(data, "ds1") == get_time_points(data, "ds2")
 
 
 def get_min_max_values(data, col1, col2):
 	
 	return {
-		'exp1_min' : data[col1].min(),
-		'exp1_max' : data[col1].max(),
-		'exp2_min' : data[col2].min(),
-		'exp2_max' : data[col2].max()
+		'ds1_min' : data[col1].min(),
+		'ds1_max' : data[col1].max(),
+		'ds2_min' : data[col2].min(),
+		'ds2_max' : data[col2].max()
 	}
 
 
 def extract_additional_information(data):
-	tmp_exp1_median = get_median_values(data, "exp1")
-	tmp_exp2_median = get_median_values(data, "exp2")
+	tmp_ds1_median = get_median_values(data, "ds1")
+	tmp_ds2_median = get_median_values(data, "ds2")
 
-	data['exp1_median'] = tmp_exp1_median
-	data['exp2_median'] = tmp_exp2_median
+	data['ds1_median'] = tmp_ds1_median
+	data['ds2_median'] = tmp_ds2_median
 
 	cluster_count = get_cluster_count(data)
 
@@ -114,7 +116,7 @@ def extract_additional_information(data):
 
 	# consider that one experiment could contain NO genes!
 
-	min_max = get_min_max_values(data, "exp1_median", "exp2_median")
+	min_max = get_min_max_values(data, "ds1_median", "ds2_median")
 
 	return {
 		'mod_data' : data,
@@ -136,13 +138,13 @@ def ptcf_to_json(data):
 			'selection' : [],
 			'go' : [],
 			'columns' : list(additional_information['mod_data']), 
-			'time_points' : get_time_points(additional_information['mod_data'], "exp1"),
-			'x_values' : get_x_values(additional_information['mod_data'], "exp1"),
+			'time_points' : get_time_points(additional_information['mod_data'], "ds1"),
+			'x_values' : get_x_values(additional_information['mod_data'], "ds1"),
 			'cluster_count' : additional_information['cluster_count'],
-			'exp1_min' : additional_information['min_max']['exp1_min'],
-			'exp1_max' : additional_information['min_max']['exp1_max'],
-			'exp2_min' : additional_information['min_max']['exp2_min'],
-			'exp2_max' : additional_information['min_max']['exp2_max']
+			'ds1_min' : additional_information['min_max']['ds1_min'],
+			'ds1_max' : additional_information['min_max']['ds1_max'],
+			'ds2_min' : additional_information['min_max']['ds2_min'],
+			'ds2_max' : additional_information['min_max']['ds2_max']
 		}
 
 	else:
@@ -154,10 +156,10 @@ def ptcf_to_json(data):
 			'time_points' : 0,
 			'x_values' : [],
 			'cluster_count' : 0,
-			'exp1_min' : 0,
-			'exp1_max' : 0, 
-			'exp2_min' : 0,
-			'exp2_max' : 0,
+			'ds1_min' : 0,
+			'ds1_max' : 0, 
+			'ds2_min' : 0,
+			'ds2_max' : 0,
 		}
 
 
@@ -180,16 +182,16 @@ def remove_invalid_genes(data):
 
 def get_k_from_ptcf(data):
 
-	exp1_cluster = data['exp1_cluster'].dropna().unique()
-	exp2_cluster = data['exp2_cluster'].dropna().unique()
+	ds1_cluster = data['ds1_cluster'].dropna().unique()
+	ds2_cluster = data['ds2_cluster'].dropna().unique()
 
-	print(exp1_cluster)
-	print(exp2_cluster)
+	# print(ds1_cluster)
+	# print(ds2_cluster)
 
-	exp1_cluster_number_only = [x.split("_")[1] for x in exp1_cluster]
-	exp2_cluster_number_only = [x.split("_")[1] for x in exp2_cluster]
+	ds1_cluster_number_only = [x.split("_")[1] for x in ds1_cluster]
+	ds2_cluster_number_only = [x.split("_")[1] for x in ds2_cluster]
 
-	return len(list(set(exp1_cluster_number_only + exp2_cluster_number_only)))
+	return len(list(set(ds1_cluster_number_only + ds2_cluster_number_only)))
 
 
 
@@ -202,7 +204,7 @@ def load_and_modify(file, from_file):
 		init = file
 
 	if not has_equal_number_of_timepoints(init):
-		#raise Exception("number of conditions/time points in exp1 and exp2 has to be identical")
+		#raise Exception("number of conditions/time points in ds1 and ds2 has to be identical")
 		return jsonify(message = "number of conditions/time points in data set 1 and data set 2 has to be identical"),500
 
 	k = get_k_from_ptcf(init)
@@ -231,38 +233,38 @@ def load_and_modify(file, from_file):
 	return data
 
 
-def get_median_values(data, exp):
+def get_median_values(data,ds):
 
-	values = data[[x for x in list(data) if x.startswith(exp) & (x!="exp1_cluster") & (x!="exp2_cluster") & (x!="gene")]]
+	values = data[[x for x in list(data) if x.startswith(ds) & (x!="ds1_cluster") & (x!="ds2_cluster") & (x!="gene")]]
 
 	return values.median(axis=1)
 
 
-def get_time_points(data, exp):
-	return len([x for x in list(data) if x.startswith(exp) & (x!="exp1_cluster") & (x!="exp2_cluster") & (x!="gene") & (x!="exp1_median") & (x!="exp2_median")])
+def get_time_points(data, ds):
+	return len([x for x in list(data) if x.startswith(ds) & (x!="ds1_cluster") & (x!="ds2_cluster") & (x!="gene") & (x!="ds1_median") & (x!="ds2_median")])
 
 
-def get_x_values(data, exp):
-	return [x for x in list(data) if x.startswith(exp) & (x!="exp1_cluster") & (x!="exp2_cluster") & (x!="gene") & (x!="exp1_median") & (x!="exp2_median")]
+def get_x_values(data, ds):
+	return [x for x in list(data) if x.startswith(ds) & (x!="ds1_cluster") & (x!="ds2_cluster") & (x!="gene") & (x!="ds1_median") & (x!="ds2_median")]
 
 
 def get_cluster_count(data):
 
-	exp1_cluster = [x.split("_")[1] for x in data.exp1_cluster.unique() if not pd.isna(x)]
-	exp2_cluster = [x.split("_")[1] for x in data.exp2_cluster.unique() if not pd.isna(x)]
+	ds1_cluster = [x.split("_")[1] for x in data.ds1_cluster.unique() if not pd.isna(x)]
+	ds2_cluster = [x.split("_")[1] for x in data.ds2_cluster.unique() if not pd.isna(x)]
 
-	combined_cluster = exp1_cluster + exp2_cluster
+	combined_cluster = ds1_cluster + ds2_cluster
 
 	return len(list(set(combined_cluster)))
 
 
 
 
-def median_centroids(data_frame, cluster_column_exp1, cluster_column_exp2):
+def median_centroids(data_frame, cluster_column_ds1, cluster_column_ds2):
 
 	# get unique clusters:
-	exp1_clusters = data_frame[cluster_column_exp1].unique()
-	exp2_clusters = data_frame[cluster_column_exp2].unique()
+	ds1_clusters = data_frame[cluster_column_ds1].unique()
+	ds2_clusters = data_frame[cluster_column_ds2].unique()
 
 	
 
@@ -299,10 +301,10 @@ def get_genes_subset(file1, file2, comparison_type):
 
 	if comparison_type == ComparisonType.INTERSECTING:
 
-		genes_in_both_exp = [x for x in file1_index if x in file2_index]
+		genes_in_both_ds = [x for x in file1_index if x in file2_index]
 
-		file1 = file1[file1.index.isin(genes_in_both_exp)]
-		file2 = file2[file2.index.isin(genes_in_both_exp)]
+		file1 = file1[file1.index.isin(genes_in_both_ds)]
+		file2 = file2[file2.index.isin(genes_in_both_ds)]
 
 	if comparison_type == ComparisonType.NON_INTERSECTING:
 
@@ -312,12 +314,12 @@ def get_genes_subset(file1, file2, comparison_type):
 		file1 = file1[file1.index.isin(file1_only)]
 		file2 = file2[file2.index.isin(file2_only)]
 
-	file1['experiment'] = 1
-	file2['experiment'] = 2
+	file1['dataset'] = 1
+	file2['dataset'] = 2
 
 	# general col list while clustering
 	tmp_col_list = list(range(1, len(list(file1))))
-	tmp_col_list.append("experiment")
+	tmp_col_list.append("dataset")
 
 	file1.columns = tmp_col_list
 	file2.columns = tmp_col_list
@@ -352,41 +354,41 @@ def clustered_to_ptcf(combined, file1_colnames, file2_colnames):
 
 	combined.reset_index(level=0, inplace=True)
 
-	combined_pivot = combined.pivot(index='gene', columns='experiment')
+	combined_pivot = combined.pivot(index='gene', columns='dataset')
 
 	# https://stackoverflow.com/questions/24290297/pandas-dataframe-with-multiindex-column-merge-levels
-	combined_colnames = ["exp" + str(entry[1]) + "_" + str(entry[0]) for entry in combined_pivot.columns]
+	combined_colnames = ["ds" + str(entry[1]) + "_" + str(entry[0]) for entry in combined_pivot.columns]
 
 	combined_pivot.columns = combined_pivot.columns.droplevel(0)
 	combined_pivot.columns = combined_colnames
 
-	cluster_columns = combined_pivot[['exp1_cluster', 'exp2_cluster']]
+	cluster_columns = combined_pivot[['ds1_cluster', 'ds2_cluster']]
 
-	combined_pivot.drop(['exp1_cluster', 'exp2_cluster'], axis= 1, inplace=True)
+	combined_pivot.drop(['ds1_cluster', 'ds2_cluster'], axis= 1, inplace=True)
 
 	combined_pivot_reorder = combined_pivot.reindex(sorted(combined_pivot.columns), axis = 1)
 	combined_pivot_reorder = pd.concat([combined_pivot_reorder, cluster_columns], axis = 1)
 
 	# cluster as int
-	combined_pivot_reorder.exp1_cluster = combined_pivot_reorder.exp1_cluster.astype('Int64') + 1
-	combined_pivot_reorder.exp2_cluster = combined_pivot_reorder.exp2_cluster.astype('Int64') + 1
+	combined_pivot_reorder.ds1_cluster = combined_pivot_reorder.ds1_cluster.astype('Int64') + 1
+	combined_pivot_reorder.ds2_cluster = combined_pivot_reorder.ds2_cluster.astype('Int64') + 1
 
-	# add "exp" to cluster id if not NA
-	combined_pivot_reorder.exp1_cluster = "exp1_" + combined_pivot_reorder.exp1_cluster.astype(str);
-	combined_pivot_reorder.exp2_cluster = "exp2_" + combined_pivot_reorder.exp2_cluster.astype(str);
+	# add "ds" to cluster id if not NA
+	combined_pivot_reorder.ds1_cluster = "ds1_" + combined_pivot_reorder.ds1_cluster.astype(str);
+	combined_pivot_reorder.ds2_cluster = "ds2_" + combined_pivot_reorder.ds2_cluster.astype(str);
 
 	# replace
 	combined_pivot_reorder = combined_pivot_reorder.replace(to_replace='<NA>', value=np.nan, regex=True)
 
 	# sort
-	combined_pivot_reorder = combined_pivot_reorder.sort_values(['exp1_cluster', 'exp2_cluster'])
+	combined_pivot_reorder = combined_pivot_reorder.sort_values(['ds1_cluster', 'ds2_cluster'])
 
 	# colnames
-	colnames_exp1 = ["exp1_" + x for x in file1_colnames]
-	colnames_exp2 = ["exp2_" + x for x in file2_colnames]
-	colnames_rest = ["exp1_cluster", "exp2_cluster"]
+	colnames_ds1 = ["ds1_" + x for x in file1_colnames]
+	colnames_ds2 = ["ds2_" + x for x in file2_colnames]
+	colnames_rest = ["ds1_cluster", "ds2_cluster"]
 
-	new_colnames = colnames_exp1 + colnames_exp2 + colnames_rest
+	new_colnames = colnames_ds1 + colnames_ds2 + colnames_rest
 
 	combined_pivot_reorder.columns = new_colnames
 
@@ -467,34 +469,44 @@ def load_k():
 
 			# get file without NA
 			try:
-				exp1_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file1]))
-				exp2_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file2]))
+				ds1_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file1]))
+				ds2_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file2]))
 
 				# validity check
-				equal_number_of_columns(exp1_file, exp2_file)
+				equal_number_of_columns(ds2_file, ds2_file)
 
 				# initial colnames
-				exp1_colnames = list(exp1_file)
-				exp2_colnames = list(exp2_file)
+				ds1_colnames = list(ds1_file)
+				ds2_colnames = list(ds2_file)
 
-				print("before filtering: " + str(len(exp1_file.index)))
-				print("before filtering: " + str(len(exp2_file.index)))
+				# print("before filtering: " + str(len(ds1_file.index)))
+				# print("before filtering: " + str(len(ds2_file.index)))
 
 				# variance filtering
-				exp1_file = filter_variance(exp1_file, lower_variance_percentile, upper_variance_percentile)
-				exp2_file = filter_variance(exp2_file, lower_variance_percentile, upper_variance_percentile)
+				ds1_file = filter_variance(ds1_file, lower_variance_percentile, upper_variance_percentile)
+				ds2_file = filter_variance(ds2_file, lower_variance_percentile, upper_variance_percentile)
 
-				print("after filtering: " + str(len(exp1_file.index)))
-				print("after filtering: " + str(len(exp2_file.index)))
+				# print("after filtering: " + str(len(ds1_file.index)))
+				# print("after filtering: " + str(len(ds2_file.index)))
 
 				# zscore
-				exp1_file = exp1_file.T.apply(stats.zscore).T
-				exp2_file = exp2_file.T.apply(stats.zscore).T
+				ds1_file = ds1_file.T.apply(stats.zscore).T
+				ds2_file = ds2_file.T.apply(stats.zscore).T
 
-				clustering_intersecting = cluster(exp1_file, exp2_file, k, ComparisonType.INTERSECTING)
-				clustering_non_intersecting = cluster(exp1_file, exp2_file, k, ComparisonType.NON_INTERSECTING)
+				print("TRANSPOSED!!!!")
 
-				ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, exp1_colnames, exp2_colnames)
+				clustering_intersecting = cluster(ds1_file, ds2_file, k, ComparisonType.INTERSECTING)
+				clustering_non_intersecting = cluster(ds1_file, ds2_file, k, ComparisonType.NON_INTERSECTING)
+
+				print(clustering_intersecting)
+
+				print("CLUSTERED!!!!!!!")
+
+				ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, ds1_colnames, ds2_colnames)
+
+				print("COMBINED TO PTCF!!!!")
+
+				print(ptcf)
 
 				### could be outsourced to function
 
@@ -514,6 +526,7 @@ def load_k():
 					'info' : info,
 					'k' : k
 				}
+
 
 			except TypeError as te:
 				if str(te) == "object of type 'builtin_function_or_method' has no len()":
@@ -535,11 +548,11 @@ def get_info(file1, file2, filename1, filename2, i_ptcf, ni_ptcf):
 
 	info[file1] = { 'filename' : filename1 }
 	info[file2] = { 'filename' : filename2 }
-	info[file1]['genes'] = list(ni_ptcf[~ni_ptcf['exp1_cluster'].isna()].index) + list(i_ptcf.index)
-	info[file2]['genes'] = list(ni_ptcf[~ni_ptcf['exp2_cluster'].isna()].index) + list(i_ptcf.index)
+	info[file1]['genes'] = list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index) + list(i_ptcf.index)
+	info[file2]['genes'] = list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index) + list(i_ptcf.index)
 	info['intersecting_genes'] = {'genes' : list(i_ptcf.index)}
-	info[file1 + '_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['exp1_cluster'].isna()].index)}
-	info[file2 + '_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['exp2_cluster'].isna()].index)}
+	info[file1 + '_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index)}
+	info[file2 + '_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index)}
 
 	return info
 
@@ -579,8 +592,8 @@ def cluster_data():
 
 			files['file' + "_" + str(counter)] = tmp_filename
 
-			# exp1_file = preprocess_file(files[tmp_file1])
-			# exp2_file = preprocess_file(files[tmp_file2])
+			# ds1_file = preprocess_file(files[tmp_file1])
+			# ds2_file = preprocess_file(files[tmp_file2])
 			
 			counter += 1
 
@@ -617,16 +630,16 @@ def selection_non_intersecting():
 def send_svg():
 	if request.method == 'POST':
 
-		print("POST!")
+		# print("POST!")
 
-		path1 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset1.pdf')
-		path2 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset2.pdf')
+		path1 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset1.svg')
+		path2 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset2.svg')
 		path_selection = os.path.join(app.config['UPLOAD_FOLDER'], 'selection.csv')
 		path_go = os.path.join(app.config['UPLOAD_FOLDER'], 'go.csv')
 
 
-		# path1 = 'home/julian/Desktop/dataset1.pdf'
-		# path2 = 'home/julian/Desktop/dataset2.pdf'
+		#path1 = 'home/julian/Desktop/dataset1.svg'
+		#path2 = 'home/julian/Desktop/dataset2.svg'
 
 		dataset1 = json.loads(request.form.to_dict()['dataset1_plot'])
 		dataset2 = json.loads(request.form.to_dict()['dataset2_plot'])
@@ -655,10 +668,23 @@ def send_svg():
 			print("no go found")
 
 		#remove unneccessary column
-		selection.drop(columns=['highlighted', 'profile_selected', 'exp1_median', 'exp2_median'], inplace=True)
+		selection.drop(columns=['highlighted', 'profile_selected', 'ds1_median', 'ds2_median'], inplace=True)
 
 		#cairosvg.svg2pdf(dataset1, write_to=path1)
 		#cairosvg.svg2pdf(dataset2, write_to=path2)
+
+		#svg_1 = svgwrite.Drawing(filename=path1, size = ("800px", "600px"))
+		#svg_1.write(dataset1, pretty=True, indent=2)
+		#svg_1.save(dataset1)
+
+		svg_1 = open(path1, "a")
+		svg_1.write(dataset1)
+		svg_1.close()
+
+		svg_2 = open(path2, "a")
+		svg_2.write(dataset2)
+		svg_2.close()
+
 		selection.to_csv(path_selection)
 
 		try:
@@ -672,13 +698,13 @@ def send_svg():
 		time_id = time_id.replace(":", "_")
 		time_id = time_id.split(".")[0]
 
-		print("### TIME_ID: " + str(time_id))
-		print("### PATH: " + os.path.join(app.config['UPLOAD_FOLDER'], "OmicsTIDE_" + str(time_id)))
+		# print("### TIME_ID: " + str(time_id))
+		# print("### PATH: " + os.path.join(app.config['UPLOAD_FOLDER'], "OmicsTIDE_" + str(time_id)))
 
 		zipObj = ZipFile(os.path.join(app.config['UPLOAD_FOLDER'], "OmicsTIDE_" + str(time_id)), 'w')
 
-		#zipObj.write(path1)
-		#zipObj.write(path2)
+		zipObj.write(path1)
+		zipObj.write(path2)
 		zipObj.write(path_selection)
 
 		try:

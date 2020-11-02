@@ -4,8 +4,8 @@ marginRelative = {top: 0, right: 0, bottom: 0, left: 0};
 svg = {}
 
 let color = d3.scaleOrdinal()
-       .domain(["exp1_1", "exp1_2", "exp1_3", "exp1_4", "exp1_5", "exp1_6", "exp2_1", "exp2_2", "exp2_3","exp2_4", "exp2_5", "exp2_6", "null"])
-       .range(["#1b9e77", "#d95f02", "#7570b3", "#e7298a", "#66a61e", "#e6ab02","#1b9e77", "#d95f02", "#7570b3", "#e7298a", "#66a61e", "#e6ab02", "#D3D3D3"]);
+       .domain(["ds1_1", "ds1_2", "ds1_3", "ds1_4", "ds1_5", "ds1_6", "ds2_1", "ds2_2", "ds2_3","ds2_4", "ds2_5", "ds2_6", "null"])
+       .range(["#1b9e77", "#eb914d", "#7570b3", "#735363", "#66a61e", "#e6ab02","#1b9e77", "#eb914d", "#7570b3", "#735363", "#66a61e", "#e6ab02", "#D3D3D3"]);
 
 /**
   * 
@@ -203,23 +203,23 @@ function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightD
     cluster_count = data.cluster_count;
 
     // remove old entries
-    let exp1_old = document.getElementById(parentLeftDivId);
-    while (exp1_old.firstChild) exp1_old.removeChild(exp1_old.firstChild);
-    let exp2_old = document.getElementById(parentRightDivId);
-    while (exp2_old.firstChild) exp2_old.removeChild(exp2_old.firstChild);
+    let ds1_old = document.getElementById(parentLeftDivId);
+    while (ds1_old.firstChild) ds1_old.removeChild(ds1_old.firstChild);
+    let ds2_old = document.getElementById(parentRightDivId);
+    while (ds2_old.firstChild) ds2_old.removeChild(ds2_old.firstChild);
 
     // add new
     //createDivs(cluster_count);
-    createChildDivs(cluster_count, parentLeftDivId, "exp1_", tabDivId);
-    createChildDivs(cluster_count, parentRightDivId, "exp2_", tabDivId);
+    createChildDivs(cluster_count, parentLeftDivId, "ds1_", tabDivId);
+    createChildDivs(cluster_count, parentRightDivId, "ds2_", tabDivId);
 
     //plot counts might be adjusted when NAs are involved
     plot_counts = document.getElementById(parentLeftDivId).childElementCount;
 
     for (i = 1; i <= plot_counts; i++) {
 
-        detailDiagram(diagramId, data, "exp1", i, tabDivId, tabId);
-        detailDiagram(diagramId, data, "exp2", i, tabDivId, tabId);
+        detailDiagram(diagramId, data, "ds1", i, tabDivId, tabId);
+        detailDiagram(diagramId, data, "ds2", i, tabDivId, tabId);
     }
 
 }

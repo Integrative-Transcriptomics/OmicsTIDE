@@ -122,30 +122,30 @@ function kSlider(id){
   */
 function expressionSlider(data, tabName, tabId){
 
-    if($("#exp1_slider-" + tabName).attr('class') !== 'undefined' && $("#exp1_slider-" + tabName)[0].noUiSlider){
-        $("#exp1_slider-" + tabName)[0].noUiSlider.destroy()
+    if($("#ds1_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_slider-" + tabName)[0].noUiSlider){
+        $("#ds1_slider-" + tabName)[0].noUiSlider.destroy()
     }
 
-    if($("#exp2_slider-" + tabName).attr('class') !== 'undefined' && $("#exp2_slider-" + tabName)[0].noUiSlider){
-        $("#exp2_slider-" + tabName)[0].noUiSlider.destroy()
+    if($("#ds2_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_slider-" + tabName)[0].noUiSlider){
+        $("#ds2_slider-" + tabName)[0].noUiSlider.destroy()
     }
 
-    if(data.exp1_min === data.exp1_max){
-      data.exp1_max = data.exp1_min + 0.1;
+    if(data.ds1_min === data.ds1_max){
+      data.ds1_max = data.ds1_min + 0.1;
     }
 
-    if(data.exp2_min === data.exp2_max){
-      data.exp2_max = data.exp2_min + 0.1;
+    if(data.ds2_min === data.ds2_max){
+      data.ds2_max = data.ds2_min + 0.1;
     }
 
 
-    createSlider("exp1_slider-" + tabName, data.exp1_min, data.exp1_max, true);
-    createSlider("exp2_slider-" + tabName, data.exp2_min, data.exp2_max, true);
+    createSlider("ds1_slider-" + tabName, data.ds1_min, data.ds1_max, true);
+    createSlider("ds2_slider-" + tabName, data.ds2_min, data.ds2_max, true);
 
-    introduceSlideUpdates("exp1", "exp1_slider-" + tabName, tabName, "exp1_slider_input1-" + tabName, true, data.exp1_min, data.exp1_max, tabId);
-    introduceSlideUpdates("exp1", "exp1_slider-" + tabName, tabName, "exp1_slider_input2-" + tabName, false, data.exp1_min, data.exp1_max, tabId);
-    introduceSlideUpdates("exp2", "exp2_slider-" + tabName, tabName, "exp2_slider_input1-" + tabName, true, data.exp2_min, data.exp2_max, tabId);
-    introduceSlideUpdates("exp2", "exp2_slider-" + tabName, tabName, "exp2_slider_input2-" + tabName, false, data.exp2_min, data.exp2_max, tabId);
+    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, data.ds1_min, data.ds1_max, tabId);
+    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, data.ds1_min, data.ds1_max, tabId);
+    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, data.ds2_min, data.ds2_max, tabId);
+    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, data.ds2_min, data.ds2_max, tabId);
 }
 
 
@@ -227,15 +227,15 @@ function updateCentroidBySlider(tabName, tabId){
     }
  
     // get clusters of diagram 
-    let exp1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.exp1_cluster))).filter(d => d !== null);
-    let exp2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.exp2_cluster))).filter(d => d !== null);
+    let ds1Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.ds1_cluster))).filter(d => d !== null);
+    let ds2Cluster = Array.from(new Set(filteredData[comparison][tabId]['data'].map(d => d.ds2_cluster))).filter(d => d !== null);
 
-    for(let cluster of exp1Cluster){
-        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp1", cluster.split("_")[1], tabName, tabId);
+    for(let cluster of ds1Cluster){
+        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds1", cluster.split("_")[1], tabName, tabId);
     }
 
-    for(let cluster of exp2Cluster){
-        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "exp2", cluster.split("_")[1], tabName, tabId);
+    for(let cluster of ds2Cluster){
+        updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds2", cluster.split("_")[1], tabName, tabId);
     }
 
 }
