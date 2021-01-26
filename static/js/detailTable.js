@@ -6,18 +6,6 @@ function createDetailTable(parentDivId, selection){
 
 	let parentDiv = document.getElementById(parentDivId);
 
-	// let parentDiv = document.getElementById(parentDivId);
-
-	// parentDiv.innerHTML = '';
-
-	// // remove old wrapper if already defined
-	// if(document.getElementById(parentDivId)){
-	// 	let wrapperDiv = document.getElementById(parentDivId);
-
-	// 	while (wrapperDiv.firstChild) wrapperDiv.removeChild(wrapperDiv.firstChild);
-
-	// 	wrapperDiv.remove();
-	// }
 
 	if(selection.length === 0){
 		return;

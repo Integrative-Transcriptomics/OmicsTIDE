@@ -10,33 +10,49 @@
   * @param{} currentYScale
   * @param{} tabDivId
   */
-function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId){
+ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId){
 
-	let centroidsNested = getDataForCentroidDiagram(data, experimentId, clusterNumber)
+
+    let centroidsNested = getDataForCentroidDiagram(data, experimentId, clusterNumber)
+    //let centroidAxis =  getDataForCentroidDiagram(totalData, experimentId, clusterNumber);
 
     // updating domains
     let currentXDomain = getCurrentXDomain(DiagramId.centroid, centroidsNested, experimentId);
-    let currentYDomain = getCurrentYDomain(DiagramId.centroid, centroidsNested, experimentId);
+    //let currentYDomain = getCurrentYDomain(DiagramId.centroid, centroidsNested, experimentId);
+
+    //let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
+    //globalDataCopy = combineLinkSpecificGlobalData(globalDataCopy);
+
+    let minValue = data['centroidMin'];
+    let maxValue = data['centroidMax'];
 
     // calling axis
     currentXScale.domain(currentXDomain);
-    currentSvg.selectAll(".x_axis")
+    //currentYScale.domain(currentYDomain);
+
+    currentYScale.domain([minValue, maxValue]);
+    
+    let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
+
+    if(tabId !== "matrix"){
+
+        currentSvg.selectAll(".x_axis")
         .attr("transform", "translate(0," + (curr_height - marginRelative.bottom) + ")")
-        .transition()
-        .duration(1000)
+        //.transition()
+        //.duration(durationTransition)
         .call(d3.axisBottom(currentXScale));
+    
+        currentSvg.selectAll(".y_axis")
+        //.transition()
+        //.duration(durationTransition)
+        .call(d3.axisLeft(currentYScale)
+        .tickValues(tickRange) 
+        );
 
-    currentYScale.domain(currentYDomain);
-    currentSvg.selectAll(".y_axis")
-        .transition()
-        .duration(1000)
-        .call(d3.axisLeft(currentYScale));
+    }
 
-    let currentTabId = tabDivId.split("_")[4];
 
-    console.log(tabDivId);
-
-    if(currentTabId === "matrix"){
+    if(tabId === "matrix"){
         currentSvg.selectAll(".x_axis").selectAll("text").remove();
     }
 
@@ -54,22 +70,22 @@ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, cu
             .attr("stroke", d => color(d.key))
             .attr("stroke-opacity", 1)
             .attr("stroke-width", 2)
-            .attr("id", d => "centroid_" + d.key)
+            .attr("id", d => "centroid_" + d.key.split(/_(.+)/)[1])
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .attr("d", function(d) {
                 return d3.line()
                         .x(function(d) {
-                            return currentXScale(d.key) })
+                            return currentXScale(d.key.split(/_(.+)/)[1]) })
                         .y(function(d) {
-                            return currentYScale(d.value.avg); })
+                            return currentYScale(Math.round((d.value.avg + Number.EPSILON) * 100) / 100); })
                         (d.values)
             });
 
         centroid
             .exit()
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .style("stroke-opacity", 0)
             .remove();
 
@@ -87,14 +103,14 @@ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, cu
             .attr("stroke-opacity", 0.3)
             .attr("stroke-width", 2)
             .attr("id", function(d){
-                return "centroid_upper_" + d.key;
+                return "centroid_upper_" + d.key.split(/_(.+)/)[1];
             })
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .attr("d", function(d) {
                 return d3.line()
                         .x(function(d) {
-                            return currentXScale(d.key) })
+                            return currentXScale(d.key.split(/_(.+)/)[1]) })
                         .y(function(d) {
                             return currentYScale(d.value.upper);})
                         (d.values)
@@ -103,7 +119,7 @@ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, cu
         upper
             .exit()
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .style("stroke-opacity", 0)
             .remove();
 
@@ -121,23 +137,23 @@ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, cu
             .attr("stroke-opacity", 0.3)
             .attr("stroke-width", 2)
             .attr("id", function(d){
-                return "centroid_lower_" + d.key;
+                return "centroid_lower_" + d.key.split(/_(.+)/)[1];
             })
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .attr("d", function(d) {
                 return d3.line()
                         .x(function(d) {
-                            return currentXScale(d.key) })
+                            return currentXScale(d.key.split(/_(.+)/)[1]) })
                         .y(function(d) {
-                            return currentYScale(d.value.lower);})
+                            return currentYScale(Math.round((d.value.lower + Number.EPSILON) * 100) / 100);})
                         (d.values)
             })
 
         lower
             .exit()
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .style("stroke-opacity", 0)
             .remove();
 
@@ -155,27 +171,134 @@ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, cu
             .attr("fill-opacity", 0.3)
             .attr("stroke", "none")
             .attr("id", function(d){
-                return "centroid_area_" + d.key;
+                return "centroid_area_" + d.key.split(/_(.+)/)[1];
             })
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .attr("d", function(d) {
                 return d3.area()
-                    .x(function(d) {return currentXScale(d.key) })
-                    .y0(function(d) {return currentYScale(d.value.lower); })
-                    .y1(function(d) {return currentYScale(d.value.upper); })
+                    .x(function(d) {return currentXScale(d.key.split(/_(.+)/)[1]) })
+                    .y0(function(d) {return currentYScale(Math.round((d.value.lower + Number.EPSILON) * 100) / 100 ); })
+                    .y1(function(d) {return currentYScale(Math.round((d.value.upper + Number.EPSILON) * 100) / 100 ); })
                     (d.values)
             })
 
         area
             .exit()
             .transition()
-            .duration(1000)
+            .duration(durationTransition)
             .style("stroke-opacity", 0)
             .remove();
 	
 
 }
+
+
+
+function createTickRange(min, max, stepSize, lowerBoundary, upperBoundary){
+
+    let range = [];
+    let indexLower;
+    let indexUpper;
+
+    // lower
+    for(let i=lowerBoundary; i<=0; i+=stepSize){  
+
+        
+        if(min === lowerBoundary){
+            indexLower = min;
+            break;
+        }
+
+        else if(min < lowerBoundary){
+        }
+
+        else if(min > (i + stepSize)){
+            continue;
+        }
+
+        else if( (min > i) && (min < (i + stepSize))){
+            indexLower = i+stepSize;
+            break;
+        }
+    }
+
+    // upper
+    for(let i=0; i<=upperBoundary; i+=stepSize){  
+
+        if(max === upperBoundary){
+            indexUpper = max;
+            break;
+        }
+
+        else if(max > upperBoundary){
+        }
+
+        else if(max > (i + stepSize)){
+            continue;
+        }
+
+        else if( (max > i) && (max < (i + stepSize))){
+            indexUpper = i+stepSize;
+            break;
+        }
+    }
+
+    // creating range
+    for(let i=indexLower; i<indexUpper; i+=stepSize){
+        range.push(i);
+    }
+
+    return range;
+
+}
+
+
+
+
+
+function getAbsoluteValues(data, lowerOrUpper){
+
+    let combinedValues = [];
+
+    for(let value of data[0].values){
+        combinedValues.push(value.value[lowerOrUpper]);
+    }
+
+    if(lowerOrUpper === "lower"){
+        return d3.min(combinedValues);
+    }
+
+    if(lowerOrUpper === "upper"){
+        return d3.max(combinedValues);
+    }
+}
+
+
+
+// https://stackoverflow.com/questions/8273047/javascript-function-similar-to-python-range
+function range(start, stop, step) {
+    if (typeof stop == 'undefined') {
+        // one param defined
+        stop = start;
+        start = 0;
+    }
+
+    if (typeof step == 'undefined') {
+        step = 1;
+    }
+
+    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
+        return [];
+    }
+
+    var result = [];
+    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+        result.push(i);
+    }
+
+    return result;
+};
 
 
 /**
@@ -194,6 +317,40 @@ function getDataForCentroidDiagram(data, experimentId, clusterNumber){
 }
 
 
+function yMinMaxPerExperimentCluster(data, experimentId, clusterNumber){
+
+    let filteredData;
+
+    if(experimentId == "ds1"){
+        filteredData = data.data.filter(d => d.ds1_cluster === experimentId + "_" + clusterNumber)
+    }
+
+    else if(experimentId == "ds2"){
+        filteredData = data.data.filter(d => d.ds2_cluster === experimentId + "_" + clusterNumber)
+    }
+
+    else{
+        return;
+    }
+
+    let allValues = [];
+
+    for(let row of filteredData){
+        for(let col of Object.keys(filteredData)){
+            if(col !== "ds1_cluster" && col !== "ds2_cluster" && col !== "ds1_median" && col !== "ds2_median" && col !== "gene"){
+                allValues.push(row[col]);
+            }
+        }
+    }
+
+    return{
+        'min' : d3.min(allValues),
+        'max' : d3.max(allValues)
+    }
+
+}
+
+
 
 /**
   *
@@ -208,12 +365,12 @@ function calcCentroid(data){
         .rollup(function(v) {
 
             return{
-                avg: d3.mean(v, function (d){return +d.value}),
+                avg: d3.mean(v, function (d){return Math.round( d.value  * 100 + Number.EPSILON ) / 100 }),
                 //std: d3.deviation(v, function (d){return +d.value}),
-                std: calcDeviation(v, function(d) {return +d.value}),
-                upper: d3.mean(v, function (d){return +d.value}) + calcDeviation(v, function (d){return +d.value}),
+                std: calcDeviation(v, function(d) {return Math.round( d.value  * 100 + Number.EPSILON ) / 100 }),
+                upper: d3.mean(v, function (d){return Math.round( d.value  * 100 + Number.EPSILON ) / 100 }) + calcDeviation(v, function (d){return Math.round( d.value  * 100 + Number.EPSILON ) / 100 }),
                 //upper: d3.mean(v, function (d){return +d.value}) + d3.deviation(v, function (d){return +d.value}),
-                lower: d3.mean(v, function (d){return +d.value}) - calcDeviation(v, function (d){return +d.value})
+                lower: d3.mean(v, function (d){return Math.round( d.value  * 100 + Number.EPSILON ) / 100 }) - calcDeviation(v, function (d){ return Math.round( d.value  * 100 + Number.EPSILON ) / 100 })
                 //lower: d3.mean(v, function (d){return +d.value}) - d3.deviation(v, function (d){return +d.value})
             }})
 

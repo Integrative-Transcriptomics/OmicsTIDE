@@ -75,11 +75,14 @@ function clearTable(parentDivId, comparison, tabId){
 
 
 function combinationToString(clusterCombinations){
+
 	return "_" + clusterCombinations.ds1 + "_" + clusterCombinations.ds2;
 }
 
 
 function createTable(parentDivId, clusterCombinations, comparison, tabId){
+
+	comparison = comparison.replace("-","_");
 
 	var parentDiv = document.getElementById(parentDivId);
 
@@ -146,6 +149,7 @@ function createTable(parentDivId, clusterCombinations, comparison, tabId){
 
 			for(let combination of clusterCombinations){
 
+
 				eval( "var tr" + combinationToString(combination) + "_" + comparison + "_" + tabId + " = document.createElement('TR')" );
 
 					eval( "var td" + combinationToString(combination) + "_" + comparison + "_" + tabId + "_ds1 = document.createElement('TD')" );
@@ -172,10 +176,4 @@ function createTable(parentDivId, clusterCombinations, comparison, tabId){
 
 	parentDiv.appendChild(tableWrapper);
 
-	// eval( "var button_" + comparison + "_" + tabId + "=document.createElement('BUTTON')");
-	// eval( "button_" + comparison + "_" + tabId + ".setAttribute('class', 'button_selection')" );
-	// eval( "button_" + comparison + "_" + tabId + ".setAttribute('id', 'button_" + comparison + "_" + tabId + "')" );
-	// eval( "button_" + comparison + "_" + tabId + ".appendChild(document.createTextNode('new selection tab'))" );
-
-	// parentDiv.appendChild(eval( "button_" + comparison + "_" + tabId ));
 }

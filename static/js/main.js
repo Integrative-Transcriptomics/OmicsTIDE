@@ -3,49 +3,10 @@
 //var global_data = [];
 var global_selection = [];
 var non_selected_opacity = 0.1;
-
 var clusteredDataTemplate = null;
 var matrixCellSelected = false;
 
-/**
- * updates data by altering the "selected" column to show the result of expression filtering
- * @param {Object} data wide data, e.g. loaded by d3.csv()
- * @returns {Object} adapted data
- */
-function update(data, tabName, tabId){
 
-    let ds1Min = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[0];
-    let ds1Max = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[1];
-    let ds2Min = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[0];
-    let ds2Max = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[1];
-
-    if (tabId === TabId.intersecting){
-        for(let d of data){
-            d.highlighted =
-                ((parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max)) &&
-                ((parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max))
-                ? true
-                : false;
-        }
-    }
-
-    if (tabId === TabId.nonIntersecting){
-        for(let d of data){
-            d.highlighted = 
-            (
-                (geneInDatasetOneOnly(d) ? 
-                    // case: genes only in dataset1 
-                    ( ( (parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max) ) ? true : false) :
-                            // case: genes only in dataset2
-                            ( ( (parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max) ) ? true : false))
-            )
-        }
-        
-    }
-
-
-    return data;
-}
 
 
 
@@ -117,100 +78,61 @@ function updateXY(current){
   */
 function updateDiagram(current, tabId){
 
+    let data = createDeepCopyofData(document.getElementById("data-json").value);
+    data = combineLinkSpecificGlobalData(data);
+
     let value = current.value;
-    let filteredData = JSON.parse(JSON.stringify(globalData))
-    let tabDivId = current.id.split("-")[current.id.split("-").length-1];
-    let comparisonId = tabDivId.split("_")[0] + "_" + tabDivId.split("_")[1] + "_" + tabDivId.split("_")[2] + "_" + tabDivId.split("_")[3];
+    //let filteredData = JSON.parse(JSON.stringify(globalData))
 
-    filteredData[comparisonId][tabId]['data'] = filteredData[comparisonId][tabId]['data'].filter(function(d) { return d.highlighted === true});
+    let tabName = current.id.split("-")[2];
+    let comparison = tabName.split("_")[0];
 
-    // 15/10/20 commented to testing update instead
-    // if(tabId === "intersecting"){
+    data[comparison][tabId]['data'] = data[comparison][tabId]['data'].filter(function(d) { return d.highlighted});
 
-    //     detailDiagramsPerCluster(DiagramId[value], 
-    //         filteredData[comparisonId][tabId], 
-    //         "clustered-data-information-data-profiles-left-" + tabDivId, 
-    //         "clustered-data-information-data-profiles-right-" + tabDivId,
-    //         tabDivId,
-    //         TabId.intersecting);
-    // }
-
-    // if(tabId === "nonIntersecting"){
-    //     detailDiagramsPerCluster(DiagramId[value], 
-    //         filteredData[comparisonId][tabId], 
-    //         "non-intersecting-information-data-left-" + tabDivId, 
-    //         "non-intersecting-information-data-right-" + tabDivId, 
-    //         tabDivId,
-    //         TabId.nonIntersecting);
-    // }
-
-    
-    //detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId)
-    //updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId)
-
-    // --> update all!
-
-    
-
+    console.log(comparison);
 
     if(tabId === "intersecting"){
 
         detailDiagramsPerCluster(DiagramId[value], 
-            filteredData[comparisonId][tabId], 
-            "clustered-data-information-data-profiles-left-" + tabDivId, 
-            "clustered-data-information-data-profiles-right-" + tabDivId,
-            tabDivId,
-            TabId.intersecting);
-
-        //updateAllDetailDiagrams(DiagramId[value], comparisonId, filteredData[comparisonId][tabId], tabDivId, TabId.intersecting);
+            data[comparison][tabId], 
+            "clustered-data-information-data-profiles-left-" + tabName, 
+            "clustered-data-information-data-profiles-right-" + tabName,
+            tabName,
+            TabId.intersecting,
+            comparison);
     }
 
     if(tabId === "nonIntersecting"){
 
         detailDiagramsPerCluster(DiagramId[value], 
-            filteredData[comparisonId][tabId], 
-            "non-intersecting-information-data-left-" + tabDivId, 
-            "non-intersecting-information-data-right-" + tabDivId, 
-            tabDivId,
-            TabId.nonIntersecting);
-        
-        //updateAllDetailDiagrams(DiagramId[value], comparisonId, filteredData[comparisonId][tabId], tabDivId, TabId.nonIntersecting);
-    }
-          
-
+            data[comparison][tabId], 
+            "non-intersecting-information-data-left-" + tabName, 
+            "non-intersecting-information-data-right-" + tabName, 
+            tabName,
+            TabId.nonIntersecting,
+            comparison);
     
+    }   
 }
 
+function changeActivityOfInput(element){
 
+    if(element.id === "own-radio-button"){
+        document.getElementById("dropdownMenuButton").classList.add("disabled");
 
-//function updateAllDetailDiagrams(diagramId, data, experimentId, clusterNumber, tabDivId, tabId)
+        if(document.getElementById("files").disabled){
+            document.getElementById("files").removeAttribute("disabled");
+            document.getElementById("study-selected-value").innerHTML = "";
+        }
+    }
 
-// function updateAllDetailDiagrams(diagramId, comparisonId, data, tabDivId, tabId){
+    if(element.id === "test-radio-button"){
+        document.getElementById("files").disabled = true;
 
-//     let currentTrendsDsOne = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.ds1_cluster)));
-//     let currentTrendsDsTwo = Array.from(new Set(globalData[comparisonId][tabId]['data'].map(d => d.ds2_cluster)));
+        if(document.getElementById("dropdownMenuButton").classList.contains("disabled")){
+            document.getElementById("dropdownMenuButton").classList.remove("disabled");
 
-//     let experiments = [];
-//     let trends = [];
-//     for(let trend of currentTrendsDsOne){
-//         experiments.push(trend.split("_")[0]);
-//         trends.push(trend.split("_")[1]);
-//     }
-
-//     for(let trend of currentTrendsDsTwo){
-//         experiments.push(trend.split("_")[0]);
-//         trends.push(trend.split("_")[1]);
-//     }
-
-//     experiments = Array.from(new Set(experiments));
-//     trends = Array.from(new Set(trends));
-
-//     for(let exp of experiments){
-//         for(let trend of trends){
-//             updateDetailDiagram(diagramId, data, exp, trend, tabDivId, tabId)
-//         }
-//     }
-
-    
-
-// }
+            document.getElementById("files").value = "";
+        }
+    }
+}

@@ -1,6 +1,5 @@
 var fileCount = 2
 
-
 /**
   *
   */
@@ -40,9 +39,6 @@ function removeActivityFromContent(tabName) {
 function removeActivityFromTabs() {
 
     let active = getActiveTabs();
-
-    console.log(active);
-
     let active_tabs = active.active_tabs;
     let active_content = active.active_content;
 
@@ -94,9 +90,6 @@ async function removeContent(tabName) {
 
     await removeContentChildren(tabName);
 
-    console.log("REMOVING ");
-    console.log(currContent)
-
     currContent.remove()
 }
 
@@ -107,9 +100,6 @@ async function removeTab(tabName) {
     let currNavTab = document.getElementById("pills-" + tabName.name + "-tab");
 
     await removeTabChildren(tabName);
-
-    console.log("REMOVING ");
-    console.log(currNavTab);
 
     currNavTab.remove()
 }
@@ -136,7 +126,6 @@ function setPrevTabActive(){
     let allPillsChildrenLi = [];
     
     for(let li of allPillsChildren){
-        console.log(li);
         if(li.tagName === "LI"){
             allPillsChildrenLi.push(li);
         }
@@ -184,14 +173,10 @@ async function closeTab(tabName) {
 
     for(let tab of allTabsLi){
         if(tab.id === currentlyClosedLiId.id){
-            console.log(tab.id);
-            console.log(index);
             break;
         }
 
         else{
-
-            console.log(tab.id);
             index += 1;
         }
     }
@@ -206,6 +191,10 @@ async function closeTab(tabName) {
         prevTab.childNodes[0].classList.add("active");
         
         let currentId = prevTab.childNodes[0].id;
+
+        
+
+        //let tabContentId = currentId.split("-")[0] + "-" + currentId.split("-")[1];
 
         let tabContentId = currentId.split("-")[0] + "-" + currentId.split("-")[1];
 
@@ -230,14 +219,10 @@ function navLinkClassByTabId(tabId) {
 
     if (tabId === "intersecting" || tabId === "nonIntersecting") {
 
-        console.log(tabId);
-
         return "first";
     }
 
     if (tabId === "selectionIntersecting" || tabId === "selectionNonIntersecting") {
-
-        console.log(tabId);
 
         return "second";
     }
@@ -254,7 +239,14 @@ function navLinkClassByTabId(tabId) {
   */
 async function addTab(tabName, hasCloseButton, tabId) {
 
-    tabName = tabName + "_" + tabId;
+    if(tabName === "data"){
+        tabName = "Comparison_Overview";
+    }
+
+    else{
+        tabName = tabName + "_" + tabId;
+    }
+    
 
     if (!isValidEnum(TabId, tabId)) {
         alert("invalid tab Id!");
@@ -262,7 +254,6 @@ async function addTab(tabName, hasCloseButton, tabId) {
     }
 
     if (document.getElementById("pills-" + tabName + "-tab")) {
-        
         alert("Tab already created: " + tabName + "\n" + "close selection first to open new");
     }
 
@@ -284,7 +275,8 @@ async function addTab(tabName, hasCloseButton, tabId) {
         new_li.setAttribute("class", "nav-item")
 
         let new_li_a = document.createElement("a")
-        new_li_a.appendChild(document.createTextNode(tabName))
+        new_li_a.appendChild(document.createTextNode(tabName.split("_")[0] + " " + tabName.split("_")[1]))
+        //new_li_a.appendChild(document.createTextNode(tabName))
         new_li_a.setAttribute("id", "pills-" + tabName + "-tab-a")
         new_li_a.setAttribute("name", tabName)
         new_li_a.setAttribute("class", "nav-link active " + navLinkClassByTabId(tabId))
@@ -335,37 +327,16 @@ async function addTab(tabName, hasCloseButton, tabId) {
         new_content.setAttribute("aria-labelledby", "pills-" + tabName + "-tab-a")
         current_content.appendChild(new_content);
 
-        if (tabId === TabId.matrix) {
-            $("#pills-" + tabName).load("/data", function () {
-                loadDataTab(tabName, TabId.matrix);
-            })
-        }
+        // see app routes in python file (--> load different HTML templates)
+        // $("#pills-" + tabName).load("/" + tabId, function () {
+        //     loadDataTab(tabName, tabId);
+        // })
 
-        if (tabId === TabId.intersecting) {
-            $("#pills-" + tabName).load("/clustered_data", function () {
-                loadDataTab(tabName, TabId.intersecting);
-            })
-        }
-
-
-        if (tabId === TabId.nonIntersecting) {
-            $("#pills-" + tabName).load("/non_intersecting", function () {
-                loadDataTab(tabName, TabId.nonIntersecting);
-            })
-        }
-
-        if (tabId === TabId.selectionIntersecting) {
-
-            $("#pills-" + tabName).load("/selection_intersecting", function () {
-                loadDataTab(tabName, TabId.selectionIntersecting);
-            })
-        }
-
-        if (tabId === TabId.selectionNonIntersecting) {
-            $("#pills-" + tabName).load("/selection_non_intersecting", function () {
-                loadDataTab(tabName, TabId.selectionNonIntersecting);
-            })
-        }
+        $("#pills-" + tabName).delay(250).queue(function(next){
+            $(this).load("/" + tabId, function () {
+                loadDataTab(tabName, tabId);
+            next();})
+        })
     }
 }
 
@@ -425,23 +396,13 @@ function setIntersectingTabsActive(){
 function loadDataTab(tabName, tabId) {
 
     if (tabId === TabId.matrix) {
-        initPlotMatrix("matrix-information").done(populateMatrix('matrix-information'));
+        let data = createDeepCopyofData(document.getElementById("data-json").value);
+		comparisonOverview(data);
     }
 
-    if (tabId === TabId.intersecting) {
-        createInstance(tabName, TabId.intersecting).then(renderPlots(globalData, tabName, TabId.intersecting))
-    }
-
-    if (tabId === TabId.nonIntersecting) {
-        createInstance(tabName, TabId.nonIntersecting).then(renderPlots(globalData, tabName, TabId.nonIntersecting))
-    }
-
-    if (tabId === TabId.selectionIntersecting) {
-        createInstance(tabName, TabId.selectionIntersecting).then(renderPlots(globalData, tabName, TabId.selectionIntersecting))
-    }
-
-    if (tabId === TabId.selectionNonIntersecting) {
-        createInstance(tabName, TabId.selectionNonIntersecting).then(renderPlots(globalData, tabName, TabId.selectionNonIntersecting))
+    else{
+        createInstance(tabName, tabId)
+        .then(renderPlots(tabName, tabId))
     }
 
 }
@@ -450,23 +411,96 @@ function JsonToJsObject(JsonObject, comparison, tabId, key) {
     return JSON.parse(JsonObject[comparison][tabId][key]);
 }
 
+function isJson(data){
+    return typeof data === "string";
+}
+
+function objectToJson(data){
+    return JSON.stringify(data);
+}
+
+
+// adds globalData to a div to make it accessible from anywhere
+function bindDataToDiv(data){
+
+    if(data.length === 0){
+        alert("Select at least one link to start the second-level analysis!")
+    }
+
+    if(!isJson(data)){
+
+        data = objectToJson(data);
+    }
+
+    document.getElementById("data-json").value = data;
+}
+
+
+
+
+function createYRanges(data, comparison, tabId){
+
+    // init scales
+    let centroidMinMax = getCentroidMinMax(data, comparison, tabId);
+
+    return{
+        'centroidMin' : centroidMinMax['min'],
+        'centroidMax' : centroidMinMax['max'],
+    };
+}
+
+
+
+
 /**
   *
   * @param{} globalData
   * @param{} tabName
   * @param{} tabId
   */
-function renderPlots(data, tabName, tabId) {
+function renderPlots(tabName, tabId) {
 
-    let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
+    let comparison = tabName.split("_")[0];
 
+    let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
+
+    console.log(globalDataCopy);
+
+    let data = combineLinkSpecificGlobalData(createDeepCopyofData(document.getElementById("data-json").value));
+
+    console.log(data);
+
+    let textNodeDs1 = document.createTextNode(data[comparison]['info']['file_1']['filename'])
+    let textNodeDs2 = document.createTextNode(data[comparison]['info']['file_2']['filename'])
+
+    // update data
+    // globalDataCopy[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
+    // globalDataCopy[comparison]['intersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMax'];
+    // globalDataCopy[comparison]['nonIntersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMin'];
+    // globalDataCopy[comparison]['nonIntersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
+
+    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
+    // data[comparison]['intersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMax'];
+    // data[comparison]['nonIntersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMin'];
+    // data[comparison]['nonIntersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
+
+    // bindDataToDiv(globalDataCopy);
+
+    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
+    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
+
+    // retrieve data with updated axes values
+    //globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
+    //data = combineLinkSpecificGlobalData(globalDataCopy);
+
+    
     if (tabId === TabId.intersecting) {
 
         if (typeof data[comparison]['intersecting']['data'] === "string") {
             data[comparison]['intersecting']['data'] = JSON.parse(data[comparison]['intersecting']['data']);
         }
 
-        render(data[comparison]['intersecting']['data'], "clustered-data-information-data-sankey-" + tabName, tabId, tabName);
+        render(data, "clustered-data-information-data-sankey-" + tabName, tabId, tabName);
 
         expressionSlider(data[comparison]['intersecting'], tabName, tabId);
 
@@ -477,6 +511,12 @@ function renderPlots(data, tabName, tabId) {
             "clustered-data-information-data-profiles-right-" + tabName,
             tabName,
             tabId);
+
+            let headerDivDs1 = document.getElementById("clustered-data-information-data-header-left-" + tabName);
+            headerDivDs1.appendChild(textNodeDs1.cloneNode(true));
+        
+            let headerDivDs2 = document.getElementById("clustered-data-information-data-header-right-" + tabName);
+            headerDivDs2.appendChild(textNodeDs2.cloneNode(true));
 
     }
 
@@ -496,9 +536,28 @@ function renderPlots(data, tabName, tabId) {
             tabName,
             tabId);
 
+            let headerDivDs1Non = document.getElementById("non-intersecting-information-data-header-left-" + tabName);
+            headerDivDs1Non.appendChild(textNodeDs1.cloneNode(true));
+        
+            let headerDivDs2Non = document.getElementById("non-intersecting-information-data-header-right-" + tabName);
+            headerDivDs2Non.appendChild(textNodeDs2.cloneNode(true));
+
     }
 
+    // second-level analysis
+
     if (tabId === TabId.selectionIntersecting) {
+
+        if (typeof data[comparison]['intersecting']['selection'] === "string") {
+            data[comparison]['intersecting']['selection'] = JSON.parse(data[comparison]['intersecting']['selection']);
+        }
+
+        let headerDivDs1Selection = document.getElementById("selection-intersecting-diagrams-header-dataset1-" + tabName);
+            headerDivDs1Selection.appendChild(textNodeDs1.cloneNode(true));
+        
+        let headerDivDs2Selection = document.getElementById("selection-intersecting-diagrams-header-dataset2-" + tabName);
+           headerDivDs2Selection.appendChild(textNodeDs2.cloneNode(true));
+
 
         detailDiagramCombined("selection-intersecting-diagrams-profiles-dataset1-" + tabName, "ds1", data[comparison]['intersecting']);
         detailDiagramCombined("selection-intersecting-diagrams-profiles-dataset2-" + tabName, "ds2", data[comparison]['intersecting']);
@@ -510,6 +569,17 @@ function renderPlots(data, tabName, tabId) {
 
     if (tabId === TabId.selectionNonIntersecting) {
 
+        if (typeof data[comparison]['nonIntersecting']['selection'] === "string") {
+            data[comparison]['nonIntersecting']['selection'] = JSON.parse(data[comparison]['nonIntersecting']['selection']);
+        }
+
+        let headerDivDs1NonSelection = document.getElementById("selection-nonIntersecting-diagrams-header-dataset1-" + tabName);
+            headerDivDs1NonSelection.appendChild(textNodeDs1.cloneNode(true));
+        
+        let headerDivDs2NonSelection = document.getElementById("selection-nonIntersecting-diagrams-header-dataset2-" + tabName);
+           headerDivDs2NonSelection.appendChild(textNodeDs2.cloneNode(true));
+
+
         detailDiagramCombined("selection-nonIntersecting-diagrams-profiles-dataset1-" + tabName, "ds1", data[comparison]['nonIntersecting']);
         detailDiagramCombined("selection-nonIntersecting-diagrams-profiles-dataset2-" + tabName, "ds2", data[comparison]['nonIntersecting']);
 
@@ -517,9 +587,6 @@ function renderPlots(data, tabName, tabId) {
 
         supportedGenomes("dropdown-menu scrollable-menu-" + tabName, data[comparison]['nonIntersecting']['selection'], tabId);
     }
-
-
-
 
 }
 
@@ -536,39 +603,27 @@ async function createInstance(id, tabId) {
 
     if (tabId === TabId.intersecting) {
         currentParentClass = document.getElementsByClassName("clustered-data-information");
-        for (element of currentParentClass) {
-            if (element.id === "") {
-                currentParentElement = element;
-            }
-        }
     }
 
     if (tabId === TabId.nonIntersecting) {
         currentParentClass = document.getElementsByClassName("non-intersecting-information");
-        for (element of currentParentClass) {
-            if (element.id === "") {
-                currentParentElement = element;
-            }
-        }
     }
 
     if (tabId === TabId.selectionIntersecting) {
         currentParentClass = document.getElementsByClassName("selection-intersecting");
-        for (element of currentParentClass) {
-            if (element.id === "") {
-                currentParentElement = element;
-            }
-        }
     }
 
     if (tabId === TabId.selectionNonIntersecting) {
         currentParentClass = document.getElementsByClassName("selection-nonIntersecting");
-        for (element of currentParentClass) {
+    }
+
+    for (let element of currentParentClass) {
             if (element.id === "") {
                 currentParentElement = element;
             }
-        }
     }
+
+
 
 
     if (tabId === TabId.intersecting) {

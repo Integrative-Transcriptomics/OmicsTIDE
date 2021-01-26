@@ -8,29 +8,33 @@
   * @param{} currentXScale
   * @param{} currentYScale
   */
-function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale){
+ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale){
 
-	let boxNested = getDataForBoxDiagram(data, experimentId, clusterNumber);
+  let boxNested = getDataForBoxDiagram(data, experimentId, clusterNumber);
+  let boxAxes = getDataForBoxDiagram(data, experimentId, clusterNumber);
+  
+  //let dataForAxes = getDataForBoxDiagram(totalData, experimentId, clusterNumber);
 
 	let currentXDomain = getCurrentXDomain(DiagramId.box, boxNested, experimentId)
-	let currentYDomain = getCurrentYDomain(DiagramId.box, boxNested, experimentId)
+	let currentYDomain = getCurrentYDomain(DiagramId.box, boxAxes, experimentId)
 
 	currentXScale.domain(currentXDomain);
     currentSvg.selectAll(".x_axis")
         .attr("transform", "translate(0," + (curr_height - marginRelative.bottom) + ")")
-        .transition()
-        .duration(500)
+        //.transition()
+        //.duration(durationTransition)
         .call(d3.axisBottom(currentXScale));
 
     currentYScale.domain(currentYDomain);
     currentSvg.selectAll(".y_axis")
-        .transition()
-        .duration(500)
+        //.transition()
+        //.duration(durationTransition)
         .call(d3.axisLeft(currentYScale));
 
 
     let vertLines = currentSvg.selectAll(".vertLines")
         .data(boxNested)
+
 
     // Show the main vertical line
     vertLines
@@ -39,9 +43,11 @@ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, current
         .attr("class", "vertLines")
         .merge(vertLines)
         .transition()
-        .duration(500)
-        .attr("x1", function(d){ return currentXScale(d.key) })
-        .attr("x2", function(d){ return currentXScale(d.key) })
+        .duration(durationTransition)
+        .attr("x1", function(d){ 
+          console.log(d);
+          return currentXScale(d.key.split(/_(.+)/)[1]) })
+        .attr("x2", function(d){ return currentXScale(d.key.split(/_(.+)/)[1]) })
         .attr("y1", function(d){ return currentYScale(d.value.lower) })
         .attr("y2", function(d){ return currentYScale(d.value.upper) })
         .attr("stroke", "grey")
@@ -58,8 +64,8 @@ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, current
         .attr("class", "boxes")
         .merge(boxes)
         .transition()
-        .duration(500)
-        .attr("x", function(d){ return currentXScale(d.key) - (boxWidth/2) })
+        .duration(durationTransition)
+        .attr("x", function(d){ return currentXScale(d.key.split(/_(.+)/)[1]) - (boxWidth/2) })
         .attr("y", function(d){ return currentYScale(d.value.q3) })
         .attr("height", function(d){ return currentYScale(d.value.q1) - currentYScale(d.value.q3) })
         .attr("width", boxWidth )
@@ -75,9 +81,9 @@ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, current
         .attr("class", "medianLines")
         .merge(medianLines)
         .transition()
-        .duration(500)
-        .attr("x1", function(d){ return currentXScale(d.key) - (boxWidth/2) })
-        .attr("x2", function(d){ return currentXScale(d.key) + (boxWidth/2) })
+        .duration(durationTransition)
+        .attr("x1", function(d){ return currentXScale(d.key.split(/_(.+)/)[1]) - (boxWidth/2) })
+        .attr("x2", function(d){ return currentXScale(d.key.split(/_(.+)/)[1]) + (boxWidth/2) })
         .attr("y1", function(d){ return currentYScale(d.value.median) })
         .attr("y2", function(d){ return currentYScale(d.value.median) })
         .attr("stroke", "grey")
@@ -93,9 +99,9 @@ function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, current
         .append("circle")
         .attr("class", "jitter")
         .merge(jitter)
-        .attr("cx", function(d){ return currentXScale(d.key) + Math.random()*boxWidth })
+        .attr("cx", function(d){ return currentXScale(d.key.split(/_(.+)/)[1]) + Math.random()*boxWidth })
         .transition()
-        .duration(500)
+        .duration(durationTransition)
         .attr("cy", function(d){ return currentYScale(+ d.outlier) })
         .attr("r", 2)
         .attr("fill", d => color(d.experimentAndCluster))

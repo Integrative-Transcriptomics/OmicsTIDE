@@ -15,19 +15,22 @@ TODO: change nomenclature: highlighted/selected
   * @param{} tabId
   * @param{} tabDivId
   */
-function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId, tabDivId){
+ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId, tabDivId){
 
 	let tip = d3.select("body").append("div")   
-            .attr("class", "tooltip")               
+            .attr("class", "toolTipSecond")
+            .style("width", "300px")
+            .style("height", "150px")
+            .style("font-size", "10px")
             .style("opacity", 0);
 
 	let nonSelectedProfilesNested = getDataForProfileDiagram(data, experimentId, clusterNumber, false);
 	let selectedProfilesNested = getDataForProfileDiagram(data, experimentId, clusterNumber, true);
-
     
 	// updating domains
     let currentXDomain = getCurrentXDomain(DiagramId.profile, data, experimentId);
     let currentYDomain = getCurrentYDomain(DiagramId.profile, data, experimentId);
+
 
     // calling axis
     currentXScale.domain(currentXDomain);
@@ -61,48 +64,11 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
             .attr("d", function(d){
 
                 return d3.line()
-                    .x(function(d) {return currentXScale(d.x); })
+                    .x(function(d) {return currentXScale(d.x.split(/_(.+)/)[1]); })
                     .y(function(d) {return currentYScale(d.value); })
                     (d.values)
             })
             
-  //       if(tabId === TabId.nonIntersecting){
-
-  //       	lines
-		//         		.on("mouseover", function(d){
-
-		// 	                d3.select("#" + tabDivId + "_lineplot_" + d.values[0].experimentAndCluster.split("_")[0] + "_" + d.key.toString())
-		// 	                .raise()
-		// 	                .attr("stroke", "red")
-		// 	                .attr("stroke-width", 3)
-
-		// 	                tip
-		//                     //.transition()
-		//                     //.duration(200)
-		//                     .style("opacity", 0.9)
-
-		// 	                tip.html(d.key)
-		// 	                    .style("left", (d3.event.pageX) + "px")     
-		// 	                    .style("top", (d3.event.pageY - 28) + "px")
-		// 	            })
-
-		// 	            .on("mouseout", function(d){                
-
-		// 	                d3.select("#" + tabDivId + "_lineplot_" + d.values[0].experimentAndCluster.split("_")[0] + "_" + d.key.toString())
-		// 	                .lower()
-		// 	                .attr("stroke", d => color(d.values[0].experimentAndCluster))
-		// 	                .attr("stroke-width", 2)
-
-		// 	                tip
-  //                               //.transition()
-		// 	                    //.duration(500)
-		// 	                    .style("opacity", 0)
-		// 		        })
-		// }
-
-		// if(tabId === TabId.intersecting){
-
-		// 	lines
 						.on("mouseover", function(d){
 
 			                d3.select("#" + tabDivId + "_lineplot_ds1_" + d.key.toString())
@@ -168,7 +134,7 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
             .attr("d", function(d){
 
                 return d3.line()
-                    .x(function(d) {return currentXScale(d.x); })
+                    .x(function(d) {return currentXScale(d.x.split(/_(.+)/)[1]); })
                     .y(function(d) {return currentYScale(d.value); })
                     (d.values)
             })
@@ -223,11 +189,12 @@ function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, cur
 
 function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg, currentXScale, currentYScale){
 
+
+
   let curr_height = document.getElementById(parentDiv).offsetHeight;
 
   let tip = d3.select("body").append("div")   
-            .attr("class", "tooltip") 
-            .style("background-color", "red")              
+            .attr("class", "tooltip")           
             .style("opacity", 0);
 
   let nonSelectedProfilesNested = getDataForProfileDiagramCombined(data, experimentId, false);
@@ -253,25 +220,29 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
         .call(d3.axisLeft(currentYScale));
 
 
-  let lines = currentSvg.selectAll(".lines")
+  let linesCombined = currentSvg.selectAll(".linesCombined")
             .data(nonSelectedProfilesNested);
 
-        lines
+        linesCombined
             .enter()
             .append("path")
-            .attr("class", "lines")
-            .merge(lines)
+            .attr("class", "linesCombined")
+            .merge(linesCombined)
             .attr("fill", "none")
             .attr("stroke", d => color(d.values[0].experimentAndCluster))
             .attr("stroke-width", 2)
             .attr("id", d => "_lineplot_" + d.values[0].experimentAndCluster.split("_")[0] + "_" + d.key.toString())
-            //.transition()
-            //.duration(1000)
             .attr("d", function(d){
 
                 return d3.line()
-                    .x(function(d) {return currentXScale(d.x); })
-                    .y(function(d) {return currentYScale(d.value); })
+                    .x(function(d) {
+                        // console.log(currentXScale(d.x))
+                        // console.log(d.x)
+                        return currentXScale(d.x.split(/_(.+)/)[1]); })
+                    .y(function(d) {
+                        // console.log(currentYScale(d.value))
+                        // console.log(d.value)
+                        return currentYScale(d.value); })
                     (d.values)
             })
            .on("mouseover", function(d){
@@ -315,6 +286,7 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
                             window.open("https://www.ncbi.nlm.nih.gov/gene/?term=" + d.key.toString());
                         })
 
+
     let linesHighlighted = currentSvg.selectAll(".lines_highlighted")
         .data(selectedProfilesNested);
 
@@ -322,7 +294,7 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
             .enter()
             .append("path")
             .attr("class", "lines_highlighted")
-            .merge(lines)
+            .merge(linesHighlighted)
             .attr("fill", "none")
             .attr("stroke", "red")
             .attr("stroke-width", 2)
@@ -332,7 +304,7 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
             .attr("d", function(d){
 
                 return d3.line()
-                    .x(function(d) {return currentXScale(d.x); })
+                    .x(function(d) {return currentXScale(d.x.split(/_(.+)/)[1]); })
                     .y(function(d) {return currentYScale(d.value); })
                     (d.values)
             })
@@ -384,8 +356,6 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
 
 
 function getDataForProfileDiagramCombined(data, experimentId, isSelected){
-
-  console.log(data);
 
   let dataSelectedNonSelectedCombined = getSelectedNonSelectedProfilesCombined(data.selection, experimentId, isSelected);
 
@@ -470,10 +440,11 @@ function wideToLong(wideData, experimentId, isBox){
                     "profile_selected": row["profile_selected"],
                     "highlighted": row["highlighted"],
                     "experimentAndCluster": row[experimentId+"_cluster"],
-                    "median": row[experimentId+"_median"],
+                    "median": Math.round( row[experimentId+"_median"] * 100 + Number.EPSILON ) / 100
+                    ,
                     "gene": row["gene"],
                     "x": colname,
-                    "value": row[colname]
+                    "value": Math.round( row[colname] * 100 + Number.EPSILON ) / 100
                 });
 
                 }
@@ -485,7 +456,7 @@ function wideToLong(wideData, experimentId, isBox){
                         "experimentAndCluster": row[experimentId+"_cluster"],
                         "gene": row["gene"],
                         "x": colname,
-                        "value": row[colname]
+                        "value": Math.round( row[colname] * 100 + Number.EPSILON ) / 100
                     });
 
                 }

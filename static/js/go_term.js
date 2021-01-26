@@ -92,7 +92,6 @@ function globalSelectionToPanther(organism, data, response, parentDivId, tabId){
         }
     }
 
-    console.log(parentDivId);
     let id = parentDivId.split("-")[3];
 
     let molFuncDiv = "";
@@ -169,7 +168,7 @@ function createDropdown(parentDivId, array){
 
     let buttonUl = document.getElementById(parentDivId);
 
-    // remove space in order to set it as variable name
+    // remove space in order to set it as letiable name
     let replacedArray = removeDots(replaceWhiteSpacesInSpeciesNames(array, "_"));
 
     for(let entry of replacedArray){
@@ -250,8 +249,8 @@ function postQuery(url, inputList, organism, category, enrichmentTestType, corre
         .then(function (response) {
 
             let tab = parentDivId.split("-")[3];
-            let combination = tab.split("_")[0] + "_" + tab.split("_")[1] + "_" + tab.split("_")[2] + "_" + tab.split("_")[3];
-            let comparisonId = tab.split("_")[4];
+            let combination = tab.split("_")[0]
+            let comparisonId = tab.split("_")[1];
 
             if(comparisonId === "selectionIntersecting"){
                 comparisonId = "intersecting";
@@ -263,9 +262,10 @@ function postQuery(url, inputList, organism, category, enrichmentTestType, corre
 
             let goResults = response.data.results.result;
 
-            globalData[combination][comparisonId]['go'][categoryFromId(category)] = flattenGoResults(goResults);
+            let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
 
-            console.log(globalData[combination][comparisonId])
+
+            globalDataCopy[combination][comparisonId]['go'][categoryFromId(category)] = flattenGoResults(goResults);
 
             // handle success
             smaller_threshold_fdr = [];
@@ -293,14 +293,12 @@ function postQuery(url, inputList, organism, category, enrichmentTestType, corre
   */
 function horizontalBarCharts(sorted_values, div, category_id, category_name){
 
-    var bar_width = document.getElementById(div).offsetWidth;
-    var bar_height = document.getElementById(div).offsetHeight;
-
-    console.log(bar_width)
+    let bar_width = document.getElementById(div).offsetWidth;
+    let bar_height = document.getElementById(div).offsetHeight;
 
     d3.select("#bar_" + div).remove();
 
-    var svgBar = d3.select("#" + div)
+    let svgBar = d3.select("#" + div)
             .append("div")
             // Container class to make it responsive.
             .classed("svg-container", false)
@@ -313,20 +311,22 @@ function horizontalBarCharts(sorted_values, div, category_id, category_name){
             // Fill with a rectangle for visualization.
             .attr("id", "bar_" + div);
 
-    var g = svgBar.append("g")
+    let g = svgBar.append("g")
             .attr("transform", "translate(" + bar_margin.left + "," + bar_margin.top + ")");
 
-    var y = d3.scaleBand()
+    let y = d3.scaleBand()
         .rangeRound([bar_margin.top, bar_height-bar_margin.bottom])
         .paddingInner(0.1)
         .align(0.1);
 
-    var x = d3.scaleLinear()
+    let x = d3.scaleLinear()
         .range([0, bar_width-bar_margin.right-bar_margin.left])
 
     y.domain(sorted_values.map(function (d) { return d.id}));
     x.domain([0, d3.max(sorted_values.map(function(d) { return d.minus_log10_fdr }))]);
-    //z.domain(keys);
+
+
+    console.log(sorted_values);
 
     g.append("g")
         .selectAll(".bar")

@@ -5,7 +5,7 @@ svg = {}
 
 let color = d3.scaleOrdinal()
        .domain(["ds1_1", "ds1_2", "ds1_3", "ds1_4", "ds1_5", "ds1_6", "ds2_1", "ds2_2", "ds2_3","ds2_4", "ds2_5", "ds2_6", "null"])
-       .range(["#1b9e77", "#eb914d", "#7570b3", "#735363", "#66a61e", "#e6ab02","#1b9e77", "#eb914d", "#7570b3", "#735363", "#66a61e", "#e6ab02", "#D3D3D3"]);
+       .range(["#1b9e77", "#eb914d", "#7570b3", "#e6ab02", "#735363", "#66a61e", "#1b9e77", "#eb914d", "#7570b3", "#e6ab02", "#735363", "#66a61e"]);
 
 /**
   * 
@@ -45,12 +45,11 @@ function detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, t
         // Fill with a rectangle for visualization.
         .attr("id", diagramId + "_" + experimentId + "_" + clusterNumber + "_" + tabDivId)
 
-    
     // set ranges
     svg["svg_x_" + diagramId + "_" + experimentId + "_" + clusterNumber + "_" + tabDivId] = d3.scalePoint()
         .range([marginRelative.left, curr_width-marginRelative.right])
     let x_axis = svg["svg_" + diagramId + "_" + experimentId + "_" + clusterNumber + "_" + tabDivId].append("g")
-        .attr("class","x_axis")
+        .attr("class","x_axis");
 
     svg["svg_y_" + diagramId + "_" + experimentId + "_" + clusterNumber + "_" + tabDivId] = d3.scaleLinear()
         .range([curr_height-marginRelative.bottom, marginRelative.top])
@@ -58,8 +57,23 @@ function detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, t
         .attr("class","y_axis")
         .attr("transform", "translate(" + marginRelative.left + ",0)");
 
+
     //init
     updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId);
+}
+
+
+function getAllMinMax(data){
+
+    let trends = [... new Set(data.map( d => d.ds1_cluster.split("_")[1]).concat(data.map( d => d.ds2_cluster.split("_")[1])) )]
+
+    for(let experiment of ["ds1", "ds2"]){
+        for(let trend of trends){
+            let tmpDataSubSet = getDataSubset(data, experiment, trend);
+
+
+        }
+    }
 }
 
 
@@ -95,6 +109,10 @@ function detailDiagramCombined(parentDiv, experimentId, data){
         .attr("class","y_axis")
         .attr("transform", "translate(" + marginRelative.left + ",0)");
 
+    // extract all subsets 
+
+    // calculate all min max
+
     //init
     updateDetailDiagramCombined(parentDiv, experimentId, data);
 }
@@ -107,34 +125,8 @@ function updateDetailDiagramCombined(parentDiv, experimentId, data){
     let currentXScale = svg["svg_x_" + parentDiv];
     let currentYScale = svg["svg_y_" + parentDiv];
 
-    // get data subset
-    //let dataSubset = getDataSubset(data, experimentId, clusterNumber);
-
-    // case: emptry subset
-    // if(dataSubset.data.length === 0){
-    //     console.log("empty!")
-    //     return;
-    // }
-
-
-    // if(diagramId === DiagramId.centroid){
-    //     renderCentroidDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId);
-    // }    
-
-    //if(diagramId === DiagramId.profile){
     renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg, currentXScale, currentYScale);
-    //}
-
-    // if(diagramId === DiagramId.box){
-    //     renderBoxDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId);
-    // }
-
-    
-
 }
-
-
-
 
 
 
@@ -165,18 +157,15 @@ function updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDi
 
     if(diagramId === DiagramId.centroid){
         renderCentroidDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId);
-    }    
+    }
 
     if(diagramId === DiagramId.profile){
-        renderProfileDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId, tabDivId);
+        renderProfileDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId, tabDivId, data);
     }
 
     if(diagramId === DiagramId.box){
-        renderBoxDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId);
+        renderBoxDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId, data);
     }
-
-    
-
 }
 
 
@@ -234,6 +223,11 @@ function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightD
 function getCurrentXDomain(diagramId, data, experimentId){
 
 
+    if (typeof data.data === "string") {
+        data.data = JSON.parse(data.data);
+    }
+
+
     if(diagramId === DiagramId.profile){
 
         let colnames = Object.keys(data.data[0])
@@ -242,7 +236,7 @@ function getCurrentXDomain(diagramId, data, experimentId){
         for(colname of colnames){
             if(isSingleValue(colname, experimentId)){
                 
-                xValues.push(colname);
+                xValues.push(colname.split("_")[1]);
             }
         }
 
@@ -250,13 +244,13 @@ function getCurrentXDomain(diagramId, data, experimentId){
     }
 
     if(diagramId === DiagramId.centroid){
-        xDomain = data[0].values.map(function(d){ return d.key});
+        xDomain = data[0].values.map(function(d){ return d.key.split("_")[1]});
     }    
 
 
     if(diagramId === DiagramId.box){
         
-        xDomain = data.map(function(d){ return d.key});
+        xDomain = data.map(function(d){ return d.key.split("_")[1]});
     }
 
     return xDomain;
@@ -270,6 +264,10 @@ function getCurrentXDomain(diagramId, data, experimentId){
   * @param{} experimentId
   */
 function getCurrentYDomain(diagramId, data, experimentId){
+
+    if (typeof data.data === "string") {
+        data.data = JSON.parse(data.data);
+    }
 
     if(diagramId === DiagramId.profile){
 
@@ -347,18 +345,60 @@ function isValidEnum(Enum, chosenValue){
 function getDataSubset(data, experimentId, clusterNumber){
 
     // clone object from globalData
-
-    if (typeof data.data === "string") {
-        data.data = JSON.parse(data.data);
-    }
     
     // deep copy
     let dataSubset = JSON.parse(JSON.stringify(data))
 
-    dataSubset.data = dataSubset.data.filter(function (d) {
-        return (d[experimentId + "_cluster"] === (experimentId + "_" + clusterNumber) && (d.highlighted === true))
-    });
+    if (typeof dataSubset.data === "string") {
+        dataSubset.data = JSON.parse(dataSubset.data);
+    }
+
+    // why isnt it an array any more?
+    if(!Array.isArray(dataSubset.data)){
+        dataSubset.data = [];
+    }
+
+    else{
+        dataSubset.data = dataSubset.data.filter(function (d) {
+            return (d[experimentId + "_cluster"] === (experimentId + "_" + clusterNumber) && (d.highlighted))
+        });
+    }
 
     return dataSubset;
 }
 
+
+
+
+/**
+ * Creates n vertically stacked child divs (childHeight = parentHeight/n) in a parent div
+ * @param {number} n number of child divs.
+ * @param {string} parent_div_id ID of the parent div
+ * @param {string} child_div_id_prefix ID prefix of the child divs
+ */
+function createChildDivs(n, parent_div_id, child_div_id_prefix, tabDivId){
+    var parent_div = document.getElementById(parent_div_id);
+
+    let currentClass = tabDivId.split("_")[4] + "_"+ tabDivId.split("_")[5];
+
+    for(i=0; i<n; i++){
+        var child = document.createElement('div');
+        child.id = child_div_id_prefix+(i+1) + "_" + tabDivId;
+        child.className = currentClass;
+        child.style.width = "100%";
+        child.style.height = (100/n) + "%";
+        //child.style.margin = "10%";
+        parent_div.appendChild(child);
+    }
+}
+
+
+function createSubDivs(parent_div_name, width_perc, height_perc, div_suffix){
+
+    var parent_div = document.getElementById(parent_div_name);
+    var child = document.createElement('div');
+    child.id = parent_div_name + "_" + div_suffix;
+    child.style.width = width_perc + "%";
+    child.style.height = height_perc + "%";
+    parent_div.appendChild(child);
+}

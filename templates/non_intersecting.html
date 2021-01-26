@@ -1,12 +1,14 @@
 <div class="non-intersecting-information">
 
+	<div class="non-intersecting-data-json"></div>
+
 	<div class="non-intersecting-information-data-wrapper">
 
 		<div class="non-intersecting-information-data-header">
 
-			<div class="non-intersecting-information-data-header-left">Trends Dataset 1</div>
+			<div class="non-intersecting-information-data-header-left"></div>
 
-			<div class="non-intersecting-information-data-header-right">Trends Dataset 2</div>
+			<div class="non-intersecting-information-data-header-right"></div>
 
 		</div>
 
@@ -149,7 +151,7 @@
 							<label for="goi">Gene of Interest (Text Input)</label>
 							<input type="text" class="goi" name="goi"><br>
 							<input type="submit" class="goi_button" value="(Un-)Highlight Gene"
-								onclick="loadGeneFilter(this)">
+								onclick="updateGeneHighlightingByTextInput(this)">
 						</div>
 
 						<div class="goi_file">
@@ -198,6 +200,26 @@
 
 				</div>
 			  </div>
+
+			  <div class="accordion download">
+				<div class="accordion_tab analysis">
+
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+						<path fill-rule="evenodd"
+							d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+					</svg>
+
+					Download session
+				</div>
+				<div class="accordion_content">
+
+					<input type="button" class="button_downloadptcf" value="download">
+
+				</div>
+			</div>
 
 		</div>
 

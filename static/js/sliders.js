@@ -142,10 +142,10 @@ function expressionSlider(data, tabName, tabId){
     createSlider("ds1_slider-" + tabName, data.ds1_min, data.ds1_max, true);
     createSlider("ds2_slider-" + tabName, data.ds2_min, data.ds2_max, true);
 
-    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, data.ds1_min, data.ds1_max, tabId);
-    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, data.ds1_min, data.ds1_max, tabId);
-    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, data.ds2_min, data.ds2_max, tabId);
-    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, data.ds2_min, data.ds2_max, tabId);
+    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, data.ds1_min, data.ds1_max, tabId, data);
+    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, data.ds1_min, data.ds1_max, tabId, data);
+    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, data.ds2_min, data.ds2_max, tabId, data);
+    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, data.ds2_min, data.ds2_max, tabId, data);
 }
 
 
@@ -161,7 +161,7 @@ function expressionSlider(data, tabName, tabId){
   * @param{int} max
   * @param{String} tabId
   */
-function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defaultMin, min, max, tabId) {
+function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defaultMin, min, max, tabId, data) {
 
     let inputNumber = document.getElementById(inputBoxId);
 
@@ -176,34 +176,103 @@ function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defa
     $('#'+sliderId)[0].noUiSlider.on('change', function (values, handle) {
 
         clearCurrentSelection(tabName);
-
-        let currentTabName = document.getElementById(sliderId)['id'].split("-")[1];
-
-        document.getElementById(experimentId + '_slider_input1-' + currentTabName).value = values[0]
-        document.getElementById(experimentId + '_slider_input2-' + currentTabName).value = values[1]
-        updateCentroidBySlider(currentTabName, tabId);
+        document.getElementById(experimentId + '_slider_input1-' + tabName).value = (values[0] * 100) / 100;
+        document.getElementById(experimentId + '_slider_input2-' + tabName).value = (values[1] * 100) / 100;
+        updateCentroidBySlider(tabName, tabId);
     });
 
     inputNumber.addEventListener('change', function () {
+      
+      let currentValue = Math.round((inputNumber.valueAsNumber + Number.EPSILON) * 100) / 100;
 
-    //document.getElementById(sliderId).noUiSlider.set([]);
-        // updateCentroidBySlider(currentTabName, tabId);
+      let min = $("#"+sliderId)[0].noUiSlider.options.range.min;
+      let max = $("#"+sliderId)[0].noUiSlider.options.range.max;
+
+      // get acutal ID of the input number
+      if(inputNumber.className.split("_")[2] === "input1"){
+
+        let input2 = parseFloat($("#"+sliderId)[0].noUiSlider.get()[1]);
+        
+        $("#"+sliderId)[0].noUiSlider.set([currentValue, input2]);
+
+      }
+
+      if(inputNumber.className.split("_")[2] === "input2"){
+
+        let input1 = parseFloat($("#"+sliderId)[0].noUiSlider.get()[0]);
+
+        $("#"+sliderId)[0].noUiSlider.set([input1, currentValue]);
+      }
+
+      updateCentroidBySlider(tabName, tabId);
     });
 }
 
 
-function clearCurrentSelection(completeTabId){
+function clearCurrentSelection(tabName){
 
-  let comparison = completeTabId.split("_")[0] + "_" + completeTabId.split("_")[1] + "_" + completeTabId.split("_")[2] + "_" +completeTabId.split("_")[3];
-  let comparisonTypeId = completeTabId.split("_")[4];
+  let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
 
-  globalData[comparison][comparisonTypeId]['selection'] = [];
+  let comparison = tabName.split("_")[0];
+  let tabId = tabName.split("_")[1];
 
-  let combinations = getDatasetCombinations(globalData[comparison][comparisonTypeId]['selection']);
+  globalDataCopy[comparison][tabId]['selection'] = [];
 
-  createTable(comparisonTypeId + "-information-controls-table-" + comparison + "_" + comparisonTypeId, combinations, comparison, comparisonTypeId);
+  bindDataToDiv(globalDataCopy);
+
+  let combinations = getDatasetCombinations(globalDataCopy[comparison][tabId]['selection']);
+
+  createTable(tabId + "-information-controls-table-" + comparison + "_" + tabId, combinations, comparison, tabId);
 
 }
+
+
+
+/**
+ * updates data by altering the "selected" column to show the result of expression filtering
+ * @param {Object} data wide data, e.g. loaded by d3.csv()
+ * @returns {Object} adapted data
+ */
+function updateSlide(data, tabName, tabId){
+
+  let ds1Min = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[0];
+  let ds1Max = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[1];
+  let ds2Min = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[0];
+  let ds2Max = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[1];
+
+  if (tabId === TabId.intersecting){
+        for(let link of Object.keys(data)){
+          for(let d of data[link]){
+
+            d.highlighted =
+              ((parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max)) &&
+              ((parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max))
+              ? true
+              : false;
+
+          }
+      }
+  }
+
+  if (tabId === TabId.nonIntersecting){
+      for(let d of data){
+          d.highlighted = 
+          (
+              (geneInDatasetOneOnly(d) ? 
+                  // case: genes only in dataset1 
+                  ( ( (parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max) ) ? true : false) :
+                          // case: genes only in dataset2
+                          ( ( (parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max) ) ? true : false))
+          )
+      }
+      
+  }
+
+  return data;
+}
+
+
+
 
 /**
   *
@@ -211,19 +280,26 @@ function clearCurrentSelection(completeTabId){
   * @param{String} tabId
   */
 function updateCentroidBySlider(tabName, tabId){
+  
+    let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
+    //globalDataCopy = combineLinkSpecificGlobalData(globalDataCopy);
 
     let currentDetailDiagram = getActiveRadioButton(tabName);
 
-    let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
+    //let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
+    let comparison = tabName.split("_")[0];
 
-    globalData[comparison][tabId]['data'] = update(globalData[comparison][tabId]['data'], tabName, tabId);
+    //globalDataCopy[comparison][tabId]['data'] = updateSlide(globalDataCopy[comparison][tabId]['data'], tabName, tabId);
 
-    // get filtered subset
-    let filteredData = JSON.parse(JSON.stringify(globalData));
-    filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return d.highlighted === true});
+    globalDataCopy[comparison][tabId]['data'] = updateSlide(globalDataCopy[comparison][tabId]['data'], tabName, tabId);
+    bindDataToDiv(globalDataCopy);
+
+    // new copy
+    let filteredData = combineLinkSpecificGlobalData(createDeepCopyofData(document.getElementById("data-json").value));
+    filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return d.highlighted});
 
     if(tabId === TabId.intersecting){
-        render(filteredData[comparison][tabId]['data'], "clustered-data-information-data-sankey-" + tabName, tabId, tabName);
+        render(filteredData, "clustered-data-information-data-sankey-" + tabName, tabId, tabName);
     }
  
     // get clusters of diagram 
@@ -239,6 +315,9 @@ function updateCentroidBySlider(tabName, tabId){
     }
 
 }
+
+
+
 
 
 

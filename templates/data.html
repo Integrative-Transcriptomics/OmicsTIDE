@@ -1,1 +1,127 @@
-<div id="matrix-information"></div>
+<div id="overview-wrapper">
+
+	<div id="controls-table-wrapper">
+
+		<div id="overview-analysis">
+			<div id="overview-analysis-dataset">
+				<div id="overview-analysis-dataset-header">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files" fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z" />
+						<path
+							d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z" />
+					</svg>
+					Datasets
+				</div>
+				<div id="overview-analysis-dataset-content"></div>
+			</div>
+			<div id="overview-analysis-variance">
+				<div id="overview-analysis-variance-header">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel" fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+					</svg>
+
+					Variance Percentile Range
+				</div>
+				<div id="overview-analysis-variance-content"></div>
+			</div>
+			<div id="overview-analysis-k">
+				<div id="overview-analysis-k-header">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-graph-up" fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z" />
+					</svg>
+
+					derived trends
+				</div>
+				<div id="overview-analysis-k-content"></div>
+			</div>
+		</div>
+
+		<div id="overview-spacer-horizontal"></div>
+
+		<div id="overview-table-comparisons">
+			<div id="overview-table-comparisons-header">
+				conducted pairwise comparisons
+			</div>
+
+			<div id="overview-table-comparisons-content"></div>
+
+		</div>
+
+	</div>
+
+	<div id="overview-spacer-vertical"></div>
+
+	<div id="matrix-information-wrapper">
+
+		<div id="matrix-information-wrapper-upper">
+
+			<div id="matrix-information-header">
+				Gene count per category
+			</div>
+
+			<div id="matrix-information-box">
+
+				<div id="matrix-information"></div>
+
+				<div id="matrix-information-spacer">
+					<p id="p-checkbox"> <input type="checkbox" id="myCheckbox"> View in percentage </p> 
+				</div>
+
+				<div id="matrix-information-controls">
+					
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="matrix-information-preview-spacer"> </div>
+
+		<div id="matrix-information-preview">
+			<div id="matrix-information-preview-header">Preview</div>
+
+			<div id="matrix-information-preview-content"></div>
+		</div>
+
+	</div>
+
+
+</div>
+
+
+<!-- alternative1: content text -->
+<div id="matrix-information-preview-content-text">
+	Hover rows in the table for a trend comparison preview.<br>
+	Click cell for corresponding analysis.
+</div>
+
+<!-- alternative2: preview -->
+<div id="matrix-information-preview-content-wrapper">
+	<div id="matrix-information-preview-content-intersecting">
+		<div id="matrix-information-preview-content-intersecting-header">INTERSECTING GENES</div>
+		<div id="matrix-information-preview-content-intersecting-content">
+			<div id="matrix-information-preview-content-intersecting-content-left"></div>
+			<div id="matrix-information-preview-content-intersecting-content-spacer1"></div>
+			<div id="matrix-information-preview-content-intersecting-content-sankey"></div>
+			<div id="matrix-information-preview-content-intersecting-content-spacer2"></div>
+			<div id="matrix-information-preview-content-intersecting-content-right"></div>
+		</div>
+	</div>
+
+	<div id="matrix-information-preview-content-spacer"></div>
+
+	<div id="matrix-information-preview-content-nonIntersecting">
+		<div id="matrix-information-preview-content-nonIntersecting-header">NON-INTERSECTING GENES</div>
+		<div id="matrix-information-preview-content-nonIntersecting-content">
+			<div id="matrix-information-preview-content-nonIntersecting-content-left"></div>
+			<div id="matrix-information-preview-content-nonIntersecting-content-spacer1"></div>
+			<div id="matrix-information-preview-content-nonIntersecting-content-right"></div>
+		</div>
+	</div>
+</div>

@@ -8,7 +8,7 @@ import json
 import sys
 import copy
 import os
-import svgutils
+#import svgutils
 from sklearn.cluster import KMeans
 from scipy import stats
 from itertools import combinations
@@ -83,6 +83,7 @@ def extract_from_ptcf(ptcf_file, ptcf):
 
 
 def combine_to_ptcf(i_ptcf, ni_ptcf, file1_colnames, file2_colnames):
+
 	combined = pd.concat([i_ptcf, ni_ptcf], axis = 0)
 
 	return clustered_to_ptcf(combined, file1_colnames, file2_colnames)
@@ -125,7 +126,7 @@ def extract_additional_information(data):
 	}
 
 
-def ptcf_to_json(data):
+def ptcf_to_json(data, is_intersecting):
 
 	if len(data.index) > 0:
 
@@ -133,10 +134,20 @@ def ptcf_to_json(data):
 
 		additional_information = extract_additional_information(data)
 
+		# split data into links
+		if is_intersecting:
+			data_split = split_by_link(additional_information['mod_data'])
+
+		else:
+			data_split = pd.DataFrame(additional_information['mod_data']).to_json(orient='records')
+
+
 		return {
-			'data' : additional_information['mod_data'].to_json(orient='records'),
+			#'data' : additional_information['mod_data'].to_json(orient='records'),
+			'data' : data_split,
 			'selection' : [],
 			'go' : [],
+			'gene_highlight_active' : False, 
 			'columns' : list(additional_information['mod_data']), 
 			'time_points' : get_time_points(additional_information['mod_data'], "ds1"),
 			'x_values' : get_x_values(additional_information['mod_data'], "ds1"),
@@ -185,9 +196,6 @@ def get_k_from_ptcf(data):
 	ds1_cluster = data['ds1_cluster'].dropna().unique()
 	ds2_cluster = data['ds2_cluster'].dropna().unique()
 
-	# print(ds1_cluster)
-	# print(ds2_cluster)
-
 	ds1_cluster_number_only = [x.split("_")[1] for x in ds1_cluster]
 	ds2_cluster_number_only = [x.split("_")[1] for x in ds2_cluster]
 
@@ -195,13 +203,72 @@ def get_k_from_ptcf(data):
 
 
 
-def load_and_modify(file, from_file):
+def valid_cluster_header(ds, file):
 
-	if from_file:
-		init = pd.read_csv(file, index_col='gene')
+	return str(ds) in list(file)
 
-	else: 
-		init = file
+
+
+def valid_cluster_values(ds, file):
+	
+	cluster_values = set(file[str(ds)].unique())
+
+	if ds == "ds1_cluster":
+		valid_values = set(['ds1_1', 'ds1_2', 'ds1_3', 'ds1_4', 'ds1_5', 'ds1_6', 'nan', np.nan])
+
+	if ds == "ds2_cluster":
+		valid_values = set(['ds2_1', 'ds2_2', 'ds2_3', 'ds2_4', 'ds2_5', 'ds2_6', 'nan', np.nan])
+
+	diff = list(cluster_values.difference(valid_values))
+
+	return len(diff)==0
+
+
+def invalid_cluster_value_pos(ds, file):
+
+	if ds == "ds1_cluster":
+		valid_values = ['ds1_1', 'ds1_2', 'ds1_3', 'ds1_4', 'ds1_5', 'ds1_6', 'nan', np.nan]
+	
+	if ds == "ds2_cluster":
+		valid_values = ['ds2_1', 'ds2_2', 'ds2_3', 'ds2_4', 'ds2_5', 'ds2_6', 'nan', np.nan]
+
+	return file.index[~file[str(ds)].isin(valid_values)].tolist()
+
+
+
+def load_and_modify(file, filename):
+
+	init = None
+
+	try:
+		init = pd.read_csv(file, index_col='gene', sep= ",")
+	
+	except ValueError as ve:
+		if (str(ve) == "Index gene invalid"):
+
+			try:
+				init = pd.read_csv(file, index_col='gene', sep= "\t")
+
+			except:
+				return jsonify(message = "Error: Values in " + file + " neither comma- nor tab-separated!"),500
+
+		else:
+			return jsonify(message = "Error: Values in " + file + " neither comma- nor tab-separated!"),500
+
+			
+	if not valid_cluster_header("ds1_cluster", init):
+		return jsonify(message = "column named 'ds1_cluster' not found"),500
+
+	if not valid_cluster_header("ds2_cluster", init):
+		return jsonify(message = "column named 'ds2_cluster' not found"),500
+
+	if not valid_cluster_values("ds1_cluster", init):
+		return jsonify(message = "Values in ds1_cluster column should be one of:\n ds1_1, ds1_2, ds1_3, ds1_4, ds1_5, ds1_6 at\n" + 
+		str(invalid_cluster_value_pos("ds1_cluster", init))),500
+
+	if not valid_cluster_values("ds2_cluster", init):
+		return jsonify(message = "Values in ds1_cluster column should be one of:\n ds2_1, ds2_2, ds2_3, ds2_4, ds2_5, ds2_6 at\n" + 
+		str(invalid_cluster_value_pos("ds2_cluster", init))),500
 
 	if not has_equal_number_of_timepoints(init):
 		#raise Exception("number of conditions/time points in ds1 and ds2 has to be identical")
@@ -216,14 +283,14 @@ def load_and_modify(file, from_file):
 	i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
 	ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
 
-	intersecting_genes = ptcf_to_json(i_ptcf)
-	non_intersecting_genes = ptcf_to_json(ni_ptcf)
+	intersecting_genes = ptcf_to_json(i_ptcf, True)
+	non_intersecting_genes = ptcf_to_json(ni_ptcf, False)
 
 	data = {}
 
-	info = get_info("file_1", "file_2", file, file, i_ptcf, ni_ptcf)
+	info = get_info("file_1", "file_2", filename, filename, i_ptcf, ni_ptcf)
 
-	data['file_1_file_2'] = {
+	data['Comparison1'] = {
 		'intersecting' : intersecting_genes,
 		'nonIntersecting' : non_intersecting_genes,
 		'info' : info,
@@ -260,35 +327,66 @@ def get_cluster_count(data):
 
 
 
-def median_centroids(data_frame, cluster_column_ds1, cluster_column_ds2):
+# def median_centroids(data_frame, cluster_column_ds1, cluster_column_ds2):
 
-	# get unique clusters:
-	ds1_clusters = data_frame[cluster_column_ds1].unique()
-	ds2_clusters = data_frame[cluster_column_ds2].unique()
+# 	# get unique clusters:
+# 	ds1_clusters = data_frame[cluster_column_ds1].unique()
+# 	ds2_clusters = data_frame[cluster_column_ds2].unique()
 
 	
 
-def preprocess_file(file):
+def preprocess_file(input_file):
 	"""Loads file as pandas DataFrame and removes NA rows
 	:param file: filename (str)
 	:return modified filename (DataFrame)
 	"""
 
-	# load data 
-	try:
-		file = pd.read_csv(file, index_col='gene')
+	print(input_file)
 
-	except ValueError:
-		return jsonify(message = "ID column has to be named 'gene'!"),500
-		
+	init = None
+
+	try:
+		print("reading!")
+		init = pd.read_csv(input_file, index_col='gene', sep= ",")
+	
+	except ValueError as ve:
+		if (str(ve) == "Index gene invalid"):
+
+			try:
+				init = pd.read_csv(input_file, index_col='gene', sep= "\t")
+
+			except:
+				print("ve except")
+				return jsonify(message = "Error: Values in " + input_file + " neither comma- nor tab-separated!"),500
+
+		else:
+			print("except!!")
+			return jsonify(message = "Error: Values in " + input_file + " neither comma- nor tab-separated!"),500
+
+	
 	# remove columns with dot
-	file = remove_invalid_genes(file)
+	init = remove_invalid_genes(init)
 
 	# drop NA
-	file.dropna(inplace=True)
+	init.dropna(inplace=True)
+	
+	# remove duplicated indices
+	init = init.loc[~init.index.duplicated(keep='first')]
+	
+	# remove duplicate gene ID row
+	#print("before duplicate removal: " + len(list(file.index)))
+	
+	#is_duplicate = file.index.duplicated(keep="first")
+	#not_duplicate = ~is_duplicate
+	#file = file[not_duplicate]
+	
+	#print("before duplicate removal: " + len(list(file.index)))
 
-	return file
+	return init
 
+
+
+	
 
 
 def get_genes_subset(file1, file2, comparison_type):
@@ -353,7 +451,6 @@ def run_k_means(data, k):
 def clustered_to_ptcf(combined, file1_colnames, file2_colnames):
 
 	combined.reset_index(level=0, inplace=True)
-
 	combined_pivot = combined.pivot(index='gene', columns='dataset')
 
 	# https://stackoverflow.com/questions/24290297/pandas-dataframe-with-multiindex-column-merge-levels
@@ -395,14 +492,14 @@ def clustered_to_ptcf(combined, file1_colnames, file2_colnames):
 	return combined_pivot_reorder
 
 
-def cluster_intersecting(filename1, filename2, cluster):
+# def cluster_intersecting(filename1, filename2, cluster):
 
-	return cluster(filename1, filename2, cluster, ComparisonType.INTERSECTING)
+# 	return cluster(filename1, filename2, cluster, ComparisonType.INTERSECTING)
 
 
-def cluster_non_intersecting(filename1, filename2, cluster):
+# def cluster_non_intersecting(filename1, filename2, cluster):
 
-	return cluster(filename1, filename2, cluster, ComparisonType.NON_INTERSECTING)
+# 	return cluster(filename1, filename2, cluster, ComparisonType.NON_INTERSECTING)
 
 
 def cluster(file1, file2, cluster, comparison_type):
@@ -431,25 +528,146 @@ def filter_variance(data, lower, upper):
 
 	return quantile_filtered
 
-def has_gene_column(f):
+# def has_gene_column(f):
 	
-	if("gene" in list(f)):
-		return True
+# 	if("gene" in list(f)):
+# 		return True
 	
-	else:
-		return jsonify(message = "ID column has to be named 'gene'!"),500
+# 	else:
+# 		return jsonify(message = "ID column has to be named 'gene'!"),500
 
 
 def equal_number_of_columns(f1, f2):
 
 	if(len(list(f1)) == len(list(f2))):
+		print(True)
 		return True
 
 	else:
 		return jsonify(message = "Number of columns/conditions has to be identical across all loaded files!"),500
 
 
-		
+
+def remove_dataset_id(df, ds1_trend_column, ds2_trend_column):
+
+	df[ds1_trend_column] = df[ds1_trend_column].str.split('_').str[1]
+	df[ds2_trend_column] = df[ds2_trend_column].str.split('_').str[1]
+
+	return df
+
+	
+
+
+def concordant_discordant(df, ds1_trend_column, ds2_trend_column):
+
+	modified = remove_dataset_id(df, ds1_trend_column, ds2_trend_column)
+	concordant = modified[modified[ds1_trend_column] == modified[ds2_trend_column]]
+	discordant = modified[modified[ds1_trend_column] != modified[ds2_trend_column]]
+
+	return {
+		'concordant' : len(concordant.index),
+		'discordant' : len(discordant.index)
+	}
+
+
+def split_by_link(data):
+
+	split_data = {}
+	
+	data['cluster_id'] = data['ds1_cluster'] + "-" + data['ds2_cluster']
+
+	grouped = data.groupby('cluster_id')
+
+	for x in grouped.groups:
+		split_data[grouped.get_group(x)['cluster_id'][0]] = grouped.get_group(x).drop(columns=['cluster_id']).to_json(orient='records')
+
+	return split_data
+
+
+
+
+
+
+def pairwise_trendcomparison(tmp_file1, tmp_file2, comparison_count, lower_variance_percentile, upper_variance_percentile, k, test_data):
+
+	#data = {}
+
+	if test_data:
+		ds1_file = preprocess_file(tmp_file1)
+		ds2_file = preprocess_file(tmp_file2)
+
+	else:
+		ds1_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file1]))
+		ds2_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file2]))
+
+	# validity check
+	equal_number_of_columns(ds1_file, ds2_file)
+
+	# initial colnames
+	ds1_colnames = list(ds1_file)
+	ds2_colnames = list(ds2_file)
+
+	# tmp colnames
+	tmp_colnames = list(range(1, len(ds1_colnames)+1))
+
+	ds1_file.columns = tmp_colnames
+	ds2_file.columns = tmp_colnames
+
+	ds1_file = filter_variance(ds1_file, lower_variance_percentile, upper_variance_percentile)
+	ds2_file = filter_variance(ds2_file, lower_variance_percentile, upper_variance_percentile)
+
+	# zscore
+	ds1_file_np = ds1_file.to_numpy()
+	ds2_file_np = ds2_file.to_numpy()
+				
+	ds1_file_np = stats.zscore(ds1_file_np, axis=1)
+	ds2_file_np = stats.zscore(ds2_file_np, axis=1)
+				
+	ds1_file = pd.DataFrame(data=ds1_file_np, index=ds1_file.index, columns=list(tmp_colnames))
+	ds2_file = pd.DataFrame(data=ds2_file_np, index=ds2_file.index, columns=list(tmp_colnames))
+			
+	ds1_file = ds1_file.T.apply(stats.zscore).T
+	ds2_file = ds2_file.T.apply(stats.zscore).T	
+
+	clustering_intersecting = cluster(ds1_file, ds2_file, k, ComparisonType.INTERSECTING)
+	clustering_non_intersecting = cluster(ds1_file, ds2_file, k, ComparisonType.NON_INTERSECTING)
+
+	ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, ds1_colnames, ds2_colnames)
+
+	ptcf = add_additional_columns(ptcf)
+			
+	i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
+	ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
+
+	intersecting_genes = ptcf_to_json(i_ptcf, True)
+	non_intersecting_genes = ptcf_to_json(ni_ptcf, False)
+
+	if test_data:
+		info = get_info(tmp_file1, tmp_file2, tmp_file1, tmp_file2, i_ptcf, ni_ptcf)
+
+	else:
+		info = get_info(tmp_file1, tmp_file2, files[tmp_file1], files[tmp_file2], i_ptcf, ni_ptcf)
+
+
+	# data["Comparison" + str(comparison_count)] = {
+	# 	'intersecting' : intersecting_genes,
+	# 	'nonIntersecting' : non_intersecting_genes,
+	# 	'info' : info,
+	# 	'k' : k,
+	# 	'lower_variance_percentile' : lower_variance_percentile,
+	# 	'upper_variance_percentile' : upper_variance_percentile
+	# }
+
+	return {
+		'intersecting' : intersecting_genes,
+		'nonIntersecting' : non_intersecting_genes,
+		'info' : info,
+		'k' : k,
+		'lower_variance_percentile' : lower_variance_percentile,
+		'upper_variance_percentile' : upper_variance_percentile
+	}
+
+	#return data
 
 
 @app.route('/load_k', methods=['GET', 'POST'])
@@ -461,6 +679,8 @@ def load_k():
 		lower_variance_percentile = int(request.form.to_dict()['lowerVariancePercentage'])
 		upper_variance_percentile = int(request.form.to_dict()['upperVariancePercentage'])
 
+		comparison_count = 1
+
 		# outsource this to function #
 		for combination in list(combinations(list(files.keys()), 2)):
 
@@ -469,65 +689,10 @@ def load_k():
 
 			# get file without NA
 			try:
-				ds1_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file1]))
-				ds2_file = preprocess_file(os.path.join(app.config['UPLOAD_FOLDER'], files[tmp_file2]))
 
-				# validity check
-				equal_number_of_columns(ds2_file, ds2_file)
-
-				# initial colnames
-				ds1_colnames = list(ds1_file)
-				ds2_colnames = list(ds2_file)
-
-				# print("before filtering: " + str(len(ds1_file.index)))
-				# print("before filtering: " + str(len(ds2_file.index)))
-
-				# variance filtering
-				ds1_file = filter_variance(ds1_file, lower_variance_percentile, upper_variance_percentile)
-				ds2_file = filter_variance(ds2_file, lower_variance_percentile, upper_variance_percentile)
-
-				# print("after filtering: " + str(len(ds1_file.index)))
-				# print("after filtering: " + str(len(ds2_file.index)))
-
-				# zscore
-				ds1_file = ds1_file.T.apply(stats.zscore).T
-				ds2_file = ds2_file.T.apply(stats.zscore).T
-
-				print("TRANSPOSED!!!!")
-
-				clustering_intersecting = cluster(ds1_file, ds2_file, k, ComparisonType.INTERSECTING)
-				clustering_non_intersecting = cluster(ds1_file, ds2_file, k, ComparisonType.NON_INTERSECTING)
-
-				print(clustering_intersecting)
-
-				print("CLUSTERED!!!!!!!")
-
-				ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, ds1_colnames, ds2_colnames)
-
-				print("COMBINED TO PTCF!!!!")
-
-				print(ptcf)
-
-				### could be outsourced to function
-
-				ptcf = add_additional_columns(ptcf)
-
-				i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
-				ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
-
-				intersecting_genes = ptcf_to_json(i_ptcf)
-				non_intersecting_genes = ptcf_to_json(ni_ptcf)
-
-				info = get_info(tmp_file1, tmp_file2, files[tmp_file1], files[tmp_file2], i_ptcf, ni_ptcf)
-
-				data[combination[0] + "_" + combination[1]] = {
-					'intersecting' : intersecting_genes,
-					'nonIntersecting' : non_intersecting_genes,
-					'info' : info,
-					'k' : k
-				}
-
-
+				data["Comparison" + str(comparison_count)] = pairwise_trendcomparison(tmp_file1, tmp_file2, comparison_count, lower_variance_percentile, upper_variance_percentile, k, False)
+				comparison_count += 1
+	
 			except TypeError as te:
 				if str(te) == "object of type 'builtin_function_or_method' has no len()":
 					return jsonify(message='ID column has to be named "gene"'),500
@@ -546,13 +711,28 @@ def get_info(file1, file2, filename1, filename2, i_ptcf, ni_ptcf):
 
 	info = {}
 
-	info[file1] = { 'filename' : filename1 }
-	info[file2] = { 'filename' : filename2 }
-	info[file1]['genes'] = list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index) + list(i_ptcf.index)
-	info[file2]['genes'] = list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index) + list(i_ptcf.index)
-	info['intersecting_genes'] = {'genes' : list(i_ptcf.index)}
-	info[file1 + '_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index)}
-	info[file2 + '_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index)}
+	conc_disc = concordant_discordant(i_ptcf, "ds1_cluster", "ds2_cluster")
+
+	genes_in_comparison = len(i_ptcf.index) + len(ni_ptcf.index)
+
+	info['file_1'] = { 'filename' : filename1 }
+	info['file_2'] = { 'filename' : filename2 }
+	info['file_1']['genes'] = list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index) + list(i_ptcf.index)
+	info['file_2']['genes'] = list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index) + list(i_ptcf.index)
+	info['file_1_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index)}
+	info['file_2_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index)}
+	info['intersecting_genes'] = {'genes' : len(i_ptcf.index)}
+	info['barChart'] = {
+		'allGenesInComparison' : genes_in_comparison,
+		'absolute' : {
+			'concordant_count' : conc_disc['concordant'], 
+			'discordant_count' : conc_disc['discordant'],
+			'intersecting_genes_count' : len(i_ptcf.index),
+			'non_intersecting_genes_count' : len(ni_ptcf.index),
+			'first_non_intersecting_genes_count' : len(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index),
+			'second_non_intersecting_genes_count' : len(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index)
+		}	
+	}
 
 	return info
 
@@ -563,8 +743,6 @@ def remove_tmp_files():
 
 	for f in filelist:
 		os.remove(os.path.join(app.config['UPLOAD_FOLDER'], f))
-
-
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -591,40 +769,155 @@ def cluster_data():
 			tmp_file.save(os.path.join(app.config['UPLOAD_FOLDER'], tmp_filename))
 
 			files['file' + "_" + str(counter)] = tmp_filename
-
-			# ds1_file = preprocess_file(files[tmp_file1])
-			# ds2_file = preprocess_file(files[tmp_file2])
 			
 			counter += 1
 
-		return "test"
+		return "clustered"
 
 	else:
 
 		return render_template('index.html')
+
+
+@app.route('/load_test_data_bloodcell' , methods=['GET','POST'])
+def load_test_data_bloodcell():
+
+	data = {}
+
+	if request.method == 'POST':
+
+		k = int(request.form.to_dict()['k'])
+		lower_variance_percentile = int(request.form.to_dict()['lowerVariancePercentage'])
+		upper_variance_percentile = int(request.form.to_dict()['upperVariancePercentage'])
+
+		transcriptome_data = "./static/data/BloodCell/Transcriptome.csv"
+		proteome_data = "./static/data/BloodCell/Proteome.csv"
+
+		try:
+			data['Comparison1'] = pairwise_trendcomparison(transcriptome_data, proteome_data, 1, lower_variance_percentile, upper_variance_percentile, k, True)
+	
+		except TypeError as te:
+			if str(te) == "object of type 'builtin_function_or_method' has no len()":
+				return jsonify(message='ID column has to be named "gene"'),500
+
+		except ValueError as ve:
+			if str(ve).startswith("Length mismatch: Expected axis has"):
+				return jsonify(message='Number of columns/conditions for the loaded files not identical!'),500
+
+		return data
+
+	else:
+		render_template("index.html")
+
+
+
+@app.route('/load_test_data_streptomyces' , methods=['GET','POST'])
+def load_test_data_streptomyces():
+
+	data = {}
+
+	if request.method == 'POST':
+
+		k = int(request.form.to_dict()['k'])
+		lower_variance_percentile = int(request.form.to_dict()['lowerVariancePercentage'])
+		upper_variance_percentile = int(request.form.to_dict()['upperVariancePercentage'])
+
+		trans_m145 = "./static/data/caseStudy_colnames/Transcriptome_M145.csv"
+		prot_m145 = "./static/data/caseStudy_colnames/Proteome_M145.csv"
+		trans_m1152 = "./static/data/caseStudy_colnames/Transcriptome_M1152.csv"
+		prot_m1152 = "./static/data/caseStudy_colnames/Proteome_M1152.csv"
+
+		try:
+			data['Comparison1'] = pairwise_trendcomparison(prot_m145, prot_m1152, 1, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison2'] = pairwise_trendcomparison(prot_m145, trans_m145, 2, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison3'] = pairwise_trendcomparison(prot_m145, trans_m1152, 3, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison4'] = pairwise_trendcomparison(prot_m1152, trans_m145, 4, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison5'] = pairwise_trendcomparison(prot_m1152, trans_m1152, 5, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison6'] = pairwise_trendcomparison(trans_m145, trans_m1152, 6, lower_variance_percentile, upper_variance_percentile, k, True)
+	
+		except TypeError as te:
+			if str(te) == "object of type 'builtin_function_or_method' has no len()":
+				return jsonify(message='ID column has to be named "gene"'),500
+
+		except ValueError as ve:
+			if str(ve).startswith("Length mismatch: Expected axis has"):
+				return jsonify(message='Number of columns/conditions for the loaded files not identical!'),500
+
+		return data
+
+	else:
+		render_template("index.html")
+	
+
+
+
+
+
 				
 
-@app.route('/data')
+@app.route('/matrix')
 def data():
 	return render_template('data.html')
 
 
-@app.route('/clustered_data')
+@app.route('/intersecting')
 def clustered_data():
 	return render_template('clustered_data.html')
 
 
-@app.route('/non_intersecting')
+@app.route('/nonIntersecting')
 def non_intersecting():
 	return render_template('non_intersecting.html')
 
-@app.route('/selection_intersecting')
+@app.route('/selectionIntersecting')
 def selection_intersecting():
 	return render_template('selection_intersecting.html')
 
-@app.route('/selection_non_intersecting')
+@app.route('/selectionNonIntersecting')
 def selection_non_intersecting():
 	return render_template('selection_non_intersecting.html')
+
+@app.route('/download_session', methods=['GET', 'POST'])
+def download_session():
+	if request.method == 'POST':
+		path_session = os.path.join(app.config['UPLOAD_FOLDER'], 'download_session.csv')
+		
+		ptcf_session = pd.read_json(request.form.to_dict()['ptcf'], orient='records')
+		ptcf_session.set_index('gene', inplace=True)
+		#ptcf_session.drop(columns=['highlighted', 'profile_selected', 'ds1_median', 'ds2_median'], inplace=True)
+
+
+		ptcf_session.to_csv(path_session)
+
+		time_id = str(datetime.now())
+		time_id = time_id.replace(" ", "_")
+		time_id = time_id.replace(":", "_")
+		time_id = time_id.split(".")[0]
+		time_id = time_id.replace("_","")
+
+		timestamp_name = "OmicsTIDE_" + time_id
+
+		print(app.config['UPLOAD_FOLDER'])
+		print(timestamp_name)
+		print(path_session)
+
+		return send_file(path_session,
+                     mimetype='text/csv',
+                     attachment_filename=timestamp_name + ".csv",
+                     as_attachment=True)
+
+		#return send_from_directory(app.config['UPLOAD_FOLDER'], timestamp_name, as_attachment=True)
+
+
+
+
+
+		
+
+		
+
+
+
 
 @app.route('/send_svg', methods=['GET', 'POST'])
 def send_svg():
@@ -636,10 +929,6 @@ def send_svg():
 		path2 = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset2.svg')
 		path_selection = os.path.join(app.config['UPLOAD_FOLDER'], 'selection.csv')
 		path_go = os.path.join(app.config['UPLOAD_FOLDER'], 'go.csv')
-
-
-		#path1 = 'home/julian/Desktop/dataset1.svg'
-		#path2 = 'home/julian/Desktop/dataset2.svg'
 
 		dataset1 = json.loads(request.form.to_dict()['dataset1_plot'])
 		dataset2 = json.loads(request.form.to_dict()['dataset2_plot'])
@@ -743,7 +1032,7 @@ def uploaded_file():
 			filename = secure_filename(file.filename)
 
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			server_data = load_and_modify(os.path.join(app.config['UPLOAD_FOLDER'], filename), True)
+			server_data = load_and_modify(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
 
 			return server_data
 

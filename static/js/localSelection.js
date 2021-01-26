@@ -30,10 +30,6 @@ function geneAlreadyInSelection(gene, selection){
 }
 
 
-function removeGeneFromSelection(gene, selection){
-
-}
-
 
 /**
  * updates the selection array of a given globalData by adding new objects to it
@@ -43,8 +39,6 @@ function removeGeneFromSelection(gene, selection){
  * @param {String} tabId
  */
 function updateSelection(newSelection, currentSelection){
-
-	let tmpData = [];
 
 	// trivial case: empty selection -> current genes will be selection
 	if(currentSelection.length === 0){
@@ -70,15 +64,6 @@ function updateSelection(newSelection, currentSelection){
 	}	
 }
 
-
-/**
- * updates the selection array of a given globalData by removing objects from it
- * @param {Array} geneList
- * @param {Array} globalDataSelection
- */
-function removeFromSelection(geneArray, globalDataSelection, comparison, tabId){
-
-}
 
 
 
