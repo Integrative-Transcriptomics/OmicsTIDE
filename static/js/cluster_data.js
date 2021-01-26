@@ -286,8 +286,9 @@ function updateDetailDiagramsOnMouseOver(comparison, currentLink){
 
     let filtered =[];
     //let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
-    let globalDataCopy = JSON.parse(document.getElementById('data-json').value)[comparison]['intersecting'];
+    let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value)[comparison]['intersecting'];
 
+    console.log(globalDataCopy);
 
     for(let link of Object.keys(globalDataCopy['data'])){
 
@@ -300,14 +301,6 @@ function updateDetailDiagramsOnMouseOver(comparison, currentLink){
         }
     }
 
-    // for(let link of Object.keys(globalDataCopy[comparison]['intersecting']['data'])){
-
-    //     if(link === linkId){
-    //         filtered = filtered.concat(globalDataCopy[comparison]['intersecting']['data'][link]);
-    //     }
-    // }
-
-
     globalDataCopy['data'] = filtered;
 
     firstDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
@@ -315,12 +308,6 @@ function updateDetailDiagramsOnMouseOver(comparison, currentLink){
 
     firstDiagramData = JSON.parse(firstDiagramData);
     secondDiagramData = JSON.parse(secondDiagramData);
-
-    // let firstDiagramData = createDeepCopyofData(document.getElementById('data-json').value);
-    // let secondDiagramData = createDeepCopyofData(document.getElementById('data-json').value);
-
-    // firstDiagramData[comparison]['intersecting']['data'] = globalDataCopy[comparison]['intersecting']['data'].filter(d => d.ds1_cluster === currentLink.names[0] && d.highlighted);
-    // secondDiagramData[comparison]['intersecting']['data'] = globalDataCopy[comparison]['intersecting']['data'].filter(d => d.ds2_cluster === currentLink.names[1] && d.highlighted);
 
     firstDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds1_cluster === currentLink.names[0] && d.highlighted);
     secondDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds2_cluster === currentLink.names[1] && d.highlighted);

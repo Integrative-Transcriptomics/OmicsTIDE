@@ -57,7 +57,6 @@ function detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, t
         .attr("class","y_axis")
         .attr("transform", "translate(" + marginRelative.left + ",0)");
 
-    
 
     //init
     updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId);
@@ -157,7 +156,7 @@ function updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDi
     }
 
     if(diagramId === DiagramId.centroid){
-        renderCentroidDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId, data);
+        renderCentroidDiagram(dataSubset, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId);
     }
 
     if(diagramId === DiagramId.profile){
@@ -182,7 +181,7 @@ function updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDi
   * @param{} tabDivId
   * @param{} tabId
   */
-function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightDivId, tabDivId, tabId, comparison) {
+function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightDivId, tabDivId, tabId) {
 
     if(!isValidEnum(DiagramId, diagramId)){
         alert("invalid diagram Id!");
@@ -208,8 +207,8 @@ function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightD
 
     for (i = 1; i <= plot_counts; i++) {
 
-        detailDiagram(diagramId, data, "ds1", i, tabDivId, tabId, comparison);
-        detailDiagram(diagramId, data, "ds2", i, tabDivId, tabId, comparison);
+        detailDiagram(diagramId, data, "ds1", i, tabDivId, tabId);
+        detailDiagram(diagramId, data, "ds2", i, tabDivId, tabId);
     }
 
 }
