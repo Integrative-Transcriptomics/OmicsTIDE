@@ -387,6 +387,31 @@ function setIntersectingTabsActive(){
 }
 
 
+function updateYScalesMinMax(data){
+
+    let copy = combineLinkSpecificGlobalData(JSON.parse(JSON.stringify(data)));
+
+    for(let comparison of Object.keys(data)){
+
+        let yRangesIntersectingCentroids = createYRanges(copy, comparison, "intersecting");
+        let yRangesNonIntersectingCentroids = createYRanges(copy, comparison, "nonIntersecting");
+
+        console.log(yRangesIntersectingCentroids);
+        console.log(yRangesNonIntersectingCentroids);
+
+    //     // update data
+    //     data[comparison]['intersecting']['centroidMin'] = createYRanges(data, comparison, "intersecting")['centroidMin'];
+    //     data[comparison]['intersecting']['centroidMax'] = createYRanges(data, comparison, "intersecting")['centroidMax'];
+    //     data[comparison]['nonIntersecting']['centroidMin'] = createYRanges(data, comparison, "nonIntersecting")['centroidMin'];
+    //     data[comparison]['nonIntersecting']['centroidMax'] = createYRanges(data, comparison, "nonIntersecting")['centroidMax'];
+    }
+
+    return data;
+
+}
+
+
+
 
 /**
   *
@@ -396,8 +421,10 @@ function setIntersectingTabsActive(){
 function loadDataTab(tabName, tabId) {
 
     if (tabId === TabId.matrix) {
-        let data = createDeepCopyofData(document.getElementById("data-json").value);
-		comparisonOverview(data);
+        
+        bindDataToDiv(updateYScalesMinMax(createDeepCopyofData(document.getElementById("data-json").value)));
+        comparisonOverview(createDeepCopyofData(document.getElementById("data-json").value));
+        
     }
 
     else{
@@ -462,38 +489,19 @@ function renderPlots(tabName, tabId) {
 
     let comparison = tabName.split("_")[0];
 
-    let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
+    //let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
 
-    console.log(globalDataCopy);
+    //console.log(globalDataCopy);
 
     let data = combineLinkSpecificGlobalData(createDeepCopyofData(document.getElementById("data-json").value));
-
-    console.log(data);
 
     let textNodeDs1 = document.createTextNode(data[comparison]['info']['file_1']['filename'])
     let textNodeDs2 = document.createTextNode(data[comparison]['info']['file_2']['filename'])
 
-    // update data
-    // globalDataCopy[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
-    // globalDataCopy[comparison]['intersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMax'];
-    // globalDataCopy[comparison]['nonIntersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMin'];
-    // globalDataCopy[comparison]['nonIntersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
-
-    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
-    // data[comparison]['intersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMax'];
-    // data[comparison]['nonIntersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMin'];
-    // data[comparison]['nonIntersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
-
-    // bindDataToDiv(globalDataCopy);
-
-    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
-    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
-
-    // retrieve data with updated axes values
-    //globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
-    //data = combineLinkSpecificGlobalData(globalDataCopy);
-
-    
+    //retrieve data with updated axes values
+    data = createDeepCopyofData(document.getElementById("data-json").value);
+    data = combineLinkSpecificGlobalData(data);
+ 
     if (tabId === TabId.intersecting) {
 
         if (typeof data[comparison]['intersecting']['data'] === "string") {

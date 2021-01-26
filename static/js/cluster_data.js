@@ -196,11 +196,7 @@ function clusterData(){
             success: function(result){
     
                     let globalData = JSON.parse(JSON.stringify(result));
-
-                    console.log(globalData)
-    
                     bindDataToDiv(globalData);
-    
                     addTab("data", true, TabId.matrix);
     
             },
@@ -214,11 +210,6 @@ function clusterData(){
 
     }
 }
-
-
-
-
-
 
 
 
@@ -287,8 +278,6 @@ function updateDetailDiagramsOnMouseOver(comparison, currentLink){
     let filtered =[];
     //let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
     let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value)[comparison]['intersecting'];
-
-    console.log(globalDataCopy);
 
     for(let link of Object.keys(globalDataCopy['data'])){
 

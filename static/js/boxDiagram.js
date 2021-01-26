@@ -16,7 +16,7 @@
   //let dataForAxes = getDataForBoxDiagram(totalData, experimentId, clusterNumber);
 
 	let currentXDomain = getCurrentXDomain(DiagramId.box, boxNested, experimentId)
-	let currentYDomain = getCurrentYDomain(DiagramId.box, boxAxes, experimentId)
+	//let currentYDomain = getCurrentYDomain(DiagramId.box, boxAxes, experimentId)
 
 	currentXScale.domain(currentXDomain);
     currentSvg.selectAll(".x_axis")
@@ -25,11 +25,23 @@
         //.duration(durationTransition)
         .call(d3.axisBottom(currentXScale));
 
-    currentYScale.domain(currentYDomain);
+
+    let minValue = -2.6;
+    let maxValue = 2.6;
+    currentYScale.domain([minValue, maxValue]);   
+    let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
+
+
+    //currentYScale.domain(currentYDomain);
     currentSvg.selectAll(".y_axis")
         //.transition()
         //.duration(durationTransition)
-        .call(d3.axisLeft(currentYScale));
+        .call(d3.axisLeft(currentYScale)
+        .tickValues(tickRange) 
+        );
+
+    
+        
 
 
     let vertLines = currentSvg.selectAll(".vertLines")

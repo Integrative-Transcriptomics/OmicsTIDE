@@ -9,8 +9,6 @@
 
 function getCentroidMinMax(data, comparison, tabId){
 
-    let combinedData = combineLinkSpecificGlobalData(data);
-
     // let uniqueClusters = [... new Set(combinedData[comparison][tabId]['data'].map(d => d.ds1_cluster.split("_")[1])
     // .concat(combinedData[comparison][tabId]['data'].map(d => d.ds2_cluster.split("_")[1])))]
 
@@ -18,9 +16,7 @@ function getCentroidMinMax(data, comparison, tabId){
     let maxs = [];
 
     for(let ds of ['ds1', 'ds2']){
-        let centroidsNested = getDataForCentroidDiagram(combinedData[comparison][tabId], ds)
-
-        console.log(centroidsNested);
+        let centroidsNested = getDataForCentroidDiagram(data[comparison][tabId], ds)
 
         for(let clusters of centroidsNested){
             for(let xValues of clusters.values){

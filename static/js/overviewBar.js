@@ -78,6 +78,8 @@ function isPtcf(data){
 
 function comparisonTable(data, tableDiv) {
 
+    console.log(data);
+
     // http://bl.ocks.org/jonahwilliams/cc2de2eedc3896a3a96d
 
     // overview-table-comparisons-content
@@ -146,8 +148,7 @@ function comparisonTable(data, tableDiv) {
                         "matrix-information-preview-content-intersecting-content-left",
                         "matrix-information-preview-content-intersecting-content-right",
                         d.comparison + "_intersecting",
-                        TabId.intersecting,
-                        d.comparison)
+                        TabId.intersecting)
                 )
                 .then(
                     detailDiagramsPerCluster(
@@ -156,8 +157,7 @@ function comparisonTable(data, tableDiv) {
                         "matrix-information-preview-content-nonIntersecting-content-left",
                         "matrix-information-preview-content-nonIntersecting-content-right",
                         d.comparison + "_nonIntersecting",
-                        TabId.nonIntersecting,
-                        d.comparison)
+                        TabId.nonIntersecting)
                 );
 
             // set preview

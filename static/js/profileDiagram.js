@@ -29,7 +29,7 @@ TODO: change nomenclature: highlighted/selected
     
 	// updating domains
     let currentXDomain = getCurrentXDomain(DiagramId.profile, data, experimentId);
-    let currentYDomain = getCurrentYDomain(DiagramId.profile, data, experimentId);
+    //let currentYDomain = getCurrentYDomain(DiagramId.profile, data, experimentId);
 
 
     // calling axis
@@ -40,11 +40,19 @@ TODO: change nomenclature: highlighted/selected
         //.duration(500)
         .call(d3.axisBottom(currentXScale));
 
-    currentYScale.domain(currentYDomain);
+
+    let minValue = -2.3;
+    let maxValue = 2.3;
+    currentYScale.domain([minValue, maxValue]);   
+    let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
+
+    //currentYScale.domain(currentYDomain);
     currentSvg.selectAll(".y_axis")
         //.transition()
         //.duration(500)
-        .call(d3.axisLeft(currentYScale));
+        .call(d3.axisLeft(currentYScale)
+        .tickValues(tickRange) 
+        );
 
 
 	let lines = currentSvg.selectAll(".lines")

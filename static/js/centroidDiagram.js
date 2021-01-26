@@ -18,21 +18,24 @@
 
     // updating domains
     let currentXDomain = getCurrentXDomain(DiagramId.centroid, centroidsNested, experimentId);
-    let currentYDomain = getCurrentYDomain(DiagramId.centroid, centroidsNested, experimentId);
+    //let currentYDomain = getCurrentYDomain(DiagramId.centroid, centroidsNested, experimentId);
 
     //let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
     //globalDataCopy = combineLinkSpecificGlobalData(globalDataCopy);
 
-    //let minValue = data['centroidMin'];
-    //let maxValue = data['centroidMax'];
+    // let minValue = data['centroidMin'];
+    // let maxValue = data['centroidMax'];
 
     // calling axis
     currentXScale.domain(currentXDomain);
-    currentYScale.domain(currentYDomain);
+    //currentYScale.domain(currentYDomain);
 
-    //currentYScale.domain([minValue, maxValue]);
-    
-    //let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
+    let minValue = -2.3;
+    let maxValue = 2.3;
+
+    currentYScale.domain([minValue, maxValue]);
+
+    let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
 
     if(tabId !== "matrix"){
 
@@ -46,7 +49,7 @@
         //.transition()
         //.duration(durationTransition)
         .call(d3.axisLeft(currentYScale)
-        //.tickValues(tickRange) 
+        .tickValues(tickRange) 
         );
 
     }

@@ -348,6 +348,7 @@ function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
                     updateDetailDiagramsOnMouseOver(comparison, d);
 
 
+
                     // tooltip
                     divSankey.transition()		
                         .duration(200)		
