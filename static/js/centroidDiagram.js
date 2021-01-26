@@ -10,29 +10,31 @@
   * @param{} currentYScale
   * @param{} tabDivId
   */
- function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId){
-
+ function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabDivId, tabId, totalData){
 
     let centroidsNested = getDataForCentroidDiagram(data, experimentId, clusterNumber)
     //let centroidAxis =  getDataForCentroidDiagram(totalData, experimentId, clusterNumber);
 
     // updating domains
     let currentXDomain = getCurrentXDomain(DiagramId.centroid, centroidsNested, experimentId);
-    //let currentYDomain = getCurrentYDomain(DiagramId.centroid, centroidsNested, experimentId);
-
-    //let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
-    //globalDataCopy = combineLinkSpecificGlobalData(globalDataCopy);
-
-    let minValue = data['centroidMin'];
-    let maxValue = data['centroidMax'];
+    let currentYDomain = getCurrentYDomain(DiagramId.centroid, centroidsNested, experimentId);
 
     // calling axis
     currentXScale.domain(currentXDomain);
-    //currentYScale.domain(currentYDomain);
 
-    currentYScale.domain([minValue, maxValue]);
-    
+    //let yMinMax = yMinMaxPerExperimentCluster(data, experimentId, clusterNumber);
+    //currentYScale.domain([yMinMax['min'], yMinMax['max']]);
+
+    currentYScale.domain(currentYDomain);
+
+    let minValue = getAbsoluteValues(centroidsNested, "lower");
+    let maxValue = getAbsoluteValues(centroidsNested, "upper");
+
+    // let ticks = [];
+
     let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
+
+
 
     if(tabId !== "matrix"){
 

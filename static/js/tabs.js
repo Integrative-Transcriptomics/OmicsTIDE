@@ -440,13 +440,18 @@ function bindDataToDiv(data){
 
 function createYRanges(data, comparison, tabId){
 
+    // centroid
+
     // init scales
     let centroidMinMax = getCentroidMinMax(data, comparison, tabId);
+    data[comparison][tabId]['centroidMin'] = centroidMinMax['min'];
+    data[comparison][tabId]['centroidMax'] = centroidMinMax['max'];
+    bindDataToDiv(data);
 
-    return{
-        'centroidMin' : centroidMinMax['min'],
-        'centroidMax' : centroidMinMax['max'],
-    };
+    console.log(data);
+
+    // profile
+
 }
 
 
@@ -464,41 +469,18 @@ function renderPlots(tabName, tabId) {
 
     let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
 
-    console.log(globalDataCopy);
-
-    let data = combineLinkSpecificGlobalData(createDeepCopyofData(document.getElementById("data-json").value));
-
-    console.log(data);
+    data = combineLinkSpecificGlobalData(globalDataCopy);
 
     let textNodeDs1 = document.createTextNode(data[comparison]['info']['file_1']['filename'])
     let textNodeDs2 = document.createTextNode(data[comparison]['info']['file_2']['filename'])
 
-    // update data
-    // globalDataCopy[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
-    // globalDataCopy[comparison]['intersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMax'];
-    // globalDataCopy[comparison]['nonIntersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMin'];
-    // globalDataCopy[comparison]['nonIntersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
-
-    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
-    // data[comparison]['intersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMax'];
-    // data[comparison]['nonIntersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMin'];
-    // data[comparison]['nonIntersecting']['centroidMax'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
-
-    // bindDataToDiv(globalDataCopy);
-
-    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "intersecting")['centroidMin'];
-    // data[comparison]['intersecting']['centroidMin'] = createYRanges(globalDataCopy, comparison, "nonIntersecting")['centroidMax'];
-
-    // retrieve data with updated axes values
-    //globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
-    //data = combineLinkSpecificGlobalData(globalDataCopy);
-
-    
     if (tabId === TabId.intersecting) {
 
         if (typeof data[comparison]['intersecting']['data'] === "string") {
             data[comparison]['intersecting']['data'] = JSON.parse(data[comparison]['intersecting']['data']);
         }
+
+        //createYRanges(global, comparison, tabId);
 
         render(data, "clustered-data-information-data-sankey-" + tabName, tabId, tabName);
 
@@ -587,6 +569,8 @@ function renderPlots(tabName, tabId) {
 
         supportedGenomes("dropdown-menu scrollable-menu-" + tabName, data[comparison]['nonIntersecting']['selection'], tabId);
     }
+
+    
 
 }
 
