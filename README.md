@@ -9,10 +9,6 @@ OmicsTIDE is based on HTML/JavaScript/CSS using the D3.js and jQuery libraries a
 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
-<p align="center">
-  <img src="images/combined.svg" />
-</p>
-
 ## Installation Guide
 The following steps are required to set up and run OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
 
@@ -45,9 +41,9 @@ user@example:~$ source <your-venv>/bin/activate
 ```
 
 ## Running OmicsTIDE
-Activate venv and run OmicsTIDE.py which will open the web application in a new browser window. 
+Activate venv and run the python file which will open the web application in a new browser window. 
 ```console
 user@example:~$ source <your-venv>/bin/activate
-(<your-venv>) user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
+(<your-venv>) user@example:~$ python <path/to/omicsTIDE>/__init__.py
 ```
 OmicsTIDE requires a stable internet connection to load the front-end libraries and frameworks (D3.js, Bootstrap, jQuery) and to request data from [NCBI](https://www.ncbi.nlm.nih.gov/) and [Panther](http://www.pantherdb.org/). 
