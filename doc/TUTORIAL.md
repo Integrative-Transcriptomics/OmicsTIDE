@@ -21,16 +21,11 @@ The user can directly upload one PTCF file and explore the trend comparisons.
 
 An example file can be found [here](../static/data/test_data/ptcf) (*Streptomyces coelicolor*).
 
-<p align="center">
-  <img src="../images/home.png" />
-</p>
+< HOME >
 
-## Choose your pairwise trend comparison (Data Matrix Tab)
-Hovering the single comparisons in this tab will put color to the greyscaled graphs to allow the focus on one single pairwise comparison. Per default, the tab corresponding to the trend comparison of the **intersecting genes** is activated. The user can click on the **non-Intersecting** tab to show the trend comparison of the non-intersecting genes, alternatively. 
+## Choose your pairwise trend comparison (comparison Tab)
 
-<p align="center">
-  <img src="../images/One.svg" />
-</p>
+< COMPARISON >
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
@@ -47,9 +42,8 @@ Example text files for known reguatory bundles of genes in *Streptomyces coelico
 Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will adds the genes corresponding to the clicked element to the **current selection table**. Another click on an already selected element will remove it from the selection again. If the non-intersecting genes are studied, diagrams can be directly clicked to add the respective genes to the current selection table.
 
 If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
-<p align="center">
-  <img src="../images/Two.svg" />
-</p>
+
+< FIRST >
 
 ## Explore subselection (2nd Level Analysis Tab)
 The current selection will appear as profile diagrams. Note, that if the analysis is based on the non-intersecting genes, one diagrams of the two diagrams might be empty, depending on the chosen selection. The genes in the subselection are shown on the top right in a **detailed selection table**. By **hovering** the single profiles, the corresponding genes are highlighted and marked with a tool tip that shows the gene ID. For more detailed information, a click on the currently hovered profile will open the corresponding entry on the **NCBI** home page.
@@ -58,6 +52,4 @@ Finding the similarities within a given selection can be done e.g. by performing
 
 The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
-<p align="center">
-  <img src="../images/Three.svg" />
-</p>
+< SECOND >
