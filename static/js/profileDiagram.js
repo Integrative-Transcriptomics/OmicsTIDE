@@ -41,8 +41,8 @@ TODO: change nomenclature: highlighted/selected
         .call(d3.axisBottom(currentXScale));
 
 
-    let minValue = -2.3;
-    let maxValue = 2.3;
+    let minValue = -2.7;
+    let maxValue = 2.7;
     currentYScale.domain([minValue, maxValue]);   
     let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
 
@@ -441,7 +441,7 @@ function wideToLong(wideData, experimentId, isBox){
         Object.keys(row).forEach(function (colname) {
 
             // skips columns not related to time point measurments
-            if (colname.startsWith(experimentId) && !(colname.endsWith("cluster") || colname.endsWith("median") || colname === "gene" || colname === "highlighted" || colname === "profile_selected")) {
+            if (colname.startsWith(experimentId) && !(colname.endsWith("var") || colname.endsWith("cluster") || colname.endsWith("median") || colname.endsWith("median")|| colname === "gene" || colname === "highlighted" || colname === "profile_selected")) {
 
                 if(!isBox){
                 longData.push({

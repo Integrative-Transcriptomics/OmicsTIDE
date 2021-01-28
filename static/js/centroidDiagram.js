@@ -30,8 +30,8 @@
     currentXScale.domain(currentXDomain);
     //currentYScale.domain(currentYDomain);
 
-    let minValue = -2.3;
-    let maxValue = 2.3;
+    let minValue = -2.6;
+    let maxValue = 2.6;
 
     currentYScale.domain([minValue, maxValue]);
 
@@ -340,7 +340,7 @@ function yMinMaxPerExperimentCluster(data, experimentId, clusterNumber){
 
     for(let row of filteredData){
         for(let col of Object.keys(filteredData)){
-            if(col !== "ds1_cluster" && col !== "ds2_cluster" && col !== "ds1_median" && col !== "ds2_median" && col !== "gene"){
+            if(col !== "ds1_cluster" && col !== "ds2_cluster" && col !== "ds1_median" && col !== "ds2_median" && col !== "gene" && col !== "ds1_var" && col !== "ds2_var"){
                 allValues.push(row[col]);
             }
         }

@@ -78,6 +78,10 @@ function updateGeneHighlightingByTextInput(current){
         globalDataCopy = removeAllHighlightingFromData(globalDataCopy, comparison, tabId);
 
         globalDataCopy[comparison][tabId]['gene_highlight_active'] = false;
+
+        // updating the globalData
+        bindDataToDiv(globalDataCopy);
+        updateHighlightingInProfileDiagrams(comparison, tabId, tabName);
     }
 
     else{
@@ -85,37 +89,13 @@ function updateGeneHighlightingByTextInput(current){
         globalDataCopy = addHighlightingByGeneList(globalDataCopy, comparison, tabId, geneList);
 
         globalDataCopy[comparison][tabId]['gene_highlight_active'] = true;
+
+        // updating the globalData
+        bindDataToDiv(globalDataCopy);
+        updateHighlightingInProfileDiagrams(comparison, tabId, tabName);
     }
 
-    // updating the globalData
-    bindDataToDiv(globalDataCopy);
-
-    updateHighlightingInProfileDiagrams(comparison, tabId, tabName);
-
-    //filter globalDataCopy
-    // globalDataCopy[comparison][tabId]['data'] = combineLinkSpecificGlobalData(globalDataCopy)[comparison][tabId]['data'].filter(d => d.highlighted);
-
-
-    // if(tabId === "intersecting"){
-
-    //     detailDiagramsPerCluster(DiagramId.profile, 
-    //         globalDataCopy[comparison][tabId], 
-    //         "clustered-data-information-data-profiles-left-" + tabName, 
-    //         "clustered-data-information-data-profiles-right-" + tabName,
-    //         tabName,
-    //         TabId.intersecting);
-    // }
-
-    // if(tabId === "nonIntersecting"){
-
-    //     detailDiagramsPerCluster(DiagramId.profile, 
-    //         globalDataCopy[comparison][tabId], 
-    //         "non-intersecting-information-data-left-" + tabName, 
-    //         "non-intersecting-information-data-right-" + tabName, 
-    //         tabName,
-    //         TabId.nonIntersecting);
     
-    // }   
 
 }
 
@@ -127,33 +107,41 @@ function updateHighlightingInProfileDiagrams(comparison, tabId, tabName){
     let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
     globalDataCopy[comparison][tabId]['data'] = combineLinkSpecificGlobalData(globalDataCopy)[comparison][tabId]['data'].filter(d => d.highlighted);
 
+    //if(!globalDataCopy[comparison][tabId]['gene_highlight_active']){
 
-    if(tabId === "intersecting"){
+        if(tabId === "intersecting"){
 
-        detailDiagramsPerCluster(DiagramId.profile, 
-            globalDataCopy[comparison][tabId], 
-            "clustered-data-information-data-profiles-left-" + tabName, 
-            "clustered-data-information-data-profiles-right-" + tabName,
-            tabName,
-            TabId.intersecting);
-    }
-
-    if(tabId === "nonIntersecting"){
-
-        detailDiagramsPerCluster(DiagramId.profile, 
-            globalDataCopy[comparison][tabId], 
-            "non-intersecting-information-data-left-" + tabName, 
-            "non-intersecting-information-data-right-" + tabName, 
-            tabName,
-            TabId.nonIntersecting);
+            detailDiagramsPerCluster(DiagramId.profile, 
+                globalDataCopy[comparison][tabId], 
+                "clustered-data-information-data-profiles-left-" + tabName, 
+                "clustered-data-information-data-profiles-right-" + tabName,
+                tabName,
+                TabId.intersecting);
+        }
     
-    }   
+        if(tabId === "nonIntersecting"){
+    
+            detailDiagramsPerCluster(DiagramId.profile, 
+                globalDataCopy[comparison][tabId], 
+                "non-intersecting-information-data-left-" + tabName, 
+                "non-intersecting-information-data-right-" + tabName, 
+                tabName,
+                TabId.nonIntersecting);
+        
+        }
 
+        let currentDetailDiagram = getActiveRadioButton(tabName);
 
-}
+        if(currentDetailDiagram === "profile"){
+            return;
+        }
 
-
-
+        else{
+            
+            document.getElementById(currentDetailDiagram + "-button-" + tabName).parentElement.classList.remove("active");
+            document.getElementById("profile-button-" + tabName).parentElement.classList.add("active");
+        }
+    }
 
 /**
  * TASK1
@@ -255,10 +243,6 @@ function addHighlightingByGeneList(data, comparison, tabId, geneList){
 
 
 
-
-
-
-
 function loadGeneFilterFile(current){
 
     let tabName = tabDivIdFromElement(current);
@@ -310,72 +294,9 @@ function loadGeneFilterFile(current){
         reader.readAsText(document.getElementById('file_goi-' + tabName).files[0]);
     }
 
-
-    // updating the globalData
-
-    //filter globalDataCopy
-    // globalDataCopy[comparison][tabId]['data'] = combineLinkSpecificGlobalData(globalDataCopy)[comparison][tabId]['data'].filter(d => d.highlighted);
-
-
-    // if(tabId === "intersecting"){
-
-    //     detailDiagramsPerCluster(DiagramId.profile, 
-    //         globalDataCopy[comparison][tabId], 
-    //         "clustered-data-information-data-profiles-left-" + tabName, 
-    //         "clustered-data-information-data-profiles-right-" + tabName,
-    //         tabName,
-    //         TabId.intersecting);
-    // }
-
-    // if(tabId === "nonIntersecting"){
-
-    //     detailDiagramsPerCluster(DiagramId.profile, 
-    //         globalDataCopy[comparison][tabId], 
-    //         "non-intersecting-information-data-left-" + tabName, 
-    //         "non-intersecting-information-data-right-" + tabName, 
-    //         tabName,
-    //         TabId.nonIntersecting);
-    
-    // }     
+    bindDataToDiv(globalDataCopy);
+   
 }
-
-
-//var geneFilterActivated = false;
-
-
-
-
-// function filteredDataSubset(data, comparison, tabId){
-
-//     // create deep copy 
-//     let filteredData = JSON.parse(JSON.stringify(data));
-    
-//     // keep filtered data only
-//     filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return d.highlighted === true});
-
-//     return filteredData;
-// }
-
-
-// function updateAllDetailDiagramsByFilteredData(data, comparison, tabId, diagramId){
-    
-//     let filteredData = filteredDataSubset(data, comparison, tabId)   
-
-//     for(let ds of ['ds1', 'ds2']){
-//         for(let cluster = 1; cluster <= filteredData[comparison][tabId]['cluster_count']; cluster++ ){
-//             updateDetailDiagram(diagramId, filteredData[comparison][tabId], ds, cluster, comparison + "_" + tabId, tabId);
-//         }
-//     }
-
-// }
-
-
-
-
-
-
-
-
 
 
 function updateHighlightLines(geneList, tabName){
@@ -393,4 +314,5 @@ function updateHighlightLines(geneList, tabName){
             updateDetailDiagram(diagramId, filteredData[comparison][tabId], ds, cluster, tabName, tabId);
         }
     }
+
 }

@@ -238,6 +238,7 @@ function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
 
             let currentlyClickedNodes = getGenesOfLinkIds(linkIds, globalDataCopy, comparison, tabId);
 
+            //let currentSelection = globalDataCopy[comparison][tabId]['selection'].filter(d => d.highlighted);
             let currentSelection = globalDataCopy[comparison][tabId]['selection'].filter(d => d.highlighted);
 
             globalDataCopy[comparison][tabId]['selection'] = updateSelection(currentlyClickedNodes, currentSelection);
@@ -247,6 +248,10 @@ function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
             let combinations = getDatasetCombinations(globalDataCopy[comparison][tabId]['selection']);
 
             createTable(tabId + "-information-controls-table-" + comparison + "_" + tabId, combinations, comparison, tabId);
+
+
+
+            
 
         })
 
@@ -317,7 +322,7 @@ function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
 
                     let currentlyClickedData = getGenesInLink(d, currentData, comparison, tabId);
 		
-                    let currentSelection = globalDataCopy[comparison][tabId]['selection'].filter(d => d.highlighted);
+                    let currentSelection = globalDataCopy[comparison][tabId]['selection'];
 
                     globalDataCopy[comparison][tabId]['selection'] = updateSelection(currentlyClickedData, currentSelection);
 
@@ -419,12 +424,6 @@ function getConAndDiscordanceInfo(data, comparison){
 }
 
 
-
-
-    // linkSankey
-    //     .style("mix-blend-mode", "multiply")
-    //     .append("title")
-    //     .text(d => `${d.names.slice(1).join(" → ")}\n${d.value.toLocaleString()}`)
 
 
 function getLinkIdsConnectedToNode(node){

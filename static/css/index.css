@@ -566,6 +566,7 @@
 #home-welcome{
 	width: 100%;
 	height: 15%;
+	padding-top: 1%;
     position: relative;
 }
 
@@ -598,7 +599,7 @@
 }
 
 #home-content-svg{
-	width: 70%;
+	width: 100%;
 	height: 100%;
 	position: relative;
 }
@@ -858,10 +859,21 @@
 	display:none;
 }
 
+#omicstide-header{
+	font-style: "Josefin Sans";
+	font-size: 30px;
+	font-weight: 400;
+}
+
+#omicstide-description{
+	font-style: "Josefin Sans";
+	font-size: 15px;
+	font-weight: 400;
+}
 
 .accordion{
     width: 100%;
-    height: 9%;
+    height: 5%;
     margin: 0 auto;
     background: #fff;
     border-radius: 3px;
@@ -871,7 +883,20 @@
     margin-bottom: 2%;
 }
 
-.accordion.multiple-files{
+.accordion.index{
+    width: 100%;
+    height: 8%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(225,225,225,1);
+    overflow: hidden;
+    transition: height 0.3s ease;
+    margin-bottom: 2%;
+}
+
+
+/* .accordion.multiple-files{
     width: 100%;
     height: 9%;
     margin: 0 auto;
@@ -893,7 +918,7 @@
     overflow: hidden;
     transition: height 0.3s ease;
     margin-bottom: 2%;
-}
+} */
 
 .accordion .accordion_tab{
 	padding: 1.5%;
@@ -954,7 +979,7 @@
 }
 
 .accordion.active.abundance{
-	 height: 50%;
+	 height: 42.5%;
 	 position: relative;
 }
 
@@ -964,7 +989,7 @@
 }
 
 .accordion.active.selection{
-	height: 50%;
+	height: 60%;
 	position: relative;
 }
 
@@ -1039,7 +1064,8 @@
 }
 
 .accordion .accordion_content{
-	padding: 2.5%;
+	padding-top: 2%;
+	padding-left: 5%;
 	height: 100%;
 	width: 100%;
 	position: relative;

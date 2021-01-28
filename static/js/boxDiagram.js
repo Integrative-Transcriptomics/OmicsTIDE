@@ -26,8 +26,8 @@
         .call(d3.axisBottom(currentXScale));
 
 
-    let minValue = -2.6;
-    let maxValue = 2.6;
+    let minValue = -2.8;
+    let maxValue = 2.8;
     currentYScale.domain([minValue, maxValue]);   
     let tickRange = createTickRange(minValue, maxValue, 0.5, -4, 4);
 

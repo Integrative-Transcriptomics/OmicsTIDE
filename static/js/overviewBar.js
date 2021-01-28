@@ -136,8 +136,6 @@ function comparisonTable(data, tableDiv) {
 
             linkTableWithBars(d);
 
-
-
             removePreview("matrix-information-preview-content")
                 .then(setPreview("matrix-information-preview-content", "matrix-information-preview-content-wrapper"))
                 .then(render(combineLinkSpecificGlobalData(data), "matrix-information-preview-content-intersecting-content-sankey", TabId.matrix, d.comparison + "_intersecting"))
@@ -687,14 +685,14 @@ function update(params) {
             return d.key;
         })
         .merge(bars)
-        .on('mouseover', function (d) {
+        // .on('mouseover', function (d) {
 
-            highlightFiles(d);
-        })
-        .on('mouseout', function (d) {
+        //     highlightFiles(d);
+        // })
+        // .on('mouseout', function (d) {
 
-            unHighlightFiles()
-        })
+        //     unHighlightFiles()
+        // })
         .transition()
         .duration(transDuration)
         //.attr('y', function(d) {

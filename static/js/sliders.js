@@ -113,40 +113,90 @@ function kSlider(id){
 }
 
 
+// variance
+function varianceAndAbundanceslider(data, tabName, tabId) {
 
-/**
-  *
-  * @param{} data
-  * @param{String} tabName
-  * @param{String} tabId
-  */
-function expressionSlider(data, tabName, tabId){
+  if ($("#ds1_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_slider-" + tabName)[0].noUiSlider) {
+    $("#ds1_slider-" + tabName)[0].noUiSlider.destroy()
+  }
 
-    if($("#ds1_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_slider-" + tabName)[0].noUiSlider){
-        $("#ds1_slider-" + tabName)[0].noUiSlider.destroy()
-    }
+  if ($("#ds2_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_slider-" + tabName)[0].noUiSlider) {
+    $("#ds2_slider-" + tabName)[0].noUiSlider.destroy()
+  }
 
-    if($("#ds2_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_slider-" + tabName)[0].noUiSlider){
-        $("#ds2_slider-" + tabName)[0].noUiSlider.destroy()
-    }
+  if ($("#ds1_abundance_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_abundance_slider-" + tabName)[0].noUiSlider) {
+    $("#ds1_abundance_slider-" + tabName)[0].noUiSlider.destroy()
+  }
 
-    if(data.ds1_min === data.ds1_max){
-      data.ds1_max = data.ds1_min + 0.1;
-    }
+  if ($("#ds2_abundance_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_abundance_slider-" + tabName)[0].noUiSlider) {
+    $("#ds2_abundance_slider-" + tabName)[0].noUiSlider.destroy()
+  }
 
-    if(data.ds2_min === data.ds2_max){
-      data.ds2_max = data.ds2_min + 0.1;
-    }
+  createSlider("ds1_slider-" + tabName, 0, 100, true);
+  createSlider("ds2_slider-" + tabName, 0, 100, true);
+  createSlider("ds1_abundance_slider-" + tabName, 0, 100, true);
+  createSlider("ds2_abundance_slider-" + tabName, 0, 100, true);
+
+  introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, 0, 100, tabId, data);
+  introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, 0, 100, tabId, data);
+  introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, 0, 100, tabId, data);
+  introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, 0, 100, tabId, data);
+  introduceSlideUpdates("ds1", "ds1_abundance_slider-" + tabName, tabName, "ds1_abundance_slider_input1-" + tabName, true, 0, 100, tabId, data);
+  introduceSlideUpdates("ds1", "ds1_abundance_slider-" + tabName, tabName, "ds1_abundance_slider_input2-" + tabName, false, 0, 100, tabId, data);
+  introduceSlideUpdates("ds2", "ds2_abundance_slider-" + tabName, tabName, "ds2_abundance_slider_input1-" + tabName, true, 0, 100, tabId, data);
+  introduceSlideUpdates("ds2", "ds2_abundance_slider-" + tabName, tabName, "ds2_abundance_slider_input2-" + tabName, false, 0, 100, tabId, data);
 
 
-    createSlider("ds1_slider-" + tabName, data.ds1_min, data.ds1_max, true);
-    createSlider("ds2_slider-" + tabName, data.ds2_min, data.ds2_max, true);
-
-    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, data.ds1_min, data.ds1_max, tabId, data);
-    introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, data.ds1_min, data.ds1_max, tabId, data);
-    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, data.ds2_min, data.ds2_max, tabId, data);
-    introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, data.ds2_min, data.ds2_max, tabId, data);
 }
+
+
+
+
+
+// function expressionSlider(data, tabName, tabId){
+
+//     if($("#ds1_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_slider-" + tabName)[0].noUiSlider){
+//         $("#ds1_slider-" + tabName)[0].noUiSlider.destroy()
+//     }
+
+//     if($("#ds2_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_slider-" + tabName)[0].noUiSlider){
+//         $("#ds2_slider-" + tabName)[0].noUiSlider.destroy()
+//     }
+
+//     createSlider("ds1_slider-" + tabName, 0, 100, true);
+//     createSlider("ds2_slider-" + tabName, 0, 100, true);
+
+//     introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, 0, 100, tabId, data);
+//     introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, 0, 100, tabId, data);
+//     introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, 0, 100, tabId, data);
+//     introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, 0, 100, tabId, data);
+// }
+
+
+
+
+
+// function abundanceSlider(data, tabName, tabId){
+
+//   // console.log(tabName);
+//   // console.log(tabId);
+
+//   if($("#ds1_abundance_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_abundance_slider-" + tabName)[0].noUiSlider){
+//       $("#ds1_abundance_slider-" + tabName)[0].noUiSlider.destroy()
+//   }
+
+//   if($("#ds2_abundance_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_abundance_slider-" + tabName)[0].noUiSlider){
+//       $("#ds2_abundance_slider-" + tabName)[0].noUiSlider.destroy()
+//   }
+
+//   createSlider("ds1_abundance_slider-" + tabName, 0, 100, true);
+//   createSlider("ds2_abundance_slider-" + tabName, 0, 100, true);
+
+//   introduceSlideUpdates("ds1", "ds1_abundance_slider-" + tabName, tabName, "ds1_abundance_slider_input1-" + tabName, true, 0, 100, tabId, data);
+//   introduceSlideUpdates("ds1", "ds1_abundance_slider-" + tabName, tabName, "ds1_abundance_slider_input2-" + tabName, false, 0, 100, tabId, data);
+//   introduceSlideUpdates("ds2", "ds2_abundance_slider-" + tabName, tabName, "ds2_abundance_slider_input1-" + tabName, true, 0, 100, tabId, data);
+//   introduceSlideUpdates("ds2", "ds2_abundance_slider-" + tabName, tabName, "ds2_abundance_slider_input2-" + tabName, false, 0, 100, tabId, data);
+// }
 
 
 /**
@@ -176,19 +226,48 @@ function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defa
     $('#'+sliderId)[0].noUiSlider.on('change', function (values, handle) {
 
         clearCurrentSelection(tabName);
-        document.getElementById(experimentId + '_slider_input1-' + tabName).value = (values[0] * 100) / 100;
-        document.getElementById(experimentId + '_slider_input2-' + tabName).value = (values[1] * 100) / 100;
+
+        if(sliderId === "ds1_slider-" + tabName || sliderId === "ds2_slider-" + tabName){
+          document.getElementById(experimentId + '_slider_input1-' + tabName).value = (values[0] * 100) / 100;
+          document.getElementById(experimentId + '_slider_input2-' + tabName).value = (values[1] * 100) / 100;
+        }
+
+        if(sliderId === "ds1_abundance_slider-" + tabName || sliderId === "ds2_abundance_slider-" + tabName){
+          document.getElementById(experimentId + '_abundance_slider_input1-' + tabName).value = (values[0] * 100) / 100;
+          document.getElementById(experimentId + '_abundance_slider_input2-' + tabName).value = (values[1] * 100) / 100;
+        }
+
         updateCentroidBySlider(tabName, tabId);
     });
 
+    // UPDATA BY NUMBER INPUT
     inputNumber.addEventListener('change', function () {
       
       let currentValue = Math.round((inputNumber.valueAsNumber + Number.EPSILON) * 100) / 100;
 
-      let min = $("#"+sliderId)[0].noUiSlider.options.range.min;
-      let max = $("#"+sliderId)[0].noUiSlider.options.range.max;
+      if(inputNumber.className.includes("abundance")){
 
-      // get acutal ID of the input number
+        if(inputNumber.className.split("_")[3] === "input1"){
+
+          let input2 = parseFloat($("#"+sliderId)[0].noUiSlider.get()[1]);
+          
+          $("#"+sliderId)[0].noUiSlider.set([currentValue, input2]);
+
+        }
+
+        if(inputNumber.className.split("_")[3] === "input2"){
+
+          let input1 = parseFloat($("#"+sliderId)[0].noUiSlider.get()[0]);
+
+
+          $("#"+sliderId)[0].noUiSlider.set([input1, currentValue]);
+        }
+      }
+
+      else{
+
+
+        // get acutal ID of the input number
       if(inputNumber.className.split("_")[2] === "input1"){
 
         let input2 = parseFloat($("#"+sliderId)[0].noUiSlider.get()[1]);
@@ -203,6 +282,11 @@ function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defa
 
         $("#"+sliderId)[0].noUiSlider.set([input1, currentValue]);
       }
+
+      }
+
+      
+
 
       updateCentroidBySlider(tabName, tabId);
     });
@@ -227,28 +311,90 @@ function clearCurrentSelection(tabName){
 }
 
 
+// function getPercentile(data, experimentId, tabName, lower, upper){
+
+//   let comparison = tabName.split("_")[0];
+//   let tabId = tabName.split("_")[1];
+
+//   let allValues = data[comparison][tabId]['data'].map(d => experimentId === "ds1" ? d.ds1_var : d.ds2_var);
+
+//   // https://stackoverflow.com/questions/48719873/how-to-get-median-and-quartiles-percentiles-of-an-array-in-javascript-or-php
+  
+//   const quantile = (arr, q) => {
+//     const sorted = asc(arr);
+//     const pos = (sorted.length - 1) * q;
+//     const base = Math.floor(pos);
+//     const rest = pos - base;
+//     if (sorted[base + 1] !== undefined) {
+//         return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+//     } else {
+//         return sorted[base];
+//     }
+//   }
+
+//   let upperQuantile = quantile(allValues, upper);
+//   let lowerQuantile = quantile(allValues, lower);
+
+//   console.log(upperQuantile);
+//   console.log(lowerQuantile);
+
+// }
+
+
+
+
+
 
 /**
  * updates data by altering the "selected" column to show the result of expression filtering
  * @param {Object} data wide data, e.g. loaded by d3.csv()
  * @returns {Object} adapted data
  */
-function updateSlide(data, tabName, tabId){
+function updateSlide(data, tabName){
 
-  let ds1Min = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[0];
-  let ds1Max = +document.getElementById('ds1_slider-' + tabName).noUiSlider.get()[1];
-  let ds2Min = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[0];
-  let ds2Max = +document.getElementById('ds2_slider-' + tabName).noUiSlider.get()[1];
+  console.log("UPDATE SLIDE!")
+
+  let tabId = tabName.split("_")[1];
+
+  let ds1VarianceMin = parseFloat(Array.from(document.getElementById('ds1_slider-' + tabName).noUiSlider.get())[0]);
+  let ds1VarianceMax = parseFloat(Array.from(document.getElementById('ds1_slider-' + tabName).noUiSlider.get())[1]);
+  let ds2VarianceMin = parseFloat(Array.from(document.getElementById('ds2_slider-' + tabName).noUiSlider.get())[0]);
+  let ds2VarianceMax = parseFloat(Array.from(document.getElementById('ds2_slider-' + tabName).noUiSlider.get())[1]);
+
+  let ds1MedianMin = parseFloat(Array.from(document.getElementById('ds1_abundance_slider-' + tabName).noUiSlider.get())[0]);
+  let ds1MedianMax = parseFloat(Array.from(document.getElementById('ds1_abundance_slider-' + tabName).noUiSlider.get())[1]);
+  let ds2MedianMin = parseFloat(Array.from(document.getElementById('ds2_abundance_slider-' + tabName).noUiSlider.get())[0]);
+  let ds2MedianMax = parseFloat(Array.from(document.getElementById('ds2_abundance_slider-' + tabName).noUiSlider.get())[1]);
+
+  console.log(document.getElementById('ds1_slider-' + tabName).noUiSlider.get())
+  console.log(document.getElementById('ds2_slider-' + tabName).noUiSlider.get())
+  console.log(document.getElementById('ds1_abundance_slider-' + tabName).noUiSlider.get())
+  console.log(document.getElementById('ds2_abundance_slider-' + tabName).noUiSlider.get())
+
+  console.log(ds1VarianceMin);
+  console.log(ds1VarianceMax);
+  console.log(ds2VarianceMin);
+  console.log(ds2VarianceMax);
+
+  console.log(ds1MedianMin);
+  console.log(ds1MedianMax);
+  console.log(ds2MedianMin);
+  console.log(ds2MedianMax);
+
+  //percentileDs1 = getPercentile(combineLinkSpecificGlobalData(data), "ds1", tabName, ds1Min, ds1Max);
 
   if (tabId === TabId.intersecting){
         for(let link of Object.keys(data)){
-          for(let d of data[link]){
+          for(let d of data[link]){    
 
-            d.highlighted =
-              ((parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max)) &&
-              ((parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max))
+              d.highlighted =
+              ( ((parseFloat(d.ds1_var) >= ds1VarianceMin) && (parseFloat(d.ds1_var) <= ds1VarianceMax)) &&
+              ((parseFloat(d.ds2_var) >= ds2VarianceMin) && (parseFloat(d.ds2_var) <= ds2VarianceMax)) &&
+              ((parseFloat(d.ds1_median) >= ds1MedianMin) && (parseFloat(d.ds1_median) <= ds1MedianMax)) &&
+              ((parseFloat(d.ds2_median) >= ds2MedianMin) && (parseFloat(d.ds2_median) <= ds2MedianMax)) )
               ? true
               : false;
+            
 
           }
       }
@@ -260,9 +406,11 @@ function updateSlide(data, tabName, tabId){
           (
               (geneInDatasetOneOnly(d) ? 
                   // case: genes only in dataset1 
-                  ( ( (parseFloat(d.ds1_median) >= ds1Min) && (parseFloat(d.ds1_median) <= ds1Max) ) ? true : false) :
+                  ( ( (parseFloat(d.ds1_var) >= ds1VarianceMin) && (parseFloat(d.ds1_var) <= ds1VarianceMax) &&
+                    ( (parseFloat(d.ds1_median) >= ds1MedianMin) && (parseFloat(d.ds1_median) <= ds1MedianMax) ) ) ? true : false) :
                           // case: genes only in dataset2
-                          ( ( (parseFloat(d.ds2_median) >= ds2Min) && (parseFloat(d.ds2_median) <= ds2Max) ) ? true : false))
+                          ( ( (parseFloat(d.ds2_var) >= ds2VarianceMin) && (parseFloat(d.ds2_var) <= ds2VarianceMax) ) &&
+                          ( ( (parseFloat(d.ds2_median) >= ds2MedianMin) && (parseFloat(d.ds2_median) <= ds2MedianMax) ) ) ? true : false))
           )
       }
       
@@ -282,20 +430,14 @@ function updateSlide(data, tabName, tabId){
 function updateCentroidBySlider(tabName, tabId){
   
     let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
-    //globalDataCopy = combineLinkSpecificGlobalData(globalDataCopy);
-
     let currentDetailDiagram = getActiveRadioButton(tabName);
-
-    //let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
     let comparison = tabName.split("_")[0];
-
-    //globalDataCopy[comparison][tabId]['data'] = updateSlide(globalDataCopy[comparison][tabId]['data'], tabName, tabId);
 
     globalDataCopy[comparison][tabId]['data'] = updateSlide(globalDataCopy[comparison][tabId]['data'], tabName, tabId);
     bindDataToDiv(globalDataCopy);
 
     // new copy
-    let filteredData = combineLinkSpecificGlobalData(createDeepCopyofData(document.getElementById("data-json").value));
+    let filteredData = combineLinkSpecificGlobalData(globalDataCopy);
     filteredData[comparison][tabId]['data'] = filteredData[comparison][tabId]['data'].filter(function(d) { return d.highlighted});
 
     if(tabId === TabId.intersecting){

@@ -422,7 +422,7 @@ function loadDataTab(tabName, tabId) {
 
     if (tabId === TabId.matrix) {
         
-        bindDataToDiv(updateYScalesMinMax(createDeepCopyofData(document.getElementById("data-json").value)));
+        //bindDataToDiv(updateYScalesMinMax(createDeepCopyofData(document.getElementById("data-json").value)));
         comparisonOverview(createDeepCopyofData(document.getElementById("data-json").value));
         
     }
@@ -510,7 +510,10 @@ function renderPlots(tabName, tabId) {
 
         render(data, "clustered-data-information-data-sankey-" + tabName, tabId, tabName);
 
-        expressionSlider(data[comparison]['intersecting'], tabName, tabId);
+        //expressionSlider(data[comparison]['intersecting'], tabName, tabId);
+        //abundanceSlider(data[comparison]['intersecting'], tabName, tabId);
+
+        varianceAndAbundanceslider(data[comparison]['intersecting'], tabName, tabId);
 
         detailDiagramsPerCluster(
             DiagramId.centroid,
@@ -534,7 +537,10 @@ function renderPlots(tabName, tabId) {
             data[comparison]['nonIntersecting']['data'] = JSON.parse(data[comparison]['nonIntersecting']['data']);
         }
 
-        expressionSlider(data[comparison]['nonIntersecting'], tabName, tabId)
+        // expressionSlider(data[comparison]['nonIntersecting'], tabName, tabId)
+        // abundanceSlider(data[comparison]['nonIntersecting'], tabName, tabId)
+
+        varianceAndAbundanceslider(data[comparison]['intersecting'], tabName, tabId);
 
         detailDiagramsPerCluster(
             DiagramId.centroid,

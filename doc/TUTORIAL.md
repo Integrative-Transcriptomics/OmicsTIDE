@@ -8,29 +8,29 @@ OmicsTIDE uses CSV files following given formats. Detailed information on the da
 The user has two options for data loading. Either [abundance files](DATAFORMATS.md/###-Abundance-Data) can be loaded to calculate trends first and then explore the corresponding trend comparison or already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
 
 ### First option: Loading up to four abundance files for pairwise trend comparisons
-The user can select between two and four abundance file for pairwise comparisons. The number of files is restricted to four to ensure a clear overview in the overview tab with max. four pairwise combinations, resultign in six pairwise comparisons. 
+The user can select between two and four abundance file for pairwise comparisons. The number of files is restricted to four to ensure a clear overview in the Data Matrix tab with max. four pairwise combinations - i.e. six comparisons. 
 
 If required, the data set can be filtered by adjusting the **range slider** to keep only a given percentile range of genes to e.g. remove low-variant genes. The removal of low-variant genes will speed up the downstream analysis steps, as the number of genes decreases. 
 
-By adjusting the **slider** for the initial clusters, the user can determine the further k-Means clustering step used for trend determination and trend comparison. 
+By adjusting the **slider** for the initial clusters, the user can determine the further k-Means clustering step. 
 
-By selecting a given test data set, the user can explore the functionalities of OmicsTIDE without the need to prepare and load own abundance or PTCF files. 
-
-The abundance files used as test data can be found [here](../static/data/test_data/qnorm_log2) (*Streptomyces coelicolor*).
+Examples files can be found [here](../static/data/test_data/qnorm_log2) (*Streptomyces coelicolor*).
 
 ### Second option: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
 
 An example file can be found [here](../static/data/test_data/ptcf) (*Streptomyces coelicolor*).
 
- < -- Home Tab -- >
+<p align="center">
+  <img src="../images/home.png" />
+</p>
 
-## Choose your pairwise trend comparison (Overview Tab)
-The overview tab shows basic information on the analysis, such as the names of the loaded files, the percentile ranged used for variance filtering, and the chosen k parameter. The information on the single pairwise comparisons is shown in an interactive table. The corresponding data is shown as horizontal stacked bar charts and allows to quickly see the "composition" of a given pairwise comparison - i.e. how many genes are found in both compared data sets (**intersecting genes**) and how many genes are found only in one of the two data sets (**non-intersecting genes**). The intersecting genes are further classified to either follow a **concordant** (purple stack) or **discordant** (yellow stack) trend in pair corresponding pairwise comparison.
+## Choose your pairwise trend comparison (Data Matrix Tab)
+Hovering the single comparisons in this tab will put color to the greyscaled graphs to allow the focus on one single pairwise comparison. Per default, the tab corresponding to the trend comparison of the **intersecting genes** is activated. The user can click on the **non-Intersecting** tab to show the trend comparison of the non-intersecting genes, alternatively. 
 
-Hovering the rows in the interactive table will focus the users attention on the corresponding stacked bar chart. Furthermore, a preview of the trend comparison visualization for intersecting and non-intersecting genes is displayed. Once the user wants to select a given pairwise trend-comparison in the first-level analysis a click on the corresponding cell in the table will open the corresponding tab. 
-
-< -- Overview Tab -- >
+<p align="center">
+  <img src="../images/One.svg" />
+</p>
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
 
@@ -40,17 +40,16 @@ In the controls section on the right, the user can choose three different types 
 
 The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. If the non-intersecting genes are studied, the filtering of the abundance is performed on each data set indivudually. *NOTE* that the abundance filtering step should be done prior to the sub selection in the workflow. Activating the abundance filtering will empty the current selection table (see below).
 
-In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene highlighting** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. The highlighting can also be turned off by clicking the button again.
+In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene search** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. The highlighting can also be turned off by clicking the button again.
 
 Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/data/genelist_Streptomyces_coelicolor/). The gene lists are based on [a recent study in Streptomyces coelicolor](https://www.nature.com/articles/s41598-020-65087-w).
 
 Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will adds the genes corresponding to the clicked element to the **current selection table**. Another click on an already selected element will remove it from the selection again. If the non-intersecting genes are studied, diagrams can be directly clicked to add the respective genes to the current selection table.
 
-In addition, the user can download the PTCF file of the current pairwise comparison as CSV file which allows to directly load this file at a later timepoint without the need to run the clustering procedure on the corresponding abundance files again. 
-
 If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
-
-< -- first-level analysis -- >
+<p align="center">
+  <img src="../images/Two.svg" />
+</p>
 
 ## Explore subselection (2nd Level Analysis Tab)
 The current selection will appear as profile diagrams. Note, that if the analysis is based on the non-intersecting genes, one diagrams of the two diagrams might be empty, depending on the chosen selection. The genes in the subselection are shown on the top right in a **detailed selection table**. By **hovering** the single profiles, the corresponding genes are highlighted and marked with a tool tip that shows the gene ID. For more detailed information, a click on the currently hovered profile will open the corresponding entry on the **NCBI** home page.
@@ -59,4 +58,6 @@ Finding the similarities within a given selection can be done e.g. by performing
 
 The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
-< -- second-level analysis -- >
+<p align="center">
+  <img src="../images/Three.svg" />
+</p>

@@ -11,16 +11,22 @@
 
 function filterHighlightedGenesOnly(data, comparison, tabId){
 
+    let filteredData = createDeepCopyofData(data);
+
     for(let link of Object.keys(data[comparison][tabId]['data'])){
 
         if(isJson(data[comparison][tabId]['data'][link])){
-            data[comparison][tabId]['data'][link] = JSON.parse(data[comparison][tabId]['data'][link]);
+            //data[comparison][tabId]['data'][link] = JSON.parse(data[comparison][tabId]['data'][link]);
+            filteredData[comparison][tabId]['data'][link] = JSON.parse(data[comparison][tabId]['data'][link]);
         }
 
-        data[comparison][tabId]['data'][link] = data[comparison][tabId]['data'][link].filter(d => d.highlighted);
+        //data[comparison][tabId]['data'][link] = data[comparison][tabId]['data'][link].filter(d => d.highlighted);
+        filteredData[comparison][tabId]['data'][link] = data[comparison][tabId]['data'][link].filter(d => d.highlighted);
     }
 
-    return data
+    console.log(filteredData);
+
+    return filteredData
 }
 
 

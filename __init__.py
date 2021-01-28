@@ -40,14 +40,16 @@ app = Flask(__name__)
 
 #if not os.path.exists('./tmp_files_OmicsTIDE'):
 
-if not os.path.exists(os.path.join('.', 'tmp_files_OmicsTIDE')):
+if not os.path.exists(os.path.join('/tmp', 'tmp_files_OmicsTIDE')):
 
 	#os.mkdir('./tmp_files_OmicsTIDE')
-    os.mkdir(os.path.join('.', 'tmp_files_OmicsTIDE'))
+    os.mkdir(os.path.join('/tmp', 'tmp_files_OmicsTIDE'))
 
 #app.config['UPLOAD_FOLDER'] = './tmp_files_OmicsTIDE'
 app.config['UPLOAD_FOLDER'] = os.path.join('.', 'tmp_files_OmicsTIDE')
 
+app.config['FILES_BLOODCELLS'] = os.path.join('.', 'static', 'data', 'BloodCell')
+app.config['FILES_STREPTOMYCES'] = os.path.join('.', 'static', 'data', 'caseStudy_colnames')
 
 
 def get_intersecting_ptcf_from_ptcf(ptcf):
@@ -105,11 +107,18 @@ def get_min_max_values(data, col1, col2):
 
 
 def extract_additional_information(data):
-	tmp_ds1_median = get_median_values(data, "ds1")
-	tmp_ds2_median = get_median_values(data, "ds2")
+	#tmp_ds1_median = get_median_values(data, "ds1")
+	#tmp_ds2_median = get_median_values(data, "ds2")
 
-	data['ds1_median'] = tmp_ds1_median
-	data['ds2_median'] = tmp_ds2_median
+	#tmp_ds1_var = get_var_values(data, "ds1")
+	#tmp_ds2_var = get_var_values(data, "ds2")
+
+	#data['ds1_median'] = tmp_ds1_median
+	#data['ds2_median'] = tmp_ds2_median
+	
+
+	#data['ds1_var'] = tmp_ds1_var
+	#data['ds2_var'] = tmp_ds2_var
 
 	cluster_count = get_cluster_count(data)
 
@@ -280,6 +289,16 @@ def load_and_modify(file, filename):
 
 	ptcf = add_additional_columns(init)
 
+	# ds1_var = ptcf['ds1_var']
+	# ds2_var = ptcf['ds2_var']
+	# ds1_median = ptcf['ds1_median']
+	# ds2_median = ptcf['ds1_median']
+
+	# ptcf.drop(columns=["ds1_var"], axis=1, inplace=True)
+	# ptcf.drop(columns=["ds2_var"], axis=1, inplace=True)
+	# ptcf.drop(columns=["ds1_median"], axis=1, inplace=True)
+	# ptcf.drop(columns=["ds2_median"], axis=1, inplace=True)
+
 	i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
 	ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
 
@@ -305,6 +324,12 @@ def get_median_values(data,ds):
 	values = data[[x for x in list(data) if x.startswith(ds) & (x!="ds1_cluster") & (x!="ds2_cluster") & (x!="gene")]]
 
 	return values.median(axis=1)
+
+def get_var_values(data,ds):
+
+	values = data[[x for x in list(data) if x.startswith(ds) & (x!="ds1_cluster") & (x!="ds2_cluster") & (x!="gene")]]
+
+	return values.var(axis=1)
 
 
 def get_time_points(data, ds):
@@ -341,12 +366,9 @@ def preprocess_file(input_file):
 	:return modified filename (DataFrame)
 	"""
 
-	print(input_file)
-
 	init = None
 
 	try:
-		print("reading!")
 		init = pd.read_csv(input_file, index_col='gene', sep= ",")
 	
 	except ValueError as ve:
@@ -356,14 +378,21 @@ def preprocess_file(input_file):
 				init = pd.read_csv(input_file, index_col='gene', sep= "\t")
 
 			except:
-				print("ve except")
 				return jsonify(message = "Error: Values in " + input_file + " neither comma- nor tab-separated!"),500
 
 		else:
-			print("except!!")
 			return jsonify(message = "Error: Values in " + input_file + " neither comma- nor tab-separated!"),500
 
 	
+	# add variance information
+	#init['var'] = init.var(axis=1)
+
+	variance = init.var(axis=1)
+	median = init.median(axis=1)
+
+	init['var'] = [stats.percentileofscore(variance, a, 'rank') for a in variance]	
+	init['median'] = [stats.percentileofscore(median, a, 'rank') for a in median]	
+
 	# remove columns with dot
 	init = remove_invalid_genes(init)
 
@@ -471,8 +500,8 @@ def clustered_to_ptcf(combined, file1_colnames, file2_colnames):
 	combined_pivot_reorder.ds2_cluster = combined_pivot_reorder.ds2_cluster.astype('Int64') + 1
 
 	# add "ds" to cluster id if not NA
-	combined_pivot_reorder.ds1_cluster = "ds1_" + combined_pivot_reorder.ds1_cluster.astype(str);
-	combined_pivot_reorder.ds2_cluster = "ds2_" + combined_pivot_reorder.ds2_cluster.astype(str);
+	combined_pivot_reorder.ds1_cluster = "ds1_" + combined_pivot_reorder.ds1_cluster.astype(str)
+	combined_pivot_reorder.ds2_cluster = "ds2_" + combined_pivot_reorder.ds2_cluster.astype(str)
 
 	# replace
 	combined_pivot_reorder = combined_pivot_reorder.replace(to_replace='<NA>', value=np.nan, regex=True)
@@ -540,7 +569,6 @@ def filter_variance(data, lower, upper):
 def equal_number_of_columns(f1, f2):
 
 	if(len(list(f1)) == len(list(f2))):
-		print(True)
 		return True
 
 	else:
@@ -603,7 +631,20 @@ def pairwise_trendcomparison(tmp_file1, tmp_file2, comparison_count, lower_varia
 	# validity check
 	equal_number_of_columns(ds1_file, ds2_file)
 
-	# initial colnames
+	# variance information
+	ds1_file_var = ds1_file["var"]
+	ds2_file_var = ds2_file["var"]
+
+	ds1_file_median = ds1_file["median"]
+	ds2_file_median = ds2_file["median"]
+
+	ds1_file.drop(columns=["var"], axis=1, inplace=True)
+	ds2_file.drop(columns=["var"], axis=1, inplace=True)
+	ds1_file.drop(columns=["median"], axis=1, inplace=True)
+	ds2_file.drop(columns=["median"], axis=1, inplace=True)
+	
+
+	# init colnames
 	ds1_colnames = list(ds1_file)
 	ds2_colnames = list(ds2_file)
 
@@ -613,6 +654,7 @@ def pairwise_trendcomparison(tmp_file1, tmp_file2, comparison_count, lower_varia
 	ds1_file.columns = tmp_colnames
 	ds2_file.columns = tmp_colnames
 
+
 	ds1_file = filter_variance(ds1_file, lower_variance_percentile, upper_variance_percentile)
 	ds2_file = filter_variance(ds2_file, lower_variance_percentile, upper_variance_percentile)
 
@@ -620,12 +662,12 @@ def pairwise_trendcomparison(tmp_file1, tmp_file2, comparison_count, lower_varia
 	ds1_file_np = ds1_file.to_numpy()
 	ds2_file_np = ds2_file.to_numpy()
 				
-	ds1_file_np = stats.zscore(ds1_file_np, axis=1)
-	ds2_file_np = stats.zscore(ds2_file_np, axis=1)
+	#ds1_file_np = stats.zscore(ds1_file_np, axis=1)
+	#ds2_file_np = stats.zscore(ds2_file_np, axis=1)
 				
 	ds1_file = pd.DataFrame(data=ds1_file_np, index=ds1_file.index, columns=list(tmp_colnames))
 	ds2_file = pd.DataFrame(data=ds2_file_np, index=ds2_file.index, columns=list(tmp_colnames))
-			
+
 	ds1_file = ds1_file.T.apply(stats.zscore).T
 	ds2_file = ds2_file.T.apply(stats.zscore).T	
 
@@ -635,11 +677,17 @@ def pairwise_trendcomparison(tmp_file1, tmp_file2, comparison_count, lower_varia
 	ptcf = combine_to_ptcf(clustering_intersecting, clustering_non_intersecting, ds1_colnames, ds2_colnames)
 
 	ptcf = add_additional_columns(ptcf)
+
+	ptcf['ds1_var'] = ds1_file_var
+	ptcf['ds2_var'] = ds2_file_var
+	ptcf['ds1_median'] = ds1_file_median
+	ptcf['ds2_median'] = ds2_file_median
 			
 	i_ptcf = get_intersecting_ptcf_from_ptcf(ptcf)
 	ni_ptcf = get_non_intersecting_ptcf_from_ptcf(ptcf)
 
 	intersecting_genes = ptcf_to_json(i_ptcf, True)
+
 	non_intersecting_genes = ptcf_to_json(ni_ptcf, False)
 
 	if test_data:
@@ -715,8 +763,11 @@ def get_info(file1, file2, filename1, filename2, i_ptcf, ni_ptcf):
 
 	genes_in_comparison = len(i_ptcf.index) + len(ni_ptcf.index)
 
-	info['file_1'] = { 'filename' : filename1 }
-	info['file_2'] = { 'filename' : filename2 }
+	path_file1, filename_file1 = os.path.split(filename1)
+	path_file2, filename_file2 = os.path.split(filename2)
+
+	info['file_1'] = { 'filename' : filename_file1 }
+	info['file_2'] = { 'filename' : filename_file2 }
 	info['file_1']['genes'] = list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index) + list(i_ptcf.index)
 	info['file_2']['genes'] = list(ni_ptcf[~ni_ptcf['ds2_cluster'].isna()].index) + list(i_ptcf.index)
 	info['file_1_only'] = {'genes' : list(ni_ptcf[~ni_ptcf['ds1_cluster'].isna()].index)}
@@ -790,8 +841,11 @@ def load_test_data_bloodcell():
 		lower_variance_percentile = int(request.form.to_dict()['lowerVariancePercentage'])
 		upper_variance_percentile = int(request.form.to_dict()['upperVariancePercentage'])
 
-		transcriptome_data = "./static/data/BloodCell/Transcriptome.csv"
-		proteome_data = "./static/data/BloodCell/Proteome.csv"
+		# transcriptome_data = "./static/data/BloodCell/Transcriptome.csv"
+		# proteome_data = "./static/data/BloodCell/Proteome.csv"
+
+		transcriptome_data = os.path.join(app.config['FILES_BLOODCELLS'], "Transcriptome.csv")
+		proteome_data = os.path.join(app.config['FILES_BLOODCELLS'], "Proteome.csv")
 
 		try:
 			data['Comparison1'] = pairwise_trendcomparison(transcriptome_data, proteome_data, 1, lower_variance_percentile, upper_variance_percentile, k, True)
@@ -822,18 +876,22 @@ def load_test_data_streptomyces():
 		lower_variance_percentile = int(request.form.to_dict()['lowerVariancePercentage'])
 		upper_variance_percentile = int(request.form.to_dict()['upperVariancePercentage'])
 
-		trans_m145 = "./static/data/caseStudy_colnames/Transcriptome_M145.csv"
-		prot_m145 = "./static/data/caseStudy_colnames/Proteome_M145.csv"
-		trans_m1152 = "./static/data/caseStudy_colnames/Transcriptome_M1152.csv"
-		prot_m1152 = "./static/data/caseStudy_colnames/Proteome_M1152.csv"
+		# trans_m145 = "./static/data/caseStudy_colnames/Transcriptome_M145.csv"
+		# #prot_m145 = "./static/data/caseStudy_colnames/Proteome_M145.csv"
+		# trans_m1152 = "./static/data/caseStudy_colnames/Transcriptome_M1152.csv"
+		# prot_m1152 = "./static/data/caseStudy_colnames/Proteome_M1152.csv"
+
+		trans_m145 = os.path.join(app.config['FILES_STREPTOMYCES'], "Transcriptome_M145.csv")
+		trans_m1152 = os.path.join(app.config['FILES_STREPTOMYCES'], "Transcriptome_M1152.csv")
+		prot_m1152 = os.path.join(app.config['FILES_STREPTOMYCES'], "Proteome_M1152.csv")
 
 		try:
-			data['Comparison1'] = pairwise_trendcomparison(prot_m145, prot_m1152, 1, lower_variance_percentile, upper_variance_percentile, k, True)
-			data['Comparison2'] = pairwise_trendcomparison(prot_m145, trans_m145, 2, lower_variance_percentile, upper_variance_percentile, k, True)
-			data['Comparison3'] = pairwise_trendcomparison(prot_m145, trans_m1152, 3, lower_variance_percentile, upper_variance_percentile, k, True)
-			data['Comparison4'] = pairwise_trendcomparison(prot_m1152, trans_m145, 4, lower_variance_percentile, upper_variance_percentile, k, True)
-			data['Comparison5'] = pairwise_trendcomparison(prot_m1152, trans_m1152, 5, lower_variance_percentile, upper_variance_percentile, k, True)
-			data['Comparison6'] = pairwise_trendcomparison(trans_m145, trans_m1152, 6, lower_variance_percentile, upper_variance_percentile, k, True)
+			#data['Comparison1'] = pairwise_trendcomparison(prot_m145, prot_m1152, 1, lower_variance_percentile, upper_variance_percentile, k, True)
+			#data['Comparison2'] = pairwise_trendcomparison(prot_m145, trans_m145, 2, lower_variance_percentile, upper_variance_percentile, k, True)
+			#data['Comparison3'] = pairwise_trendcomparison(prot_m145, trans_m1152, 3, lower_variance_percentile, upper_variance_percentile, k, True)
+			#data['Comparison1'] = pairwise_trendcomparison(prot_m1152, trans_m145, 1, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison1'] = pairwise_trendcomparison(trans_m1152, trans_m145, 1, lower_variance_percentile, upper_variance_percentile, k, True)
+			data['Comparison2'] = pairwise_trendcomparison(trans_m1152, prot_m1152, 2, lower_variance_percentile, upper_variance_percentile, k, True)
 	
 		except TypeError as te:
 			if str(te) == "object of type 'builtin_function_or_method' has no len()":
@@ -896,10 +954,6 @@ def download_session():
 		time_id = time_id.replace("_","")
 
 		timestamp_name = "OmicsTIDE_" + time_id
-
-		print(app.config['UPLOAD_FOLDER'])
-		print(timestamp_name)
-		print(path_session)
 
 		return send_file(path_session,
                      mimetype='text/csv',

@@ -300,6 +300,7 @@ function isSingleValue(colname, experimentId){
         colname.startsWith(experimentId) && 
         !colname.endsWith("cluster") &&
         !colname.endsWith("median") &&
+        !colname.endsWith("var") &&
         colname !== "gene" &&
         colname !== "highlighted" &&
         colname !== "profile_selected")

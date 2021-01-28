@@ -196,6 +196,9 @@ function clusterData(){
             success: function(result){
     
                     let globalData = JSON.parse(JSON.stringify(result));
+
+                    console.log(globalData);
+
                     bindDataToDiv(globalData);
                     addTab("data", true, TabId.matrix);
     
@@ -249,6 +252,8 @@ function createDeepCopyofData(inputData){
 
 
 function combineLinkSpecificGlobalData(data){
+
+    console.log(data);
 
     for(let comparison of Object.keys(data)){
 

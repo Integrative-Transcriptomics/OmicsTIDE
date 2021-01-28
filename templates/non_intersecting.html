@@ -83,20 +83,20 @@
 							d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" />
 					</svg>
 
-					Abundance Filter
+					Variance Filter
 				</div>
 				<div class="accordion_content">
 
-					<div class="non-intersecting-information-controls-expression">
+					<div class="clustered-data-information-controls-expression">
 
 						<div class="ds1_wrapper">
-							Dataset1 Median
+							Data set 1: Variance
 
 							<div class="slider_box_ds1">
 								<div class="ds1_slider"> </div>
 								<div class="ds1_slider_input_wrapper">
-									<input type="number" class="ds1_slider_input1" step="0.10">
-									<input type="number" class="ds1_slider_input2" step="0.10">
+									<input type="number" class="ds1_slider_input1" step="1">
+									<input type="number" class="ds1_slider_input2" step="1">
 								</div>
 							</div>
 
@@ -108,13 +108,13 @@
 						</div>
 
 						<div class="ds2_wrapper">
-							Dataset2 Median
+							Data set 2: Variance
 
 							<div class="slider_box_ds2">
-								<div class="ds2_slider"> </div>
+								<div class="ds2_slider"></div>
 								<div class="ds2_slider_input_wrapper">
-									<input type="number" class="ds2_slider_input1" step="0.10">
-									<input type="number" class="ds2_slider_input2" step="0.10">
+									<input type="number" class="ds2_slider_input1" step="1">
+									<input type="number" class="ds2_slider_input2" step="1">
 								</div>
 							</div>
 
@@ -124,10 +124,66 @@
 							</div>
 
 						</div>
+
 					</div>
 
 				</div>
+			</div>
 
+			<div class="accordion abundance">
+				<div class="accordion_tab analysis">
+
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" />
+					</svg>
+
+					Abundance Filter
+				</div>
+				<div class="accordion_content">
+
+					<div class="clustered-data-information-controls-expression">
+
+						<div class="ds1_abundance_wrapper">
+							Data set 1: Median Abundance
+
+							<div class="slider_box_ds1_abundance">
+								<div class="ds1_abundance_slider"> </div>
+								<div class="ds1_abundance_slider_input_wrapper">
+									<input type="number" class="ds1_abundance_slider_input1" step="1">
+									<input type="number" class="ds1_abundance_slider_input2" step="1">
+								</div>
+							</div>
+
+							<div class="ds1_abundance_values">
+								<div class="ds1_abundance_values_min"></div>
+								<div class="ds1_abundance_values_max"></div>
+							</div>
+
+						</div>
+
+						<div class="ds2_abundance_wrapper">
+							Data set 2: Median Abundance
+
+							<div class="slider_box_ds2_abundance">
+								<div class="ds2_abundance_slider"></div>
+								<div class="ds2_abundance_slider_input_wrapper">
+									<input type="number" class="ds2_abundance_slider_input1" step="1">
+									<input type="number" class="ds2_abundance_slider_input2" step="1">
+								</div>
+							</div>
+
+							<div class="ds2_abundance_values">
+								<div class="ds2_abundance_values_min"></div>
+								<div class="ds2_abundance_values_max"></div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
 			</div>
 
 			<div class="accordion gene">

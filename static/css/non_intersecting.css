@@ -1,6 +1,6 @@
 .non-intersecting-information{
 	background-color:#FFFFFF;
-    height:75vh;
+    height:85vh;
     position:relative;
     display:flex;
 }
@@ -52,14 +52,16 @@
 
 .non-intersecting-information-spacer{
 	height:100%;
-	width:2.5%;
+	width:1%;
 	position:relative;
 }
+
+
 
 .non-intersecting-information-controls{
 	position:relative;
 	height:100%;
-	width:20%;
+	width:21.5%;
 	border: 1px solid lightgrey;
 	padding: 1%;
 }

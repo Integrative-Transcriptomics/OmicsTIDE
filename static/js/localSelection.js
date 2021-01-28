@@ -40,6 +40,12 @@ function geneAlreadyInSelection(gene, selection){
  */
 function updateSelection(newSelection, currentSelection){
 
+	console.log(newSelection);
+
+	console.log(currentSelection);
+
+	//currentSelection = currentSelection.filter(d => d.highlighted);
+
 	// trivial case: empty selection -> current genes will be selection
 	if(currentSelection.length === 0){
 
@@ -59,6 +65,8 @@ function updateSelection(newSelection, currentSelection){
 		newSelectionGenesOnly = newSelection.filter(d => newSelectionGenesOnly.includes(d.gene));
 
 		currentSelectionGenesOnly = currentSelection.filter(d => currentSelectionGenesOnly.includes(d.gene));
+
+		console.log(newSelectionGenesOnly.concat(currentSelectionGenesOnly))
 
 		return newSelectionGenesOnly.concat(currentSelectionGenesOnly);
 	}	

@@ -9,6 +9,10 @@ OmicsTIDE is based on HTML/JavaScript/CSS using the D3.js and jQuery libraries a
 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
+<p align="center">
+  <img src="images/combined.svg" />
+</p>
+
 ## Installation Guide
 The following steps are required to set up and run OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
 

@@ -14,7 +14,8 @@ $(document).on('click', '.export-button', function(event) {
     let tabName = currentDiv.split("-")[2];
     let clickedComparison = tabName.split("_")[0];
     let comparisonTypeId = tabName.split("_")[1];
-    let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
+    let exportCopy = createDeepCopyofData(document.getElementById('data-json').value);
+    exportCopy = combineLinkSpecificGlobalData(exportCopy);
     let data = {};
 
     if(comparisonTypeId === "selectionIntersecting"){
@@ -24,7 +25,7 @@ $(document).on('click', '.export-button', function(event) {
         data = {
             'dataset1_plot' : JSON.stringify(document.getElementById("combined_selection-intersecting-diagrams-profiles-dataset1-" + clickedComparison + "_" + comparisonTypeId).outerHTML),
             'dataset2_plot' : JSON.stringify(document.getElementById("combined_selection-intersecting-diagrams-profiles-dataset2-" + clickedComparison + "_" + comparisonTypeId).outerHTML),
-            'selection' : JSON.stringify(globalDataCopy[clickedComparison][comparisonTypeIdSplit]['selection'])
+            'selection' : JSON.stringify(exportCopy[clickedComparison][comparisonTypeIdSplit]['selection'])
         }
     
     }
@@ -36,17 +37,15 @@ $(document).on('click', '.export-button', function(event) {
         data = {
             'dataset1_plot' : JSON.stringify(document.getElementById("combined_selection-nonIntersecting-diagrams-profiles-dataset1-" + clickedComparison + "_" + comparisonTypeId).outerHTML),
             'dataset2_plot' : JSON.stringify(document.getElementById("combined_selection-nonIntersecting-diagrams-profiles-dataset2-" + clickedComparison + "_" + comparisonTypeId).outerHTML),
-            'selection' : JSON.stringify(globalDataCopy[clickedComparison][comparisonTypeIdSplit]['selection'])
+            'selection' : JSON.stringify(exportCopy[clickedComparison][comparisonTypeIdSplit]['selection'])
         }
 
     }   
 
-    for(let goTerm of Object.keys(globalDataCopy[clickedComparison][comparisonTypeIdSplit]['go'])){
-        if(globalDataCopy[clickedComparison][comparisonTypeIdSplit]['go'][goTerm].length !== 0){
+    for(let goTerm of Object.keys(exportCopy[clickedComparison][comparisonTypeIdSplit]['go'])){
+        if(exportCopy[clickedComparison][comparisonTypeIdSplit]['go'][goTerm].length !== 0){
 
-            console.log(goTerm);
-
-            data[goTerm] = JSON.stringify(globalDataCopy[clickedComparison][comparisonTypeIdSplit]['go'][goTerm]);
+            data[goTerm] = JSON.stringify(exportCopy[clickedComparison][comparisonTypeIdSplit]['go'][goTerm]);
         }
     }
 
