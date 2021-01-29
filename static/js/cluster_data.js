@@ -2,8 +2,8 @@ var globalDataLoaded = false;
 
 
 /**
-  *
-  */
+ * 
+ */
 function loadFilesForClustering(){
 
     if((document.getElementById("files").files.length < 2 || document.getElementById("files").files.length > 4) && 
@@ -215,15 +215,10 @@ function clusterData(){
 }
 
 
-
-
-
-
-
-
-
-
-
+/**
+ * 
+ * @param {ObjectArray} inputData 
+ */
 function createDeepCopyofData(inputData){
 
     let data = JSON.parse(JSON.stringify(inputData))
@@ -251,9 +246,11 @@ function createDeepCopyofData(inputData){
 }
 
 
+/**
+ * combines the data separated by the single trend comparisons (e.g. ds1_1-ds2_1) to one ObjectArray
+ * @param {ObjectArray} data 
+ */
 function combineLinkSpecificGlobalData(data){
-
-    console.log(data);
 
     for(let comparison of Object.keys(data)){
 
@@ -272,96 +269,6 @@ function combineLinkSpecificGlobalData(data){
     return data
 }
 
-
-function updateDetailDiagramsOnMouseOver(comparison, currentLink){
-
-    let linkId = currentLink.names[0] + "-" + currentLink.names[1];
-
-    let ds1Cluster = currentLink.names[0].split("_")[1];
-    let ds2Cluster = currentLink.names[1].split("_")[1];
-
-    let filtered =[];
-    //let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
-    let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value)[comparison]['intersecting'];
-
-    for(let link of Object.keys(globalDataCopy['data'])){
-
-        if(isJson(globalDataCopy['data'][link])){
-            globalDataCopy['data'][link] = JSON.parse(globalDataCopy['data'][link]);
-        }
-
-        if(link === linkId){
-            filtered = filtered.concat(globalDataCopy['data'][link]);
-        }
-    }
-
-    globalDataCopy['data'] = filtered;
-
-    firstDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
-    secondDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
-
-    firstDiagramData = JSON.parse(firstDiagramData);
-    secondDiagramData = JSON.parse(secondDiagramData);
-
-    firstDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds1_cluster === currentLink.names[0] && d.highlighted);
-    secondDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds2_cluster === currentLink.names[1] && d.highlighted);
-
-    let currentDetailDiagram = getActiveRadioButton(comparison + "_intersecting");
-
-    updateDetailDiagram(currentDetailDiagram, firstDiagramData[comparison]['intersecting'], "ds1", ds1Cluster, comparison+"_intersecting", "intersecting", comparison)
-    updateDetailDiagram(currentDetailDiagram, secondDiagramData[comparison]['intersecting'], "ds2", ds2Cluster, comparison+"_intersecting", "intersecting", comparison)
-
-    
-}
-
-
-
-function restoreDetailDiagramsOnMouseOut(comparison, linkId){
-
-    let filtered =[];
-
-    let firstDatasetCluster = linkId.names[0];
-    let secondDatasetCluster = linkId.names[1];
-
-    let ds1Cluster = linkId.names[0].split("_")[1];
-    let ds2Cluster = linkId.names[1].split("_")[1];
-
-    //let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
-    let globalDataCopy = JSON.parse(document.getElementById('data-json').value)[comparison]['intersecting'];
-
-    
-
-    for(let link of Object.keys(globalDataCopy['data'])){
-
-        if(isJson(globalDataCopy['data'][link])){
-            globalDataCopy['data'][link] = JSON.parse(globalDataCopy['data'][link]);
-        }
-
-        if(link.startsWith(firstDatasetCluster) || link.endsWith(secondDatasetCluster)){
-            filtered = filtered.concat(globalDataCopy['data'][link]);
-        }
-    }
-
-    globalDataCopy['data'] = filtered;
-
-    firstDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
-    secondDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
-
-    firstDiagramData = JSON.parse(firstDiagramData);
-    secondDiagramData = JSON.parse(secondDiagramData);
-
-    // let firstDiagramData = createDeepCopyofData(document.getElementById('data-json').value);
-    // let secondDiagramData = createDeepCopyofData(document.getElementById('data-json').value);
-
-    firstDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds1_cluster === linkId.names[0] && d.highlighted);
-    secondDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds2_cluster === linkId.names[1] && d.highlighted);
-
-
-    let currentDetailDiagram = getActiveRadioButton(comparison + "_intersecting");
-
-    updateDetailDiagram(currentDetailDiagram, firstDiagramData[comparison]['intersecting'], "ds1", ds1Cluster, comparison+"_intersecting", "intersecting", comparison)
-    updateDetailDiagram(currentDetailDiagram, secondDiagramData[comparison]['intersecting'], "ds2", ds2Cluster, comparison+"_intersecting", "intersecting", comparison)
-}
 
 
 

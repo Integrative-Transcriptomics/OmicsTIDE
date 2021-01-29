@@ -66,9 +66,12 @@ function graph(keys, data, tabName) {
 }
 
 /**
- * renders chart from node/link information and data
- * @{param} graph nodes and linkes
- * @{param} data initial data
+ * 
+ * @param {Object} graph 
+ * @param {ObjectArray} data 
+ * @param {String} divID 
+ * @param {String} tabId 
+ * @param {String} tabName 
  */
 function chart(graph, data, divID, tabId, tabName) {
 
@@ -105,14 +108,14 @@ function chart(graph, data, divID, tabId, tabName) {
 
 
 /**
-  * 
-  * @param{} graph
-  * @param{} data
-  * @param{} divId
-  * @param{int} tabId
-  * @param{} svgSankey
-  * @param{} tabName
-  */
+ * 
+ * @param {Object} graph 
+ * @param {ObjectArray} data 
+ * @param {String} divID 
+ * @param {String} tabId 
+ * @param {SvgObject} svgSankey 
+ * @param {String} tabName 
+ */
 function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
 
     let comparison = tabName.split("_")[0];
@@ -400,7 +403,11 @@ function updateAlluvial(graph, data, divID, tabId, svgSankey, tabName){
     }
         
      
-    
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ */
 function getConAndDiscordanceInfo(data, comparison){
 
 
@@ -425,7 +432,10 @@ function getConAndDiscordanceInfo(data, comparison){
 
 
 
-
+/**
+ * 
+ * @param {Element} node 
+ */
 function getLinkIdsConnectedToNode(node){
 
     let linkIds;
@@ -442,6 +452,13 @@ function getLinkIdsConnectedToNode(node){
 }
 
 
+/**
+ * 
+ * @param {Array} arrayOfLinkIds 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function getGenesOfLinkIds(arrayOfLinkIds, data, comparison, tabId){
 
     let genes = [];
@@ -454,7 +471,10 @@ function getGenesOfLinkIds(arrayOfLinkIds, data, comparison, tabId){
 }
 
 
-
+/**
+ * 
+ * @param {element} element 
+ */
 function extractNodeInformationForToolTip(element){
 
     let nodeInformation = element.__data__;
@@ -463,22 +483,22 @@ function extractNodeInformationForToolTip(element){
 }
 
 
+/**
+ * 
+ * @param {element} element 
+ */
 function extractLinkInformationForToolTip(element){
 
     let linkInformation = element.__data__;
     
     return "Trend ds1: " + linkInformation.names[0] + "\nTrend ds2: " + linkInformation.names[1] + "\nGenes: " + linkInformation.value;
 }
-
-
-
-
-        
+      
 
 /**
-  * 
-  * @param{} d
-  */
+ * 
+ * @param {Object} d 
+ */
 function alluvialColoring(d){
 
         const startColor = color(d.target.name);
@@ -508,12 +528,12 @@ function alluvialColoring(d){
 
 
 /**
-  * 
-  * @param{} data
-  * @param{} divId
-  * @param{} tabId
-  * @param{int} tabName
-  */
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} divID 
+ * @param {String} tabId 
+ * @param {String} tabName 
+ */
 function render(data, divID, tabId, tabName) {
 
     console.log(data);
@@ -531,7 +551,8 @@ function render(data, divID, tabId, tabName) {
 
 
 /**
- * @param {ObjectArray} nodeData
+ * 
+ * @param {Object} nodeData 
  */
 function isSourceNode(nodeData){
 
@@ -540,7 +561,8 @@ function isSourceNode(nodeData){
 
 
 /**
- * @param {Array} link 
+ * 
+ * @param {String} link 
  */
 function linkIdToString(link){
 
@@ -608,6 +630,10 @@ function getAllLinksWithSameSourceTarget(link, data){
 }
 
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
 function collapseGlobalData(data){
 
     let collapsedData = [];
@@ -621,6 +647,107 @@ function collapseGlobalData(data){
 
     return collapsedData;
 }
+
+
+/**
+ * updates detail diagrams when hovering a link in the Sankey diagram
+ * @param {String} comparison 
+ * @param {String} currentLink 
+ */
+function updateDetailDiagramsOnMouseOver(comparison, currentLink){
+
+    let linkId = currentLink.names[0] + "-" + currentLink.names[1];
+
+    let ds1Cluster = currentLink.names[0].split("_")[1];
+    let ds2Cluster = currentLink.names[1].split("_")[1];
+
+    let filtered =[];
+    //let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
+    let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value)[comparison]['intersecting'];
+
+    for(let link of Object.keys(globalDataCopy['data'])){
+
+        if(isJson(globalDataCopy['data'][link])){
+            globalDataCopy['data'][link] = JSON.parse(globalDataCopy['data'][link]);
+        }
+
+        if(link === linkId){
+            filtered = filtered.concat(globalDataCopy['data'][link]);
+        }
+    }
+
+    globalDataCopy['data'] = filtered;
+
+    firstDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
+    secondDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
+
+    firstDiagramData = JSON.parse(firstDiagramData);
+    secondDiagramData = JSON.parse(secondDiagramData);
+
+    firstDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds1_cluster === currentLink.names[0] && d.highlighted);
+    secondDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds2_cluster === currentLink.names[1] && d.highlighted);
+
+    let currentDetailDiagram = getActiveRadioButton(comparison + "_intersecting");
+
+    updateDetailDiagram(currentDetailDiagram, firstDiagramData[comparison]['intersecting'], "ds1", ds1Cluster, comparison+"_intersecting", "intersecting", comparison)
+    updateDetailDiagram(currentDetailDiagram, secondDiagramData[comparison]['intersecting'], "ds2", ds2Cluster, comparison+"_intersecting", "intersecting", comparison)
+
+    
+}
+
+
+/**
+ * restores detail diagrams when unhovering a link in the Sankey diagram
+ * @param {String} comparison 
+ * @param {String} linkId 
+ */
+function restoreDetailDiagramsOnMouseOut(comparison, linkId){
+
+    let filtered =[];
+
+    let firstDatasetCluster = linkId.names[0];
+    let secondDatasetCluster = linkId.names[1];
+
+    let ds1Cluster = linkId.names[0].split("_")[1];
+    let ds2Cluster = linkId.names[1].split("_")[1];
+
+    //let globalDataCopy = createDeepCopyofData(document.getElementById('data-json').value);
+    let globalDataCopy = JSON.parse(document.getElementById('data-json').value)[comparison]['intersecting'];
+
+    
+
+    for(let link of Object.keys(globalDataCopy['data'])){
+
+        if(isJson(globalDataCopy['data'][link])){
+            globalDataCopy['data'][link] = JSON.parse(globalDataCopy['data'][link]);
+        }
+
+        if(link.startsWith(firstDatasetCluster) || link.endsWith(secondDatasetCluster)){
+            filtered = filtered.concat(globalDataCopy['data'][link]);
+        }
+    }
+
+    globalDataCopy['data'] = filtered;
+
+    firstDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
+    secondDiagramData = JSON.parse(JSON.stringify(document.getElementById('data-json').value));
+
+    firstDiagramData = JSON.parse(firstDiagramData);
+    secondDiagramData = JSON.parse(secondDiagramData);
+
+    // let firstDiagramData = createDeepCopyofData(document.getElementById('data-json').value);
+    // let secondDiagramData = createDeepCopyofData(document.getElementById('data-json').value);
+
+    firstDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds1_cluster === linkId.names[0] && d.highlighted);
+    secondDiagramData[comparison]['intersecting']['data'] = globalDataCopy['data'].filter(d => d.ds2_cluster === linkId.names[1] && d.highlighted);
+
+
+    let currentDetailDiagram = getActiveRadioButton(comparison + "_intersecting");
+
+    updateDetailDiagram(currentDetailDiagram, firstDiagramData[comparison]['intersecting'], "ds1", ds1Cluster, comparison+"_intersecting", "intersecting", comparison)
+    updateDetailDiagram(currentDetailDiagram, secondDiagramData[comparison]['intersecting'], "ds2", ds2Cluster, comparison+"_intersecting", "intersecting", comparison)
+}
+
 
 
 

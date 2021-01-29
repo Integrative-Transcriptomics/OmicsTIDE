@@ -2,6 +2,12 @@ bar_margin = {top: 10, right: 20, bottom: 40, left: 80};
 
 
 
+/**
+ * retrieved the currently supported genomes from PantherDB
+ * @param {String} parentDivId 
+ * @param {ObjectArray} data 
+ * @param {String} tabId 
+ */
 function supportedGenomes(parentDivId, data, tabId){
 
     axios.get("http://pantherdb.org/services/oai/pantherdb/supportedgenomes")
@@ -18,7 +24,13 @@ function supportedGenomes(parentDivId, data, tabId){
         })
 }
 
-
+/**
+ * 
+ * @param {*} response 
+ * @param {*} data 
+ * @param {*} parentDivId 
+ * @param {*} tabId 
+ */
 function buttonClick(response, data, parentDivId, tabId){
 
     $(document).on('click', '.go-dropdown-menu-a', function (event) {
@@ -31,15 +43,21 @@ function buttonClick(response, data, parentDivId, tabId){
 }
 
 
+/**
+ * 
+ * @param {Array} selection 
+ */
 function genesInSelectionToString(selection){
     let geneArray = selection.map(d => d.gene)
 
     return geneArray.join("")
 }
 
+
 /**
-  *
-  */
+ * 
+ * @param {Array} selection 
+ */
 function genesInSelectionToString(selection){
 
     let geneArray = selection.map( d => d.gene);
@@ -63,10 +81,14 @@ function genesInSelectionToString(selection){
 }
 
 
-
 /**
-  *
-  */
+ * requests data for the current selection
+ * @param {String} organism 
+ * @param {ObjectArray} data 
+ * @param {Object} response 
+ * @param {String} parentDivId 
+ * @param {String} tabId 
+ */
 function globalSelectionToPanther(organism, data, response, parentDivId, tabId){
 
     let url = 'http://pantherdb.org/services/oai/pantherdb/enrich/overrep?';
@@ -150,20 +172,38 @@ function globalSelectionToPanther(organism, data, response, parentDivId, tabId){
 }
 
 
-// only a small minority of species have a dot in the name -> for the first: remove them
+/**
+ * 
+ * @param {Array} speciesArray 
+ */
 function removeDots(speciesArray){
     return speciesArray.map(d => d.replaceAll(".", ""));
 }
 
+/**
+ * 
+ * @param {Array} speciesNameArray 
+ * @param {String} replaceWith 
+ */
 function replaceWhiteSpacesInSpeciesNames(speciesNameArray, replaceWith){
     return speciesNameArray.map(d => d.replaceAll(" ", replaceWith));
 }
 
+/**
+ * 
+ * @param {String} speciesName 
+ * @param {String} replacedWith 
+ */
 function addWhiteSpacesToSpeciesName(speciesName, replacedWith){
     return speciesName.replaceAll(replacedWith, " ");
 }
 
 
+/**
+ * 
+ * @param {String} parentDivId 
+ * @param {Array} array 
+ */
 function createDropdown(parentDivId, array){
 
     let buttonUl = document.getElementById(parentDivId);
@@ -198,7 +238,10 @@ function createDropdown(parentDivId, array){
 
 
 
-
+/**
+ * 
+ * @param {Object} goResults 
+ */
 function flattenGoResults(goResults){
 
     let flatGoResults = [];
@@ -232,17 +275,20 @@ function categoryFromId(id){
 
 
 
-
 /**
-  *
-  * @param{} category
-  * @param{} organism
-  * @param{} inputList
-  * @param{} fdrThreshold
-  * @param{} div
-  * @param{} categoryId
-  * @param{} categoryName
-  */
+ * 
+ * @param {String} url 
+ * @param {Array} inputList 
+ * @param {String} organism 
+ * @param {String} category 
+ * @param {String} enrichmentTestType 
+ * @param {String} correction 
+ * @param {float} fdr_threshold 
+ * @param {String} div 
+ * @param {String} category_id 
+ * @param {String} category_name 
+ * @param {String} parentDivId 
+ */
 function postQuery(url, inputList, organism, category, enrichmentTestType, correction, fdr_threshold, div, category_id, category_name, parentDivId){
 
     axios.get(url + inputList + "&" + organism + "&" + category + "&" + enrichmentTestType + "&" + correction)
@@ -282,15 +328,13 @@ function postQuery(url, inputList, organism, category, enrichmentTestType, corre
 }
 
 
-
-
 /**
-  *
-  * @param{} sortedValues
-  * @param{} div
-  * @param{} categoryId
-  * @param{} categoryName
-  */
+ * 
+ * @param {ObjectArray} sorted_values 
+ * @param {String} div 
+ * @param {String} category_id 
+ * @param {String} category_name 
+ */
 function horizontalBarCharts(sorted_values, div, category_id, category_name){
 
     let bar_width = document.getElementById(div).offsetWidth;
@@ -324,9 +368,6 @@ function horizontalBarCharts(sorted_values, div, category_id, category_name){
 
     y.domain(sorted_values.map(function (d) { return d.id}));
     x.domain([0, d3.max(sorted_values.map(function(d) { return d.minus_log10_fdr }))]);
-
-
-    console.log(sorted_values);
 
     g.append("g")
         .selectAll(".bar")
@@ -377,15 +418,12 @@ function horizontalBarCharts(sorted_values, div, category_id, category_name){
 
 
 /**
-  *
-  * @param{} pantherResults
-  * @param{} tableId
-  * @param{} dimensions
-  * @param{} valueFunc
-  * @param{} textFunc
-  * @param{} exp2
-  * @param{} columns
-  */
+ * 
+ * @param {Object} panther_results 
+ * @param {String} div 
+ * @param {String} category_id 
+ * @param {String} category_name 
+ */
 function GoTermBarCharts(panther_results, div, category_id, category_name){
 
     // restrict to 10 largest values

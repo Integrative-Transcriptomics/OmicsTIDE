@@ -14,6 +14,10 @@ function getActiveTabs() {
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 function removeActivityFromTab(tabName) {
 
     let currNavTab = document.getElementById("pills-" + tabName.name + "-tab");
@@ -24,6 +28,10 @@ function removeActivityFromTab(tabName) {
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 function removeActivityFromContent(tabName) {
 
     let currContent = document.getElementById("pills-" + tabName.name);
@@ -35,7 +43,9 @@ function removeActivityFromContent(tabName) {
 }
 
 
-
+/**
+ * 
+ */
 function removeActivityFromTabs() {
 
     let active = getActiveTabs();
@@ -57,6 +67,11 @@ function removeActivityFromTabs() {
     }
 }
 
+
+/**
+ * 
+ * @param {String} tabName 
+ */
 async function removeContentChildren(tabName) {
 
     let currContent = document.getElementById("pills-" + tabName.name);
@@ -70,6 +85,10 @@ async function removeContentChildren(tabName) {
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 async function removeTabChildren(tabName) {
 
     let currNavTab = document.getElementById("pills-" + tabName.name + "-tab");
@@ -83,6 +102,10 @@ async function removeTabChildren(tabName) {
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 async function removeContent(tabName) {
 
     // removing tab content
@@ -94,6 +117,10 @@ async function removeContent(tabName) {
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 async function removeTab(tabName) {
 
     // removing nav tabs
@@ -105,6 +132,10 @@ async function removeTab(tabName) {
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 async function removeTabAndContent(tabName) {
 
     await removeContent(tabName);
@@ -113,6 +144,9 @@ async function removeTabAndContent(tabName) {
 }
 
 
+/**
+ * 
+ */
 function currentlyActiveTabIsClosed() {
 
     return (getActiveTabs().active_tabs.length === 0) ? true : false;
@@ -120,6 +154,9 @@ function currentlyActiveTabIsClosed() {
 }
 
 
+/**
+ * 
+ */
 function setPrevTabActive(){
 
     let allPillsChildren = document.getElementById("pills-tab").childNodes;
@@ -133,7 +170,10 @@ function setPrevTabActive(){
 }
 
 
-
+/**
+ * 
+ * @param {Array} selection 
+ */
 function extractLiTags(selection){
 
     let allTabsLi = [];
@@ -148,6 +188,10 @@ function extractLiTags(selection){
 }
 
 
+/**
+ * 
+ * @param {Element} tab 
+ */
 function isHomeTab(tab){
 
     return (tab.id === "pills-home-tab") ? true : false;
@@ -155,12 +199,10 @@ function isHomeTab(tab){
 }
 
 
-
-
 /**
-  *
-  * @param{String} tabName
-  */
+ * 
+ * @param {String} tabName 
+ */
 async function closeTab(tabName) {
 
     let currentlyClosedLiId = document.getElementById(tabName.parentElement.id).parentElement;
@@ -211,6 +253,10 @@ async function closeTab(tabName) {
 }
 
 
+/**
+ * 
+ * @param {String} tabId 
+ */
 function navLinkClassByTabId(tabId) {
 
     if (tabId === "matrix") {
@@ -229,14 +275,12 @@ function navLinkClassByTabId(tabId) {
 }
 
 
-
-
 /**
-  *
-  * @param{String} tabName
-  * @param{boolean} hasCloseButton
-  * @param{String} tabId
-  */
+ * 
+ * @param {String} tabName 
+ * @param {Boolean} hasCloseButton 
+ * @param {String} tabId 
+ */
 async function addTab(tabName, hasCloseButton, tabId) {
 
     if(tabName === "data"){
@@ -363,6 +407,9 @@ $("#pills-tab").on('click', 'li#pills-data_matrix-tab', function () {
 });
 
 
+/**
+ * 
+ */
 function setIntersectingTabsActive(){
 
     let intersectingTabs = $('a[id^="matrix-information_"][id$="-intersect-pills"]:not([id$="non-intersect-pills"])');
@@ -387,6 +434,10 @@ function setIntersectingTabsActive(){
 }
 
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
 function updateYScalesMinMax(data){
 
     let copy = combineLinkSpecificGlobalData(JSON.parse(JSON.stringify(data)));
@@ -411,13 +462,11 @@ function updateYScalesMinMax(data){
 }
 
 
-
-
 /**
-  *
-  * @param{String} tabName
-  * @param{String} tabId
-  */
+ * 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function loadDataTab(tabName, tabId) {
 
     if (tabId === TabId.matrix) {
@@ -434,20 +483,41 @@ function loadDataTab(tabName, tabId) {
 
 }
 
+
+/**
+ * 
+ * @param {Object} JsonObject 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ * @param {String} key 
+ */
 function JsonToJsObject(JsonObject, comparison, tabId, key) {
     return JSON.parse(JsonObject[comparison][tabId][key]);
 }
 
+
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
 function isJson(data){
     return typeof data === "string";
 }
 
+
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
 function objectToJson(data){
     return JSON.stringify(data);
 }
 
 
-// adds globalData to a div to make it accessible from anywhere
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
 function bindDataToDiv(data){
 
     if(data.length === 0){
@@ -463,8 +533,41 @@ function bindDataToDiv(data){
 }
 
 
+/**
+ * adds/removes activity to a given bootstrap tab
+ * @param {String} completeTabId 
+ */
+function openSelectionAccordion(completeTabId) {
+
+	let allAccordions = $("[id*='accordion '][id*='" + completeTabId + "']");
+
+	for (let accordion of allAccordions) {
+
+		// case: selection already opened
+		if (accordion.id.includes("selection") && accordion.classList.contains("active")) {
+			console.log("already active - do nothing");
+			return;
+		}
+
+		if (accordion.id.includes("selection")) {
+			console.log("seletion... add activity");
+			accordion.classList.add("active");
+		}
+
+		else {
+			console.log("not selection... remove activity");
+			accordion.classList.remove("active");
+		}
+	}
+}
 
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function createYRanges(data, comparison, tabId){
 
     // init scales
@@ -477,14 +580,11 @@ function createYRanges(data, comparison, tabId){
 }
 
 
-
-
 /**
-  *
-  * @param{} globalData
-  * @param{} tabName
-  * @param{} tabId
-  */
+ * 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function renderPlots(tabName, tabId) {
 
     let comparison = tabName.split("_")[0];
@@ -605,12 +705,11 @@ function renderPlots(tabName, tabId) {
 }
 
 
-
 /**
-  *
-  * @param{id} id
-  * @param{tabId} tabId
-  */
+ * 
+ * @param {String} id 
+ * @param {String} tabId 
+ */
 async function createInstance(id, tabId) {
 
     let currentParentElement = null;
@@ -636,8 +735,6 @@ async function createInstance(id, tabId) {
                 currentParentElement = element;
             }
     }
-
-
 
 
     if (tabId === TabId.intersecting) {

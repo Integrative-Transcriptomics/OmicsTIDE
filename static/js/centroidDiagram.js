@@ -1,15 +1,14 @@
 
 
 /**
-  *
-  * @param{} data
-  * @param{String} experimentId
-  * @param{int} clusterNumber
-  * @param{} currentSvg
-  * @param{} currentXScale
-  * @param{} currentYScale
-  * @param{} tabDivId
-  */
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {SvgObject} currentSvg 
+ * @param {ScaleFunction} currentXScale 
+ * @param {ScaleFunction} currentYScale 
+ * @param {String} tabId 
+ */
  function renderCentroidDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId){
 
 
@@ -197,7 +196,14 @@
 }
 
 
-
+/**
+ * creates a range with equal stepSize based on the min and max value. 
+ * @param {float} min 
+ * @param {float} max 
+ * @param {float} stepSize 
+ * @param {float} lowerBoundary 
+ * @param {float} upperBoundary 
+ */
 function createTickRange(min, max, stepSize, lowerBoundary, upperBoundary){
 
     let range = [];
@@ -257,9 +263,11 @@ function createTickRange(min, max, stepSize, lowerBoundary, upperBoundary){
 }
 
 
-
-
-
+/**
+ * extracts the min and max values of the current data
+ * @param {ObjectArray} data 
+ * @param {String} lowerOrUpper 
+ */
 function getAbsoluteValues(data, lowerOrUpper){
 
     let combinedValues = [];
@@ -279,37 +287,39 @@ function getAbsoluteValues(data, lowerOrUpper){
 
 
 
-// https://stackoverflow.com/questions/8273047/javascript-function-similar-to-python-range
-function range(start, stop, step) {
-    if (typeof stop == 'undefined') {
-        // one param defined
-        stop = start;
-        start = 0;
-    }
+// // https://stackoverflow.com/questions/8273047/javascript-function-similar-to-python-range
 
-    if (typeof step == 'undefined') {
-        step = 1;
-    }
 
-    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
-        return [];
-    }
+// function range(start, stop, step) {
+//     if (typeof stop == 'undefined') {
+//         // one param defined
+//         stop = start;
+//         start = 0;
+//     }
 
-    var result = [];
-    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
-        result.push(i);
-    }
+//     if (typeof step == 'undefined') {
+//         step = 1;
+//     }
 
-    return result;
-};
+//     if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
+//         return [];
+//     }
+
+//     var result = [];
+//     for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+//         result.push(i);
+//     }
+
+//     return result;
+// };
 
 
 /**
-  *
-  * @param{} data
-  * @param{String} experimentId
-  * @param{int} clusterNumber
-  */
+ * transforms data for centroid diagrams
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ */
 function getDataForCentroidDiagram(data, experimentId, clusterNumber){
 
 	let dataSubsetLong = wideToLong(data.data, experimentId, false);
@@ -318,8 +328,11 @@ function getDataForCentroidDiagram(data, experimentId, clusterNumber){
 
 	return dataSubsetNested;
 }
-
-
+/**
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ */
 function yMinMaxPerExperimentCluster(data, experimentId, clusterNumber){
 
     let filteredData;
@@ -355,11 +368,12 @@ function yMinMaxPerExperimentCluster(data, experimentId, clusterNumber){
 
 
 
+
 /**
-  *
-  * https://stackoverflow.com/questions/29131627/how-to-group-multiple-values-in-nested-d3-to-create-multiple-rollup-sum-chart
-  * @param{} data
-  */
+ * transforms the data by using a rollup
+ * inspired: https://stackoverflow.com/questions/29131627/how-to-group-multiple-values-in-nested-d3-to-create-multiple-rollup-sum-chart
+ * @param {ObjectArray} data 
+ */
 function calcCentroid(data){
 
     return d3.nest()
@@ -384,38 +398,35 @@ function calcCentroid(data){
 
 
 /**
-  *
-  * @param{} v
-  * @param{} d
-  */
+ * @param {float} v 
+ * @param {float} d 
+ */
 function calcDeviation(v, d){
     return (typeof d3.deviation(v, function (d){return +d.value}) === "undefined") ? 0 : d3.deviation(v, function (d){return +d.value});
 }
 
 
 /**
-  *
-  * @param{} data
-  */
+ * @param {ObjectArray} data 
+ */
 function getMinValueLowerBoundCentroid(data){
     return getAllCentroidValues(data, "min");
 }
 
 
 /**
-  *
-  * @param{} data
-  */
+ * @param {ObjectArray} data 
+ */
 function getMaxValueUpperBoundCentroid(data){
     return getAllCentroidValues(data, "max");
 }
 
 
 /**
-  *
-  * @param{} data
-  * @param{String} minOrMax
-  */
+ * extracts all centroid values -> fixed y scales
+ * @param {ObjectArray} data 
+ * @param {String} minOrMax 
+ */
 function getAllCentroidValues(data, minOrMax){
 
     let values = [];

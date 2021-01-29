@@ -17,9 +17,9 @@
 /**
  * TASK 2
  * sets all 'profile_selected'-Parameter in globalDataCopy to false
- * @param {*} data globalDataCopy
- * @param {*} comparison current comparison
- * @param {*} tabId current tabId, used to distinguish between the link-separated intersecting genes and non-intersecting genes
+ * @param {ObjectArray} data globalDataCopy
+ * @param {String} comparison current comparison
+ * @param {String} tabId current tabId, used to distinguish between the link-separated intersecting genes and non-intersecting genes
  */
 function removeAllHighlightingFromData(data, comparison, tabId){
 
@@ -50,7 +50,7 @@ function removeAllHighlightingFromData(data, comparison, tabId){
 /**
  * removes highlighting or adds highlighting depending in highlighting state
  * updates globalData
- * @param {*} current buttonId
+ * @param {String} current buttonId
  */
 function updateGeneHighlightingByTextInput(current){
 
@@ -100,7 +100,12 @@ function updateGeneHighlightingByTextInput(current){
 }
 
 
-
+/**
+ * updates profile diagrams (gene highlighting)
+ * @param {String} comparison 
+ * @param {String} tabId 
+ * @param {String} tabName 
+ */
 function updateHighlightingInProfileDiagrams(comparison, tabId, tabName){
 
     //filter globalDataCopy
@@ -146,9 +151,9 @@ function updateHighlightingInProfileDiagrams(comparison, tabId, tabName){
 /**
  * TASK1
  * extracts all genes in the globalDataCopy based on comparison and tabId and returns an array of gene IDs
- * @param {*} data 
- * @param {*} comparison 
- * @param {*} tabId 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
  */
 function getAllGenesInCurrentData(data, comparison, tabId){
 
@@ -179,10 +184,10 @@ function getAllGenesInCurrentData(data, comparison, tabId){
 /**
  * TASK1
  * sets profile_selected to true for all genes in globalDataCopy appearing in the input
- * @param {*} data 
- * @param {*} comparison 
- * @param {*} tabId 
- * @param {*} geneIntersection 
+ * @param {ObjectAray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ * @param {Array} geneIntersection 
  */
 function updateGeneEntries(data, comparison, tabId, geneIntersection){
 
@@ -216,10 +221,10 @@ function updateGeneEntries(data, comparison, tabId, geneIntersection){
 /**
  * TASK1 
  * sets all 'profile_selected'-Parameter in globalDataCopy to true if they appear in the geneList
- * @param {*} data 
- * @param {*} comparison 
- * @param {*} tabId 
- * @param {*} geneList 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ * @param {Array} geneList 
  */
 function addHighlightingByGeneList(data, comparison, tabId, geneList){
 
@@ -241,8 +246,10 @@ function addHighlightingByGeneList(data, comparison, tabId, geneList){
 
 
 
-
-
+/**
+ * 
+ * @param {element} current 
+ */
 function loadGeneFilterFile(current){
 
     let tabName = tabDivIdFromElement(current);
@@ -299,6 +306,11 @@ function loadGeneFilterFile(current){
 }
 
 
+/**
+ * 
+ * @param {Array} geneList 
+ * @param {String} tabName 
+ */
 function updateHighlightLines(geneList, tabName){
 
     let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];

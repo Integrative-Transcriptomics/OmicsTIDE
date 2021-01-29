@@ -1,12 +1,10 @@
 
-// function getProfileMinMax(data, comparison, tabId){
-
-//     for(let ds of data[comparison][tabId]['data']){
-        
-//     }
-// }
-
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function getCentroidMinMax(data, comparison, tabId){
 
     // let uniqueClusters = [... new Set(combinedData[comparison][tabId]['data'].map(d => d.ds1_cluster.split("_")[1])
@@ -36,13 +34,3 @@ function getCentroidMinMax(data, comparison, tabId){
         'max' : d3.max(maxs)
     }
 }
-
-
-
-// function getBoxMinMax(data, comparison, tabId){
-
-//     for(let ds of data[comparison][tabId]['data']){
-        
-//     }
-
-// }

@@ -1,4 +1,9 @@
 
+/**
+ * 
+ * @param {String} parentDivId 
+ * @param {ObjectArray} selection 
+ */
 function createDetailTable(parentDivId, selection){
 
 	console.log(parentDivId);
@@ -92,12 +97,5 @@ function createDetailTable(parentDivId, selection){
 		tableWrapper.appendChild(table);
 
 	parentDiv.appendChild(tableWrapper);
-
-	// eval( "var button_" + comparison + "_" + tabId + "=document.createElement('BUTTON')");
-	// eval( "button_" + comparison + "_" + tabId + ".setAttribute('class', 'button_selection')" );
-	// eval( "button_" + comparison + "_" + tabId + ".setAttribute('id', 'button_" + comparison + "_" + tabId + "')" );
-	// eval( "button_" + comparison + "_" + tabId + ".appendChild(document.createTextNode('new selection tab'))" );
-
-	// parentDiv.appendChild(eval( "button_" + comparison + "_" + tabId ));
 
 }

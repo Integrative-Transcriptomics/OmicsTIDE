@@ -1,4 +1,5 @@
 
+
 function selectAllGenes(newSelection, currentSelection){
 	return updateSelection(newSelection, currentSelection);
 
@@ -8,8 +9,6 @@ function selectAllGenes(newSelection, currentSelection){
 function deselectAll(newSelection, currentSelection){
 	return [];
 }
-
-
 
 
 function ptcfEntryByGeneId(gene, ptcf){
@@ -22,6 +21,11 @@ function ptcfEntryByGeneId(gene, ptcf){
 }
 
 
+/**
+ * 
+ * @param {String} gene 
+ * @param {Array} selection 
+ */
 function geneAlreadyInSelection(gene, selection){
 
 	let currentSelectionGenes = selection.map(d => d.gene);
@@ -40,9 +44,6 @@ function geneAlreadyInSelection(gene, selection){
  */
 function updateSelection(newSelection, currentSelection){
 
-	console.log(newSelection);
-
-	console.log(currentSelection);
 
 	//currentSelection = currentSelection.filter(d => d.highlighted);
 

@@ -9,6 +9,12 @@
  var durationTransition = 1000;
 
 
+ /**
+  * 
+  * @param {ObjectArray} data 
+  * @param {String} comparison 
+  * @param {String} tabId 
+  */
 function filterHighlightedGenesOnly(data, comparison, tabId){
 
     let filteredData = createDeepCopyofData(data);
@@ -30,7 +36,13 @@ function filterHighlightedGenesOnly(data, comparison, tabId){
 }
 
 
-
+/**
+ * 
+ * @param {Object} link 
+ * @param {ObjectArray} data 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function getGenesInLink(link, data, comparison, tabId){
 
     let linkId = link.names[0] + "-" + link.names[1];
@@ -39,6 +51,11 @@ function getGenesInLink(link, data, comparison, tabId){
 }
 
 
+/**
+ * 
+ * @param {Object} node 
+ * @param {Object} link 
+ */
 function linkIsConnectedToCurrentNode(node, link){
 
     return ((link.id.split("_")[1] + "_" + link.id.split("_")[2]) === (node.name.split("_")[0] + "_" + node.name.split("_")[1]) ||
@@ -46,16 +63,28 @@ function linkIsConnectedToCurrentNode(node, link){
 }
 
 
+/**
+ * 
+ * @param {Object} d 
+ */
 function isSourceNode(d){
     return d.sourceLinks.length !== 0;
 }
 
 
+/**
+ * 
+ * @param {Object} d 
+ */
 function linksByNode(d){
     return (isSourceNode(d) ? d.sourceLinks : d.targetLinks);
 }
 
 
+/**
+ * 
+ * @param {Object} d 
+ */
 function highlightLinksByNode(d){
     alluvial_links = Array.prototype.slice.call(document.getElementsByClassName('alluvial_links'));
 
@@ -71,6 +100,10 @@ function highlightLinksByNode(d){
     }
 
 
+/**
+ * 
+ * @param {Object} d 
+ */
 function unHighlightLinksByNode(d){
     alluvial_links = Array.prototype.slice.call(document.getElementsByClassName('alluvial_links'));
 
@@ -86,7 +119,13 @@ function unHighlightLinksByNode(d){
 }
 
 
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {Object} d 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function getInverseClusterSelectionLinks(data, d, comparison, tabId){
 
     let ds1Clusters = data[comparison][tabId]['data'].map(d => d.ds1_cluster);
@@ -105,6 +144,10 @@ function getInverseClusterSelectionLinks(data, d, comparison, tabId){
 
 }
 
+/**
+ * 
+ * @param {Object} d 
+ */
 function getAllActiveNodes(d){
 
     let hoveredNode = d.name;
@@ -131,6 +174,13 @@ function getAllActiveNodes(d){
 }
 
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {Array} nodeSelection 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function getInverseClusterSelectionNode(data, nodeSelection, comparison, tabId){
 
     let ds1Clusters = data[comparison][tabId]['data'].map(d => d.ds1_cluster);
@@ -150,7 +200,12 @@ function getInverseClusterSelectionNode(data, nodeSelection, comparison, tabId){
 }
 
 
-
+/**
+ * 
+ * @param {Array} inverseSelection 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function removeActivityFromDetailDiagram(inverseSelection, comparison, tabId){
 
     // get all ids not containing currently hovered from/to
@@ -173,6 +228,13 @@ function removeActivityFromDetailDiagram(inverseSelection, comparison, tabId){
     }
 }
 
+
+/**
+ * 
+ * @param {Array} inverseSelection 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function addActivityToDetailDiagram(inverseSelection, comparison, tabId){
 
     for(let inv of inverseSelection){
@@ -193,6 +255,13 @@ function addActivityToDetailDiagram(inverseSelection, comparison, tabId){
     }
 }
 
+
+/**
+ * 
+ * @param {Array} inverseSelection 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function removeActivityFromNodes(inverseSelection, comparison, tabId){
 
     for(let inv of inverseSelection){
@@ -205,6 +274,13 @@ function removeActivityFromNodes(inverseSelection, comparison, tabId){
     //node_ds1_1_clustered-data-information-data-sankey-file_1_file_2_intersecting
 }
 
+
+/**
+ * 
+ * @param {Array} inverseSelection 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function addActivityToNodes(inverseSelection, comparison, tabId){
 
     for(let inv of inverseSelection){
@@ -217,6 +293,13 @@ function addActivityToNodes(inverseSelection, comparison, tabId){
 }
 
 
+/**
+ * 
+ * @param {Object} activeNodes 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ * @param {ObjectArray} globalDataData 
+ */
 function currentlyClickedGenesByNode(activeNodes, comparison, tabId, globalDataData){
 
     let ds1Nodes = activeNodes.filter( d => d.startsWith("ds1"));
@@ -229,8 +312,11 @@ function currentlyClickedGenesByNode(activeNodes, comparison, tabId, globalDataD
 }
 
 
-
-
+/**
+ * 
+ * @param {Object} d 
+ * @param {String} id 
+ */
 function highlightHoveredLink(d, id){
 
     d3.select(id)
@@ -251,6 +337,11 @@ function highlightHoveredLink(d, id){
 }
 
 
+/**
+ * 
+ * @param {Object} d 
+ * @param {String} id 
+ */
 function unhighlightHoveredLink(d, id){
 
     d3.select(id)
@@ -269,40 +360,6 @@ function unhighlightHoveredLink(d, id){
         }
     }
 }
-
-
-/**
- * ###############
- * ### SLIDERS ###
- * ###############
- */
-
-
-
-
-
-
-/*
-* ################
-* ### ALLUVIAL ###
-* ################
-*/
-
-/**
- * (de)selects all genes in the initial data
- */
-// function deselect_all(){
-//     if(global_selection.length === 0){
-//         global_selection = Array.from(global_data.data).filter(d => d.highlighted === true);
-//         global_selection.columns = global_data.columns;
-//     }
-
-//     else{
-//         global_selection = [];
-//     }
-// }
-
-
 
 /**
  * uses information from the Alluvial diagram to get the corresponding genes from initial data
@@ -359,6 +416,10 @@ function getGenesByClusterId(data, cluster, comparison, tabId){
 * ########################
 */
 
+
+/**
+ * 
+ */
 function exportGeneList(){
 
     selected_genes = global_selection.map(d => d.gene)
@@ -382,6 +443,11 @@ function exportGeneList(){
 * ################
 */
 
+
+/**
+ * 
+ * @param {Array} selection 
+ */
 function getInverseGeneSelection(selection){
 
     init_genes = work_data.map(function (d) { return d.gene; });
@@ -393,6 +459,11 @@ function getInverseGeneSelection(selection){
 }
 
 
+/**
+ * 
+ * @param {Object} d 
+ * @param {String} divId 
+ */
 function fixHighlightedLink(d, divId){
 
     // change class of currently hovered element
@@ -401,6 +472,10 @@ function fixHighlightedLink(d, divId){
 }
 
 
+/**
+ * 
+ * @param {Object} d 
+ */
 function fixNode(d){
         alluvial_links = Array.prototype.slice.call(document.getElementsByClassName('alluvial_links'));
 
@@ -444,8 +519,6 @@ function fixNode(d){
 }
 
 
-
-
 /**
  * updates global selection by adding or removing the selection (one line!)
  * @param {Object} selection one line of an object
@@ -478,8 +551,14 @@ function updateGlobalSelectionLine(selection) {
     }
 }
 
-//http://bl.ocks.org/godds/6550889
-// mouse over link or node
+
+/**
+ * inspired: http://bl.ocks.org/godds/6550889
+ * @param {ObjectArray} data 
+ * @param {Object} d 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function updatePlot(data, d, tabName, tabId){
 
     let currentDetailDiagram = getActiveRadioButton(tabName);
@@ -499,26 +578,16 @@ function updatePlot(data, d, tabName, tabId){
     updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds1", ds1Cluster, tabName, TabId.intersecting);
     updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], "ds2", ds2Cluster, tabName, TabId.intersecting);
 
-
-
-
-    //filtered_data = init_data.filter(function(d) { return all_genes.includes(d.gene) })
-    
-
-    // // if(currentDetailDiagram === "centroid" || value === "profiles"){
-    // //     updateProfileCentroids(filtered_data, d.names[0].split("_")[0], d.names[0].split("_")[1])
-    // //     updateProfileCentroids(filtered_data, d.names[1].split("_")[0], d.names[1].split("_")[1])
-    // // }
-
-    // // else if(value === "boxplot"){
-    // //     updateBoxplots(filtered_data, d.names[0].split("_")[0], d.names[0].split("_")[1])
-    // //     updateBoxplots(filtered_data, d.names[1].split("_")[0], d.names[1].split("_")[1])
-    // // }
-
-
 }
 
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {Object} d 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function updatePlotByNode(data, d, tabName, tabId){
 
     let currentDetailDiagram = getActiveRadioButton(tabName);
@@ -557,42 +626,13 @@ function updatePlotByNode(data, d, tabName, tabId){
         updateDetailDiagram(currentDetailDiagram, filteredData[comparison][tabId], link.split("_")[0], link.split("_")[1], tabName, TabId.intersecting);
     }
     
-
-
-
-
-    // var selection = document.getElementById('plot_selection');
-    // var value = selection.options[selection.selectedIndex].value;
-
-    // all_genes = getGenesByClusterId(d.name)
-
-    // work_data = global_data.data
-
-
-    // first filtering
-    //filtered_data = init_data.filter(function(d) { return all_genes.includes(d.gene) })
-    // filtered_data = work_data.filter(function(d) { return all_genes.includes(d.gene) && d.highlighted === true})
-    // filtered_data.column=work_data.column;
-
-    // // second filtering
-    // ds1 = [... new Set(filtered_data.map(function(d) { return d.ds1_cluster }))]
-    // ds2 = [... new Set(filtered_data.map(function(d) { return d.ds2_cluster }))]
-
-    // combined = ds1.concat(ds2);
-
-    // for(let entry of combined){
-    //     if(value === "centroid" || value === "profiles"){
-    //         updateProfileCentroids(filtered_data, entry.split("_")[0], entry.split("_")[1])
-    //     }
-
-    //     else if(value === "boxplot"){
-    //         updateBoxplots(filtered_data, entry.split("_")[0], entry.split("_")[1])
-    //     }
-        
-    // }
 }
 
 
+/**
+ * 
+ * @param {String} tabName 
+ */
 function getActiveRadioButton(tabName){
 
     // get current diagram
@@ -608,8 +648,13 @@ function getActiveRadioButton(tabName){
 }
 
 
-
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {Object} d 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function restoreCentroidByNode(data, d, tabName, tabId){
 
 
@@ -635,14 +680,13 @@ function restoreCentroidByNode(data, d, tabName, tabId){
 }
 
 
-// mouse out
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function restoreCentroid(data, tabName, tabId){
-
-    /*
-
-    TODO: restore restore only 
-
-    */
 
     let currentDetailDiagram = getActiveRadioButton(tabName);
 
@@ -665,17 +709,19 @@ function restoreCentroid(data, tabName, tabId){
     }
 }
 
-
-
-
-
-    
-
+/**
+ * 
+ * @param {element} element 
+ */
 function tabDivIdFromElement(element){
     return element.id.split('-')[1];
 }
 
 
+/**
+ * 
+ * @param {String} tabDivId 
+ */
 function comparisonFromTabDivId(tabDivId){
 
     //return tabDivId.split("_")[0] + "_" + tabDivId.split("_")[1] + "_" + tabDivId.split("_")[2] + "_" + tabDivId.split("_")[3];
@@ -684,6 +730,10 @@ function comparisonFromTabDivId(tabDivId){
 }
 
 
+/**
+ * 
+ * @param {String} tabDivId 
+ */
 function tabIdFromTabDivId(tabDivId){
 
     //return tabDivId.split("_")[4];
@@ -692,11 +742,20 @@ function tabIdFromTabDivId(tabDivId){
 }
 
 
+/**
+ * 
+ * @param {String} tabDivId 
+ */
 function geneStringFromTextInput(tabDivId){
     return document.getElementById('goi-' + tabDivId).value;
 }
 
 
+/**
+ * 
+ * @param {String} geneString 
+ * @param {String} separator 
+ */
 function geneArrayFromGeneString(geneString, separator){
     return geneString.split(separator);
 }

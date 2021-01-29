@@ -1,11 +1,11 @@
 
 /**
-  *
-  * @param{String} id
-  * @param{int} min
-  * @param{int} max
-  * @param{boolean} twoHandles
-  */
+ * 
+ * @param {String} id 
+ * @param {float} min 
+ * @param {float} max 
+ * @param {Boolean} twoHandles 
+ */
 function createSlider(id, min, max, twoHandles) {
 
     let slider = document.getElementById(id);
@@ -33,13 +33,13 @@ function createSlider(id, min, max, twoHandles) {
 
 
 /**
-  *
-  * @param{String} sliderId
-  * @param{String} inputBoxId
-  * @param{int} defaultMin
-  * @param{int} min
-  * @param{int} max
-  */
+ * 
+ * @param {String} sliderId 
+ * @param {String} inputBoxId 
+ * @param {Boolean} defaultMin 
+ * @param {float} min 
+ * @param {float} max 
+ */
 function updateNumbers(sliderId, inputBoxId, defaultMin, min, max) {
 
     let inputNumber = document.getElementById(inputBoxId);
@@ -60,6 +60,14 @@ function updateNumbers(sliderId, inputBoxId, defaultMin, min, max) {
     });
 }
 
+
+/**
+ * 
+ * @param {String} sliderId 
+ * @param {String} inputBoxId 
+ * @param {float} min 
+ * @param {float} max 
+ */
 function updateNumbersSingle(sliderId, inputBoxId, min, max) {
 
     let inputNumber = document.getElementById(inputBoxId);
@@ -80,6 +88,10 @@ function updateNumbersSingle(sliderId, inputBoxId, min, max) {
 }
 
 
+/**
+ * needs to be done before new slider can be created
+ * @param {String} id 
+ */
 function destroySlider(id){
   if($("#" + id).attr('class') !== 'undefined' && $("#" + id)[0].noUiSlider){
         $("#" + id)[0].noUiSlider.destroy();
@@ -88,9 +100,9 @@ function destroySlider(id){
 
 
 /**
-  *
-  * @param{String} id
-  */
+ * 
+ * @param {String} id 
+ */
 function varianceSlider(id){
     
     destroySlider(id);
@@ -102,6 +114,10 @@ function varianceSlider(id){
 }
 
 
+/**
+ * 
+ * @param {String} id 
+ */
 function kSlider(id){
 
   destroySlider(id);
@@ -113,7 +129,12 @@ function kSlider(id){
 }
 
 
-// variance
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} tabName 
+ * @param {String} tabId 
+ */
 function varianceAndAbundanceslider(data, tabName, tabId) {
 
   if ($("#ds1_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_slider-" + tabName)[0].noUiSlider) {
@@ -150,67 +171,18 @@ function varianceAndAbundanceslider(data, tabName, tabId) {
 }
 
 
-
-
-
-// function expressionSlider(data, tabName, tabId){
-
-//     if($("#ds1_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_slider-" + tabName)[0].noUiSlider){
-//         $("#ds1_slider-" + tabName)[0].noUiSlider.destroy()
-//     }
-
-//     if($("#ds2_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_slider-" + tabName)[0].noUiSlider){
-//         $("#ds2_slider-" + tabName)[0].noUiSlider.destroy()
-//     }
-
-//     createSlider("ds1_slider-" + tabName, 0, 100, true);
-//     createSlider("ds2_slider-" + tabName, 0, 100, true);
-
-//     introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input1-" + tabName, true, 0, 100, tabId, data);
-//     introduceSlideUpdates("ds1", "ds1_slider-" + tabName, tabName, "ds1_slider_input2-" + tabName, false, 0, 100, tabId, data);
-//     introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input1-" + tabName, true, 0, 100, tabId, data);
-//     introduceSlideUpdates("ds2", "ds2_slider-" + tabName, tabName, "ds2_slider_input2-" + tabName, false, 0, 100, tabId, data);
-// }
-
-
-
-
-
-// function abundanceSlider(data, tabName, tabId){
-
-//   // console.log(tabName);
-//   // console.log(tabId);
-
-//   if($("#ds1_abundance_slider-" + tabName).attr('class') !== 'undefined' && $("#ds1_abundance_slider-" + tabName)[0].noUiSlider){
-//       $("#ds1_abundance_slider-" + tabName)[0].noUiSlider.destroy()
-//   }
-
-//   if($("#ds2_abundance_slider-" + tabName).attr('class') !== 'undefined' && $("#ds2_abundance_slider-" + tabName)[0].noUiSlider){
-//       $("#ds2_abundance_slider-" + tabName)[0].noUiSlider.destroy()
-//   }
-
-//   createSlider("ds1_abundance_slider-" + tabName, 0, 100, true);
-//   createSlider("ds2_abundance_slider-" + tabName, 0, 100, true);
-
-//   introduceSlideUpdates("ds1", "ds1_abundance_slider-" + tabName, tabName, "ds1_abundance_slider_input1-" + tabName, true, 0, 100, tabId, data);
-//   introduceSlideUpdates("ds1", "ds1_abundance_slider-" + tabName, tabName, "ds1_abundance_slider_input2-" + tabName, false, 0, 100, tabId, data);
-//   introduceSlideUpdates("ds2", "ds2_abundance_slider-" + tabName, tabName, "ds2_abundance_slider_input1-" + tabName, true, 0, 100, tabId, data);
-//   introduceSlideUpdates("ds2", "ds2_abundance_slider-" + tabName, tabName, "ds2_abundance_slider_input2-" + tabName, false, 0, 100, tabId, data);
-// }
-
-
 /**
-  *
-  * https://refreshless.com/nouislider/examples/
-  * @param{String} experimentId
-  * @param{String} sliderId
-  * @param{String} tabName
-  * @param{String} inputBoxId
-  * @param{int} defaultMin
-  * @param{int} min
-  * @param{int} max
-  * @param{String} tabId
-  */
+ * inspired by https://refreshless.com/nouislider/examples/
+ * @param {String} experimentId 
+ * @param {String} sliderId 
+ * @param {String} tabName 
+ * @param {String} inputBoxId 
+ * @param {float} defaultMin 
+ * @param {float} min 
+ * @param {float} max 
+ * @param {String} tabId 
+ * @param {ObjectArray} data 
+ */
 function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defaultMin, min, max, tabId, data) {
 
     let inputNumber = document.getElementById(inputBoxId);
@@ -293,6 +265,10 @@ function introduceSlideUpdates(experimentId, sliderId, tabName, inputBoxId, defa
 }
 
 
+/**
+ * removes current selection (an clears table) after slider is activated since selection would alternatively change due to different number of genes
+ * @param {String} tabName 
+ */
 function clearCurrentSelection(tabName){
 
   let globalDataCopy = createDeepCopyofData(document.getElementById("data-json").value);
@@ -365,21 +341,6 @@ function updateSlide(data, tabName){
   let ds1MedianMax = parseFloat(Array.from(document.getElementById('ds1_abundance_slider-' + tabName).noUiSlider.get())[1]);
   let ds2MedianMin = parseFloat(Array.from(document.getElementById('ds2_abundance_slider-' + tabName).noUiSlider.get())[0]);
   let ds2MedianMax = parseFloat(Array.from(document.getElementById('ds2_abundance_slider-' + tabName).noUiSlider.get())[1]);
-
-  console.log(document.getElementById('ds1_slider-' + tabName).noUiSlider.get())
-  console.log(document.getElementById('ds2_slider-' + tabName).noUiSlider.get())
-  console.log(document.getElementById('ds1_abundance_slider-' + tabName).noUiSlider.get())
-  console.log(document.getElementById('ds2_abundance_slider-' + tabName).noUiSlider.get())
-
-  console.log(ds1VarianceMin);
-  console.log(ds1VarianceMax);
-  console.log(ds2VarianceMin);
-  console.log(ds2VarianceMax);
-
-  console.log(ds1MedianMin);
-  console.log(ds1MedianMax);
-  console.log(ds2MedianMin);
-  console.log(ds2MedianMax);
 
   //percentileDs1 = getPercentile(combineLinkSpecificGlobalData(data), "ds1", tabName, ds1Min, ds1Max);
 
@@ -457,8 +418,6 @@ function updateCentroidBySlider(tabName, tabId){
     }
 
 }
-
-
 
 
 

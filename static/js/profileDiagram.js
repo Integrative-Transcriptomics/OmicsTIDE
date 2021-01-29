@@ -1,20 +1,15 @@
 
-/*
-TODO: change nomenclature: highlighted/selected
-
-*/
-
 /**
-  * 
-  * @param{} data
-  * @param{} experimentId
-  * @param{} clusterNumber
-  * @param{} currentSvg
-  * @param{} currentXScale
-  * @param{} currentYScale
-  * @param{} tabId
-  * @param{} tabDivId
-  */
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {SvgObject} currentSvg 
+ * @param {ScaleFunction} currentXScale 
+ * @param {ScaleFunction} currentYScale 
+ * @param {String} tabId 
+ * @param {String} tabDivId 
+ */
  function renderProfileDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale, tabId, tabDivId){
 
 	let tip = d3.select("body").append("div")   
@@ -194,10 +189,16 @@ TODO: change nomenclature: highlighted/selected
 }
 
 
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} parentDiv 
+ * @param {String} experimentId 
+ * @param {SvgObject} currentSvg 
+ * @param {ScaleFunction} currentXScale 
+ * @param {ScaleFunction} currentYScale 
+ */
 function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg, currentXScale, currentYScale){
-
-
 
   let curr_height = document.getElementById(parentDiv).offsetHeight;
 
@@ -362,7 +363,12 @@ function renderProfileDiagramCombined(data, parentDiv, experimentId, currentSvg,
 }
 
 
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {Boolean} isSelected 
+ */
 function getDataForProfileDiagramCombined(data, experimentId, isSelected){
 
   let dataSelectedNonSelectedCombined = getSelectedNonSelectedProfilesCombined(data.selection, experimentId, isSelected);
@@ -375,7 +381,12 @@ function getDataForProfileDiagramCombined(data, experimentId, isSelected){
 }
 
 
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {Boolean} isSelected 
+ */
 function getSelectedNonSelectedProfilesCombined(data, experimentId, isSelected){
 
     let filteredTmpData = data.filter(function (d) {
@@ -388,16 +399,13 @@ function getSelectedNonSelectedProfilesCombined(data, experimentId, isSelected){
 
 
 
-
-
-
 /**
-  * 
-  * @param{} data
-  * @param{} experimentId
-  * @param{} clusterNumber
-  * @param{} isSelected
-  */
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {Boolean} isSelected 
+ */
 function getDataForProfileDiagram(data, experimentId, clusterNumber, isSelected){
 
 	let dataSelectedNonSelected = getSelectedNonSelectedProfiles(data.data, experimentId, clusterNumber, isSelected);
@@ -411,12 +419,12 @@ function getDataForProfileDiagram(data, experimentId, clusterNumber, isSelected)
 
 
 /**
-  * 
-  * @param{} data
-  * @param{} experimentId
-  * @param{} clusterNumber
-  * @param{} isSelected
-  */
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {Boolean} isSelected 
+ */
 function getSelectedNonSelectedProfiles(data, experimentId, clusterNumber, isSelected){
 
     let filteredTmpData = data.filter(function (d) {
@@ -428,11 +436,11 @@ function getSelectedNonSelectedProfiles(data, experimentId, clusterNumber, isSel
 
 
 /**
-  * 
-  * @param{} wideData
-  * @param{} experimentId
-  * @param{} isBox
-  */
+ * 
+ * @param {ObjectArray} wideData 
+ * @param {String} experimentId 
+ * @param {Boolean} isBox 
+ */
 function wideToLong(wideData, experimentId, isBox){
     var longData = [];
 
@@ -482,10 +490,10 @@ function wideToLong(wideData, experimentId, isBox){
 
 
 /**
-  * 
-  * @param{} data
-  * @param{} key
-  */
+ * creates nested object from data
+ * @param {ObjectArray} data 
+ * @param {String} key 
+ */
 function nestData(data, key){
 
 	return d3.nest()

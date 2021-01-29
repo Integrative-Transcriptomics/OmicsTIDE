@@ -1,13 +1,12 @@
 
 /**
-  *
-  * @param{} data
-  * @param{String} experimentId
-  * @param{int} clusterNumber
-  * @param{} currentSvg
-  * @param{} currentXScale
-  * @param{} currentYScale
-  */
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {SvgObject} currentSvg 
+ * @param {ScaleObject} currentXScale 
+ * @param {ScaleObject} currentYScale 
+ */
  function renderBoxDiagram(data, experimentId, clusterNumber, currentSvg, currentXScale, currentYScale){
 
   let boxNested = getDataForBoxDiagram(data, experimentId, clusterNumber);
@@ -40,13 +39,8 @@
         .tickValues(tickRange) 
         );
 
-    
-        
-
-
     let vertLines = currentSvg.selectAll(".vertLines")
         .data(boxNested)
-
 
     // Show the main vertical line
     vertLines
@@ -122,14 +116,12 @@
 }
 
 
-
-
 /**
-  *
-  * @param{} data
-  * @param{String} experimentId
-  * @param{int} clusterNumber
-  */
+ * transforms the data for the box plots
+ * @param {Objectarray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ */
 function getDataForBoxDiagram(data, experimentId, clusterNumber){
 
 	let dataSubsetLong = wideToLong(data.data, experimentId, true);
@@ -142,10 +134,10 @@ function getDataForBoxDiagram(data, experimentId, clusterNumber){
 
 
 /**
-  *
-  * @param{} data
-  * @param{} key
-  */
+ * nests the data for box plots
+ * @param {ObjectArray} data 
+ * @param {String} key 
+ */
 function nestDataBox(data, key){
 
 	return d3.nest() // nest function allows to group the calculation per level of a factor
@@ -177,26 +169,27 @@ function nestDataBox(data, key){
 
 
 /**
-  *
-  * @param{} data
-  */
+ * extracts min value of all boxes (lower outlier)
+ * @param {ObjectArray} data 
+ */
 function getMinValueBox(data){
 	return d3.min(getAllBoxValues(data));
 }
 
+
 /**
-  *
-  * @param{} data
-  */
+ * extracts max value of all boxes (upper outlier)
+ * @param {ObjectArray} data 
+ */
 function getMaxValueBox(data){
 	return d3.max(getAllBoxValues(data));
 }
 
 
 /**
-  *
-  * @param{} data
-  */
+ * summarizes all values in the box plot
+ * @param {ObjectArray} data 
+ */
 function getAllBoxValues(data){
 	
 	let allValues = [];
@@ -214,9 +207,9 @@ function getAllBoxValues(data){
 
 
 /**
-  *
-  * @param{} data
-  */
+ * returns the all outliers (>1.5*IQR, < 1.5*IQR )
+ * @param {ObjectArray} data 
+ */
 function getSingleOutliers(data){
     output = [];
 

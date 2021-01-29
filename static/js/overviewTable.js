@@ -1,4 +1,8 @@
 
+/**
+ * returns all combinations of clusters
+ * @param {Array} selection 
+ */
 function clusterCombinations(selection){
 
 	let combinations = [];
@@ -11,6 +15,10 @@ function clusterCombinations(selection){
 }
 
 
+/**
+ * counts the number of actual combinations
+ * @param {Array} clusterCombinations 
+ */
 function countCombinations(clusterCombinations){
 
 	let countObject = [];
@@ -29,6 +37,10 @@ function countCombinations(clusterCombinations){
 }
 
 
+/**
+ * 
+ * @param {int} combinationCounts 
+ */
 function countOverview(combinationCounts){
 
 	let finalObject = [];
@@ -42,6 +54,10 @@ function countOverview(combinationCounts){
 }
 
 
+/**
+ * 
+ * @param {Array} selection 
+ */
 function getDatasetCombinations(selection){
 
 	let combinations = clusterCombinations(selection);
@@ -54,6 +70,12 @@ function getDatasetCombinations(selection){
 }
 
 
+/**
+ * 
+ * @param {String} parentDivId 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function clearTable(parentDivId, comparison, tabId){
 
 	var parentDiv = document.getElementById(parentDivId);
@@ -74,12 +96,23 @@ function clearTable(parentDivId, comparison, tabId){
 }
 
 
+/**
+ * 
+ * @param {String} clusterCombinations 
+ */
 function combinationToString(clusterCombinations){
 
 	return "_" + clusterCombinations.ds1 + "_" + clusterCombinations.ds2;
 }
 
 
+/**
+ * 
+ * @param {String} parentDivId 
+ * @param {Array} clusterCombinations 
+ * @param {String} comparison 
+ * @param {String} tabId 
+ */
 function createTable(parentDivId, clusterCombinations, comparison, tabId){
 
 	comparison = comparison.replace("-","_");

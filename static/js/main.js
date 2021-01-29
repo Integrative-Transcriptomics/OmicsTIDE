@@ -9,20 +9,38 @@ var matrixCellSelected = false;
 
 
 
-
+/**
+ * 
+ * @param {Object} row 
+ */
 function geneInDatasetOneOnly(row){
         return row.ds1_median !== null && row.ds2_median === null;
 }
 
+/**
+ * 
+ * @param {Object} row 
+ */
 function geneInBothDatasets(row){
     return row.ds1_median !== null && row.ds2_median !== null;
 }
 
+/**
+ * 
+ * @param {Object} row 
+ */
 function geneInNeitherDatasets(row){
     return row.ds1_median !== null && row.ds2_median !== null;
 }
 
-
+/**
+ * 
+ * @param {Object} row 
+ * @param {float} ds1Min 
+ * @param {float} ds1Max 
+ * @param {float} ds2Min 
+ * @param {float} ds2Max 
+ */
 function checkNonIntersecting(row, ds1Min, ds1Max, ds2Min, ds2Max){
 
     // should not happend
@@ -49,33 +67,32 @@ function checkNonIntersecting(row, ds1Min, ds1Max, ds2Min, ds2Max){
 
 
 
+// function updateXY(current){
 
-function updateXY(current){
+//     let tabName = current.id.split("-")[1];
 
-    let tabName = current.id.split("-")[1];
+//     let tabId = tabName.split("_")[4];
 
-    let tabId = tabName.split("_")[4];
+//     let diagramId = current.value;
 
-    let diagramId = current.value;
+//     let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
 
-    let comparison = tabName.split("_")[0] + "_" + tabName.split("_")[1] + "_" + tabName.split("_")[2] + "_" + tabName.split("_")[3];
-
-    for(let ds of ["ds1", "ds2"]){
-        for(let i=1; i <= globalData[comparison][tabId]['cluster_count']; i++){
+//     for(let ds of ["ds1", "ds2"]){
+//         for(let i=1; i <= globalData[comparison][tabId]['cluster_count']; i++){
         
-            updateDetailDiagram(diagramId, globalData[comparison][tabId], ds, i, tabName, tabId);
-        }
-    }
-}
+//             updateDetailDiagram(diagramId, globalData[comparison][tabId], ds, i, tabName, tabId);
+//         }
+//     }
+// }
 
 
 
 
 /**
-  *
-  * @param{element} current
-  * @param{String} tabId
-  */
+ * 
+ * @param {Element} current 
+ * @param {String} tabId 
+ */
 function updateDiagram(current, tabId){
 
     let data = createDeepCopyofData(document.getElementById("data-json").value);
@@ -115,6 +132,10 @@ function updateDiagram(current, tabId){
     }   
 }
 
+/**
+ * 
+ * @param {Element} element 
+ */
 function changeActivityOfInput(element){
 
     if(element.id === "own-radio-button"){

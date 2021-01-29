@@ -8,14 +8,13 @@ let color = d3.scaleOrdinal()
        .range(["#1b9e77", "#eb914d", "#7570b3", "#e6ab02", "#735363", "#66a61e", "#1b9e77", "#eb914d", "#7570b3", "#e6ab02", "#735363", "#66a61e"]);
 
 /**
-  * 
-  * @param{} diagramId
-  * @param{} data
-  * @param{} experimentId
-  * @param{int} clusterNumer
-  * @param{} tabdivID
-  * @param{} tabId
-  */
+ * @param {String} diagramId 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {String} tabDivId 
+ * @param {String} tabId 
+ */
 function detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId){
 
     curr_width = document.getElementById(experimentId + "_" + clusterNumber + "_" + tabDivId).offsetWidth;
@@ -62,7 +61,10 @@ function detailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, t
     updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId);
 }
 
-
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
 function getAllMinMax(data){
 
     let trends = [... new Set(data.map( d => d.ds1_cluster.split("_")[1]).concat(data.map( d => d.ds2_cluster.split("_")[1])) )]
@@ -75,8 +77,12 @@ function getAllMinMax(data){
         }
     }
 }
-
-
+/**
+ * combined profile plot -> second-level analysis
+ * @param {String} parentDiv 
+ * @param {String} experimentId 
+ * @param {ObjectArray} data 
+ */
 function detailDiagramCombined(parentDiv, experimentId, data){
 
   let curr_width =  document.getElementById(parentDiv).offsetWidth;
@@ -118,6 +124,12 @@ function detailDiagramCombined(parentDiv, experimentId, data){
 }
 
 
+/**
+ * -> second-level analysis
+ * @param {String} parentDiv 
+ * @param {String} experimentId 
+ * @param {ObjectArray} data 
+ */
 function updateDetailDiagramCombined(parentDiv, experimentId, data){
 
     // set current svg
@@ -131,14 +143,14 @@ function updateDetailDiagramCombined(parentDiv, experimentId, data){
 
 
 /**
-  * 
-  * @param{} diagramId
-  * @param{} data
-  * @param{} experimentId
-  * @param{int} clusterNumer
-  * @param{} tabdivID
-  * @param{} tabId
-  */
+ * 
+ * @param {String} diagramId 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ * @param {String} tabDivId 
+ * @param {String} tabId 
+ */
 function updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDivId, tabId){
 
     // set current svg
@@ -173,14 +185,14 @@ function updateDetailDiagram(diagramId, data, experimentId, clusterNumber, tabDi
 
 
 /**
-  * 
-  * @param{} diagramId
-  * @param{} data
-  * @param{} parentLeftDivId
-  * @param{int} parentRightDivId
-  * @param{} tabDivId
-  * @param{} tabId
-  */
+ * creates all detail diagrams for a given globalData
+ * @param {String} diagramId 
+ * @param {ObjectArray} data 
+ * @param {String} parentLeftDivId 
+ * @param {String} parentRightDivId 
+ * @param {String} tabDivId 
+ * @param {String} tabId 
+ */
 function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightDivId, tabDivId, tabId) {
 
     if(!isValidEnum(DiagramId, diagramId)){
@@ -215,11 +227,11 @@ function detailDiagramsPerCluster(diagramId, data, parentLeftDivId, parentRightD
 
 
 /**
-  * 
-  * @param{} diagramId
-  * @param{} data
-  * @param{} experimentId
-  */
+ * 
+ * @param {String} diagramId 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ */
 function getCurrentXDomain(diagramId, data, experimentId){
 
 
@@ -258,11 +270,11 @@ function getCurrentXDomain(diagramId, data, experimentId){
 
 
 /**
-  * 
-  * @param{} diagramId
-  * @param{} data
-  * @param{} experimentId
-  */
+ * 
+ * @param {String} diagramId 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ */
 function getCurrentYDomain(diagramId, data, experimentId){
 
     if (typeof data.data === "string") {
@@ -291,10 +303,10 @@ function getCurrentYDomain(diagramId, data, experimentId){
 
 
 /**
-  * 
-  * @param{} colname
-  * @param{} experimentId
-  */
+ * 
+ * @param {String} colname 
+ * @param {String} experimentId 
+ */
 function isSingleValue(colname, experimentId){
     return (
         colname.startsWith(experimentId) && 
@@ -308,10 +320,10 @@ function isSingleValue(colname, experimentId){
 
 
 /**
-  * 
-  * @param{} data
-  * @param{} experimentId
-  */
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ */
 function valuesToArray(data, experimentId){
     let allValues = [];
 
@@ -328,21 +340,21 @@ function valuesToArray(data, experimentId){
 
 
 /**
-  * 
-  * @param{} Enum
-  * @param{} chosenValue
-  */
+ * 
+ * @param {Enum} Enum 
+ * @param {String} chosenValue 
+ */
 function isValidEnum(Enum, chosenValue){
     return Object.keys(Enum).includes(chosenValue);
 }
 
 
 /**
-  * 
-  * @param{} data
-  * @param{} experimentId
-  * @param{int} clusterNumer
-  */
+ * creates subset for detal diagrams
+ * @param {ObjectArray} data 
+ * @param {String} experimentId 
+ * @param {int} clusterNumber 
+ */
 function getDataSubset(data, experimentId, clusterNumber){
 
     // clone object from globalData
@@ -372,10 +384,11 @@ function getDataSubset(data, experimentId, clusterNumber){
 
 
 /**
- * Creates n vertically stacked child divs (childHeight = parentHeight/n) in a parent div
- * @param {number} n number of child divs.
- * @param {string} parent_div_id ID of the parent div
- * @param {string} child_div_id_prefix ID prefix of the child divs
+ * creates n vertically stacked child divs in a parent div
+ * @param {int} n 
+ * @param {String} parent_div_id 
+ * @param {String} child_div_id_prefix 
+ * @param {String} tabDivId 
  */
 function createChildDivs(n, parent_div_id, child_div_id_prefix, tabDivId){
     var parent_div = document.getElementById(parent_div_id);
@@ -394,6 +407,13 @@ function createChildDivs(n, parent_div_id, child_div_id_prefix, tabDivId){
 }
 
 
+/**
+ * 
+ * @param {String} parent_div_name 
+ * @param {float} width_perc 
+ * @param {float} height_perc 
+ * @param {String} div_suffix 
+ */
 function createSubDivs(parent_div_name, width_perc, height_perc, div_suffix){
 
     var parent_div = document.getElementById(parent_div_name);

@@ -1,5 +1,9 @@
 // parse globalData to as javascript object
 
+/**
+ * transforms data for bar charts
+ * @param {ObjectArray} data 
+ */
 function barChartFromGlobalDataInfo(data) {
 
     let barChartData = [];
@@ -20,6 +24,13 @@ function barChartFromGlobalDataInfo(data) {
     return barChartData
 }
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ * @param {String} datasetDiv 
+ * @param {String} varianceDiv 
+ * @param {String} kDiv 
+ */
 function extractInputParameters(data, datasetDiv, varianceDiv, kDiv) {
 
     let datasetElement = document.getElementById(datasetDiv);
@@ -46,14 +57,14 @@ function extractInputParameters(data, datasetDiv, varianceDiv, kDiv) {
         datasetElement.appendChild(document.createElement("br"))
     }
 
-    if(lower === undefined || upper === undefined){
+    if (lower === undefined || upper === undefined) {
         varianceElement.appendChild(document.createTextNode("not determined for PTCF"))
     }
 
-    else{
+    else {
         varianceElement.appendChild(document.createTextNode(lower + "-" + upper + "%"))
     }
-    
+
 
     kElement.appendChild(document.createTextNode(k))
 
@@ -68,34 +79,37 @@ function initButton(id, buttonName, functionCall) {
 
 }
 
+/**
+ * 
+ * @param {ObjectArray} data 
+ */
+function isPtcf(data) {
 
-function isPtcf(data){
-
-    return ( (Object.keys(data).length === 1) && 
-    (data[Object.keys(data)[0]]['info']['file_1']['filename'] === data[Object.keys(data)[0]]['info']['file_2']['filename']) )
+    return ((Object.keys(data).length === 1) &&
+        (data[Object.keys(data)[0]]['info']['file_1']['filename'] === data[Object.keys(data)[0]]['info']['file_2']['filename']))
 }
 
 
+/**
+ * create an interactive table for the comparison information
+ * inspired: http://bl.ocks.org/jonahwilliams/cc2de2eedc3896a3a96d
+ * @param {ObjectArray} data 
+ * @param {String} tableDiv 
+ */
 function comparisonTable(data, tableDiv) {
-
-    console.log(data);
-
-    // http://bl.ocks.org/jonahwilliams/cc2de2eedc3896a3a96d
-
-    // overview-table-comparisons-content
 
     let transformedObject = [];
 
-    if(isPtcf(data)){
+    if (isPtcf(data)) {
         transformedObject.push({
             'comparison': 'Comparison1',
             'PTCF': data['Comparison1']['info']['file_1']['filename'],
             'intersecting': 'Analyze!',
-            'non-intersecting' : 'Analyze!'
+            'non-intersecting': 'Analyze!'
         })
     }
 
-    else{
+    else {
         for (let comparison of Object.keys(data)) {
 
             transformedObject.push({
@@ -103,11 +117,11 @@ function comparisonTable(data, tableDiv) {
                 'first_dataset': data[comparison]['info']['file_1']['filename'],
                 'second_dataset': data[comparison]['info']['file_2']['filename'],
                 'intersecting': 'Analyze!',
-                'non-intersecting' : 'Analyze!'
+                'non-intersecting': 'Analyze!'
             })
         }
     }
-    
+
 
     let table = d3.select("#" + tableDiv)
         .append("table")
@@ -130,8 +144,8 @@ function comparisonTable(data, tableDiv) {
         .append("tr")
         .on("mouseover", function (d) {
             d3.select(this)
-            .transition()
-            .duration(100)
+                .transition()
+                .duration(100)
                 .style("background-color", "lightgrey");
 
             linkTableWithBars(d);
@@ -164,8 +178,8 @@ function comparisonTable(data, tableDiv) {
         })
         .on("mouseout", function (d) {
             d3.select(this)
-            .transition()
-            .duration(100)
+                .transition()
+                .duration(100)
                 .style("background-color", "transparent");
 
             unHighlightFiles();
@@ -182,59 +196,60 @@ function comparisonTable(data, tableDiv) {
         })
         .enter()
         .append("td")
-        .attr("class", function(d){return "tablecells " + d.i + "_" + d.value.split(".")[0]})
-        .html(function (d) { 
-            return d.value; })
-        .on("mouseover", function(d){
-            if(d.i === "intersecting" || d.i === "non-intersecting"){
+        .attr("class", function (d) { return "tablecells " + d.i + "_" + d.value.split(".")[0] })
+        .html(function (d) {
+            return d.value;
+        })
+        .on("mouseover", function (d) {
+            if (d.i === "intersecting" || d.i === "non-intersecting") {
                 d3.select(this)
-                .style("cursor", "pointer")         
-                .transition()
-                .duration(100)
-                .style("background-color", "red");  
+                    .style("cursor", "pointer")
+                    .transition()
+                    .duration(100)
+                    .style("background-color", "red");
 
-                if(d.i === "intersecting"){
+                if (d.i === "intersecting") {
                     $("#matrix-information-preview-content-intersecting-content").css('border-color', "red").fadeIn(100)
                     $("#matrix-information-preview-content-nonIntersecting-content").css('border-color', "transparent").fadeIn(100)
-                    
+
                 }
 
-                else{
+                else {
                     $("#matrix-information-preview-content-nonIntersecting-content").css('border-color', "red").fadeIn(100)
                     $("#matrix-information-preview-content-intersecting-content").css('border-color', "transparent").fadeIn(100)
                 }
-                
-                
+
+
             }
         })
-        .on("mouseout", function(d){
+        .on("mouseout", function (d) {
 
-            if(d.i === "intersecting" || d.i === "non-intersecting"){
+            if (d.i === "intersecting" || d.i === "non-intersecting") {
                 d3.select(this)
-                .style("cursor", "default")         
-                .transition()
-                .duration(100)
-                .style("background-color", "transparent");  
+                    .style("cursor", "default")
+                    .transition()
+                    .duration(100)
+                    .style("background-color", "transparent");
 
-                if(d.i === "intersecting"){
+                if (d.i === "intersecting") {
                     $("#matrix-information-preview-content-intersecting-content").css('border-color', "transparent").fadeIn(100)
                 }
 
-                else{
+                else {
                     $("#matrix-information-preview-content-nonIntersecting-content").css('border-color', "transparent").fadeIn(100)
                 }
             }
         })
-        .on("click", function(d){
+        .on("click", function (d) {
 
-            if(d.i === "intersecting"){
+            if (d.i === "intersecting") {
 
-                let comparison= $(this).siblings()[0].innerHTML;
-                addTab(comparison , true, TabId.intersecting);
+                let comparison = $(this).siblings()[0].innerHTML;
+                addTab(comparison, true, TabId.intersecting);
 
             }
 
-            if(d.i === "non-intersecting"){
+            if (d.i === "non-intersecting") {
 
                 let comparison = $(this).siblings()[0].innerHTML;
                 addTab(comparison, true, TabId.nonIntersecting);
@@ -246,28 +261,36 @@ function comparisonTable(data, tableDiv) {
 
 }
 
-
-async function removePreview(parentDivId){
+/**
+ * 
+ * @param {String} parentDivId 
+ */
+async function removePreview(parentDivId) {
 
     let parentDiv = document.getElementById(parentDivId);
     while (parentDiv.firstChild) {
         parentDiv.firstChild.remove();
-    } 
+    }
 }
 
-async function setPreview(parentDivId, previewDivId){
-    
+/**
+ * 
+ * @param {String} parentDivId 
+ * @param {String} previewDivId 
+ */
+async function setPreview(parentDivId, previewDivId) {
+
     //let parentDiv = document.getElementById(parentDivId);
     let previewDiv = document.getElementById(previewDivId).cloneNode(true);
 
-    if(previewDivId === "matrix-information-preview-content-text"){
+    if (previewDivId === "matrix-information-preview-content-text") {
         previewDiv.style.display = "block";
     }
 
-    else{
+    else {
         previewDiv.style.display = "flex";
     }
-    
+
 
     //parentDiv.appendChild(previewDiv);
 
@@ -275,8 +298,10 @@ async function setPreview(parentDivId, previewDivId){
 }
 
 
-
-
+/**
+ * highlights selected bars
+ * @param {Array} hovered 
+ */
 function linkTableWithBars(hovered) {
 
     let bars = Array.prototype.slice.call(document.getElementsByClassName("bars"));
@@ -294,18 +319,17 @@ function linkTableWithBars(hovered) {
 }
 
 
-
-
-// start implementing here:
-
-// mainly inspired by: https://bl.ocks.org/ricardo-marino/ca2db3457f82dbb10a8753ecba8c0029
-
+/**
+ * creates the overview tab
+ * inspired by: https://bl.ocks.org/ricardo-marino/ca2db3457f82dbb10a8753ecba8c0029
+ * @param {ObjectArray} globalDataCopy 
+ */
 function comparisonOverview(globalDataCopy) {
 
     //let globalDataCopy = JSON.parse(JSON.stringify(flaskGlobalData));
-    
+
     let barChartData = barChartFromGlobalDataInfo(globalDataCopy);
-    
+
     let copyBarChartData = JSON.parse(JSON.stringify(barChartData));
 
     // extract input information
@@ -329,6 +353,11 @@ function comparisonOverview(globalDataCopy) {
 }
 
 
+/**
+ * 
+ * @param {Object} input 
+ * @param {Object} canvas 
+ */
 function drawBars(input, canvas) {
 
     let params = { 'input': input, 'canvas': canvas };
@@ -338,6 +367,10 @@ function drawBars(input, canvas) {
 }
 
 
+/**
+ * 
+ * @param {Object} params 
+ */
 function initialize(params) {
 
     // unpacking params
@@ -432,7 +465,7 @@ function initialize(params) {
         // Fill with a rectangle for visualization.
         .attr("id", "svg_legend")
         .append('g')
-        .attr('transform', 'translate(' + document.getElementById("matrix-information-controls").offsetWidth/4 + ',' + 0 + ')');
+        .attr('transform', 'translate(' + document.getElementById("matrix-information-controls").offsetWidth / 4 + ',' + 0 + ')');
 
     let legend = legendSvg.selectAll(".shapes")
         .data(labels)
@@ -450,30 +483,30 @@ function initialize(params) {
         .style("fill", function (d) {
             return col(d)
         })
-        // .on('mouseover', function (d) { d3.select(this).style("cursor", "pointer") })
-        // .on('mouseout', function (d) { d3.select(this).style("cursor", "default") })
-        // .on('click', function (d) {
+    // .on('mouseover', function (d) { d3.select(this).style("cursor", "pointer") })
+    // .on('mouseout', function (d) { d3.select(this).style("cursor", "default") })
+    // .on('click', function (d) {
 
-        //     if (chosen.cluster.includes(d)) {
-        //         let index = chosen.cluster.indexOf(d);
-        //         if (index !== -1) {
-        //             chosen.cluster.splice(index, 1);
-        //         }
+    //     if (chosen.cluster.includes(d)) {
+    //         let index = chosen.cluster.indexOf(d);
+    //         if (index !== -1) {
+    //             chosen.cluster.splice(index, 1);
+    //         }
 
-        //         d3.select(this)
-        //             .attr('fill', color(d));
-        //     }
+    //         d3.select(this)
+    //             .attr('fill', color(d));
+    //     }
 
-        //     else {
+    //     else {
 
-        //         chosen.cluster.push(d);
+    //         chosen.cluster.push(d);
 
-        //         d3.select(this)
-        //             .attr('fill', 'transparent');
-        //     }
+    //         d3.select(this)
+    //             .attr('fill', 'transparent');
+    //     }
 
-        //     update(params);
-        // });
+    //     update(params);
+    // });
 
 
 
@@ -981,6 +1014,10 @@ function formatData(data) {
 // });
 
 
+/**
+ * highlights cells in the table corresponding to hovered non-intersecting bar chart
+ * @param {String} rect 
+ */
 function highlightFiles(rect) {
 
     let currentFile1 = rect.file_1;
@@ -991,14 +1028,14 @@ function highlightFiles(rect) {
     if (rect.cluster === "ni_firstOnly") {
 
         for (let bar of bars) {
-            
+
 
             if ((bar.__data__.file_1 !== currentFile1) || (bar.id.split("_")[2] !== "firstOnly")) {
 
                 d3.select("#" + bar.id)
-                .transition()
-                .duration(100)
-                .style("opacity", 0.1)
+                    .transition()
+                    .duration(100)
+                    .style("opacity", 0.1)
 
                 // bar.style.opacity = 0.3;
 
@@ -1006,12 +1043,12 @@ function highlightFiles(rect) {
 
                 console.log(current)
 
-                if(current === "ni_firstOnly"){
+                if (current === "ni_firstOnly") {
                     console.log(".first_dataset" + "_" + currentFile1.split(".")[0])
                     d3.selectAll(".first_dataset" + "_" + currentFile1.split(".")[0])
-                    .transition()
-                    .duration(100)
-                    .style("background-color", "lightgrey");     
+                        .transition()
+                        .duration(100)
+                        .style("background-color", "lightgrey");
                 }
             }
         }
@@ -1025,19 +1062,19 @@ function highlightFiles(rect) {
                 //bar.style.opacity = 0.3;
 
                 d3.select("#" + bar.id)
-                .transition()
-                .duration(100)
-                .style("opacity", 0.1)
+                    .transition()
+                    .duration(100)
+                    .style("opacity", 0.1)
 
 
                 let current = bar.__data__.cluster;
 
-                if(current === "ni_secondOnly"){
+                if (current === "ni_secondOnly") {
                     console.log(".second_dataset" + "_" + currentFile2.split(".")[0])
                     d3.selectAll(".second_dataset" + "_" + currentFile2.split(".")[0])
-                    .transition()
-                    .duration(100)
-                    .style("background-color", "lightgrey");     
+                        .transition()
+                        .duration(100)
+                        .style("background-color", "lightgrey");
                 }
             }
         }
@@ -1045,21 +1082,23 @@ function highlightFiles(rect) {
 }
 
 
-
+/**
+ * unhighlightes connected table cells when hovering the single stacks in the bar chart
+ */
 function unHighlightFiles() {
 
     let bars = Array.prototype.slice.call(document.getElementsByClassName("bars"));
 
     for (let bar of bars) {
         d3.select("#" + bar.id)
-                .transition()
-                .duration(100)
-                .style("opacity", 1)
+            .transition()
+            .duration(100)
+            .style("opacity", 1)
         //bar.style.opacity = 1;
     }
 
     d3.selectAll(".tablecells")
-    .transition()
-    .duration(100)
-        .style("background-color", "transparent"); 
+        .transition()
+        .duration(100)
+        .style("background-color", "transparent");
 }
