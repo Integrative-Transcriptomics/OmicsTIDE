@@ -71,15 +71,11 @@ The **data export** section allows the user to download a zip-compressed folder 
 
 
 ---
-[1] Hoogendijk, Arie J., et al. "Dynamic transcriptome-proteome correlation networks reveal human myeloid differentiation and neutrophil-specific programming." Cell reports 29.8 (2019): 2505-2519.
-
-https://www.sciencedirect.com/science/article/pii/S2211124719314044
+[1] Hoogendijk, Arie J., et al. "Dynamic transcriptome-proteome correlation networks reveal human myeloid differentiation and neutrophil-specific programming." Cell reports 29.8 (2019): 2505-2519. --> https://www.sciencedirect.com/science/article/pii/S2211124719314044
 
 Data: https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (The FPKM and LQF values were used for transcriptome and proteome, respectively. We used the mean value across all biological replicates per transcriptome and proteome --> [see here](../static/data/BloodCell))
 
 
-[2] Sulheim, Snorre, et al. "Enzyme-constrained models and omics analysis of Streptomyces coelicolor reveal metabolic changes that enhance heterologous production." Iscience 23.9 (2020): 101525.
-
-https://www.sciencedirect.com/science/article/pii/S2589004220307173
+[2] Sulheim, Snorre, et al. "Enzyme-constrained models and omics analysis of Streptomyces coelicolor reveal metabolic changes that enhance heterologous production." Iscience 23.9 (2020): 101525. --> https://www.sciencedirect.com/science/article/pii/S2589004220307173
 
 Data: https://ars.els-cdn.com/content/image/1-s2.0-S2589004220307173-mmc4.xlsx (The data were normalized and the replicates were combined by using the mean value per time point and per strain)
