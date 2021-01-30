@@ -24,7 +24,7 @@ Each gene in a PTCF file either corresponds to a gene occurring in both data set
 A detailed information on the calculation of trend comparisons in I-PTCF and NI-PTCF can be found [here](TRENDCOMPARISON.md)
 
 <p align="center">
-  <img src="../images/ptcf.png" />
+  <img src="../images/ptcf_.png" />
 </p>
 
 
