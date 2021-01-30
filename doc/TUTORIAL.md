@@ -82,4 +82,4 @@ Data: https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (T
 
 https://www.sciencedirect.com/science/article/pii/S2589004220307173
 
-Data: The values normalized values were of the replicates were combined by using the mean value per time point and per strain
+Data: https://ars.els-cdn.com/content/image/1-s2.0-S2589004220307173-mmc4.xlsx (The values normalized values were of the replicates were combined by using the mean value per time point and per strain)
