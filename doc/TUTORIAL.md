@@ -14,12 +14,12 @@ If required, the data set can be filtered by adjusting the **range slider** to k
 
 By adjusting the **slider** for the initial clusters, the user can determine the further k-Means clustering step. 
 
-Examples files can be found [here](../static/data/test_data/qnorm_log2) (*Streptomyces coelicolor*).
+Examples files can be found [here](../static/data/BloodCell) (*Homo sapiens* [1]).
 
 ### Second option: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
 
-An example file can be found [here](../static/data/test_data/ptcf) (*Streptomyces coelicolor*).
+An example file can be found [here](../static/data/) (*Homo sapien* [1]).
 
 < HOME >
 
@@ -53,3 +53,8 @@ Finding the similarities within a given selection can be done e.g. by performing
 The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
 < SECOND >
+
+
+
+---
+[1] https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (The FPKM and LQF values were used for transcriptome and proteome, respectively. We used the average across all biological replicates per transcriptome and proteome --> [see here](../static/data/BloodCell))
