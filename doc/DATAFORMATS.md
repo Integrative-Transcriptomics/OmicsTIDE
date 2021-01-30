@@ -12,6 +12,7 @@ OmicsTIDE uses abundance data as one of its input options. The user should have 
 
 #### attributes ###
 gene: unique categorical identifier
+
 value: non-negative float
 
 **NOTE: The ID column has to be named "gene".**
