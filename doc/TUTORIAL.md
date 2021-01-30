@@ -54,7 +54,7 @@ If the user wants to retrieve the current analysis in the form of a PTCF, the fi
 If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
 
 <p align="center">
-  <img src="../images/First_New_.png" />
+  <img src="../images/First_NEW_.png" />
 </p>
 
 ## Explore subselection (2nd Level Analysis Tab)
@@ -65,7 +65,7 @@ Finding the similarities within a given selection can be done e.g. by performing
 The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
 <p align="center">
-  <img src="../images/Second_New_.png" />
+  <img src="../images/Second_NEW_.png" />
 </p>
 
 
