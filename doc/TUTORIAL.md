@@ -32,7 +32,7 @@ Once the data is loaded, the user is presented an overview of the analysis, cont
 The interactive table provides information on the files selected for the pairwise trend comparison. Hovering the single rows in the table will highlight the corresponding bar chart. Furthermore, a preview of the trend comparison visualization is created. If the user clicks the cell corresponding to the intersecting genes or the non-intersecting genes, the first-level analysis will be started.
 
 <p align="center">
-  <img src="../images/Overview-.png" />
+  <img src="../images/Overview__.png" />
 </p>
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
