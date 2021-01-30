@@ -14,7 +14,7 @@ If required, the data set can be filtered by adjusting the **range slider** to k
 
 By adjusting the **slider** for the initial clusters, the user can determine the further k-Means clustering step. 
 
-Examples files can be found [here](../static/data/BloodCell) (*Homo sapiens* [1]).
+Examples files can be found [here](../static/data/) (see [1], [2]).
 
 ### Second option: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
@@ -61,4 +61,11 @@ The **data export** section allows the user to download a zip-compressed folder 
 
 https://www.sciencedirect.com/science/article/pii/S2211124719314044
 
-Data: https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (The FPKM and LQF values were used for transcriptome and proteome, respectively. We used the average across all biological replicates per transcriptome and proteome --> [see here](../static/data/BloodCell))
+Data: https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (The FPKM and LQF values were used for transcriptome and proteome, respectively. We used the mean value across all biological replicates per transcriptome and proteome --> [see here](../static/data/BloodCell))
+
+
+[2] Sulheim, Snorre, et al. "Enzyme-constrained models and omics analysis of Streptomyces coelicolor reveal metabolic changes that enhance heterologous production." Iscience 23.9 (2020): 101525.
+
+https://www.sciencedirect.com/science/article/pii/S2589004220307173
+
+Data: The values normalized values were of the replicates were combined by using the mean value per time point and per strain
