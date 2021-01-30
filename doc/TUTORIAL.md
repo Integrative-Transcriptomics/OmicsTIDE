@@ -5,7 +5,7 @@ This tutorial will guide the user through OmicsTIDE from the data loading, over 
 OmicsTIDE comma- or tab-separated text files following given formats. Detailed information on the data formats used by OmicsTIDE is [provided](DATAFORMATS.md).
 
 ## Data Loading (Home Tab)
-The user has two options for data loading. Either [abundance files](DATAFORMATS.md/###-Abundance-Data) can be loaded to calculate trends first and then explore the corresponding trend comparison or already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
+The user has two options for data loading. Either [abundance data](DATAFORMATS.md/###-Abundance-Data) can be loaded to calculate trends first and then explore the corresponding trend comparison or already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
 
 ### First option: Loading up to four abundance files for pairwise trend comparisons
 The user can select between two and four abundance file for pairwise comparisons. The number of files is restricted to four to ensure a clear overview in the Data Matrix tab with max. four pairwise combinations - i.e. six comparisons. 
