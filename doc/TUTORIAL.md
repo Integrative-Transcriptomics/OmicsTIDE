@@ -2,7 +2,7 @@
 This tutorial will guide the user through OmicsTIDE from the data loading, over the customized analysis to the final data export.
 
 ## Data 
-OmicsTIDE uses CSV files following given formats. Detailed information on the data formats used by OmicsTIDE is [provided](DATAFORMATS.md).
+OmicsTIDE comma- or tab-separated text files following given formats. Detailed information on the data formats used by OmicsTIDE is [provided](DATAFORMATS.md).
 
 ## Data Loading (Home Tab)
 The user has two options for data loading. Either [abundance files](DATAFORMATS.md/###-Abundance-Data) can be loaded to calculate trends first and then explore the corresponding trend comparison or already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
