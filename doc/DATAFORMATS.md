@@ -37,7 +37,7 @@ A detailed information on the calculation of trend comparisons in I-PTCF and NI-
 
 gene: unique categorical identifier
 
-ds1_cond(1 to n): float (z-score)
+ds1_cond(1 to n): float (typically z-score normalized)
 
 ds1_cluster: categorical value in the form of ("ds1_" plus an integer from 1 to 6, e.g. "ds1_1")
 
@@ -45,7 +45,7 @@ ds1_median: non-negative float (between 0 and 100)
 
 ds1_var: non-negative float (between 0 and 100)
 
-ds2_cond(1 to n): float (z-score)
+ds2_cond(1 to n): float (typically z-score normalized)
 
 ds2_cluster: categorical value in the form of ("ds2_" plus an integer from 1 to 6, e.g. "ds2_1")
 
