@@ -22,7 +22,7 @@ The user can directly upload one PTCF file and explore the trend comparisons.
 An example file can be found [here](../static/data/).
 
 <p align="center">
-  <img src="../images/Loading.png" />
+  <img src="../images/Loading_.png" />
 </p>
 
 ## Choose your pairwise trend comparison (comparison Tab)
@@ -32,7 +32,7 @@ Once the data is loaded, the user is presented an overview of the analysis, cont
 The interactive table provides information on the files selected for the pairwise trend comparison. Hovering the single rows in the table will highlight the corresponding bar chart. Furthermore, a preview of the trend comparison visualization is created. If the user clicks the cell corresponding to the intersecting genes or the non-intersecting genes, the first-level analysis will be started.
 
 <p align="center">
-  <img src="../images/Comparison.png" />
+  <img src="../images/Overview_.png" />
 </p>
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
@@ -54,7 +54,7 @@ If the user wants to retrieve the current analysis in the form of a PTCF, the fi
 If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
 
 <p align="center">
-  <img src="../images/First.png" />
+  <img src="../images/First_.png" />
 </p>
 
 ## Explore subselection (2nd Level Analysis Tab)
@@ -65,7 +65,7 @@ Finding the similarities within a given selection can be done e.g. by performing
 The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
 <p align="center">
-  <img src="../images/Second.png" />
+  <img src="../images/Second-.png" />
 </p>
 
 
