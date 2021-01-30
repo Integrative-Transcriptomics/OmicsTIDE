@@ -59,6 +59,6 @@ The **data export** section allows the user to download a zip-compressed folder 
 ---
 [1] Hoogendijk, Arie J., et al. "Dynamic transcriptome-proteome correlation networks reveal human myeloid differentiation and neutrophil-specific programming." Cell reports 29.8 (2019): 2505-2519.
 
-https://www.sciencedirect.com/science/article/pii/S2211124719314044#mmc2
+https://www.sciencedirect.com/science/article/pii/S2211124719314044
 
 Data: https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (The FPKM and LQF values were used for transcriptome and proteome, respectively. We used the average across all biological replicates per transcriptome and proteome --> [see here](../static/data/BloodCell))
