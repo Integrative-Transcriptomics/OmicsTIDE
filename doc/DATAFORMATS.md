@@ -11,6 +11,7 @@ The fundament of the most algorithms and tools dealing with omics data is a well
 OmicsTIDE uses abundance data as one of its input options. The user should have already modified the data by adapting the raw data e.g. using quantile-normalization or log2-transformation. 
 
 **NOTE: attributes**
+
 gene: unique categorical identifier
 
 value: non-negative float
@@ -33,6 +34,7 @@ A detailed information on the calculation of trend comparisons in I-PTCF and NI-
 </p>
 
 **NOTE: attributes**
+
 gene: unique categorical identifier
 
 ds1_cond(1 to n): float value (z-score)
@@ -50,9 +52,6 @@ ds2_cluster: categorical value in the form of ("ds2_" plus an integer from 1 to 
 ds2_median(1 to n): non-negative float value (between 0 and 100)
 
 ds2_var(1 to n): non-negative float value (between 0 and 100)
-
-
-
 
 **NOTE: The ID column has to be named "gene".**
 
