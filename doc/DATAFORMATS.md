@@ -41,17 +41,17 @@ ds1_cond(1 to n): float value (z-score)
 
 ds1_cluster: categorical value in the form of ("ds1_" plus an integer from 1 to 6, e.g. "ds1_1")
 
-ds1_median(1 to n): non-negative float value (between 0 and 100)
+ds1_median(1 to n): non-negative float (between 0 and 100)
 
-ds1_var(1 to n): non-negative float value (between 0 and 100)
+ds1_var(1 to n): non-negative float (between 0 and 100)
 
-ds2_cond(1 to n): float value (z-score)
+ds2_cond(1 to n): float (z-score)
 
 ds2_cluster: categorical value in the form of ("ds2_" plus an integer from 1 to 6, e.g. "ds2_1")
 
-ds2_median(1 to n): non-negative float value (between 0 and 100)
+ds2_median(1 to n): non-negative float (between 0 and 100)
 
-ds2_var(1 to n): non-negative float value (between 0 and 100)
+ds2_var(1 to n): non-negative float (between 0 and 100)
 
 **NOTE: The ID column has to be named "gene".**
 
