@@ -19,7 +19,7 @@ Examples files can be found [here](../static/data/) (see [1], [2]).
 ### Second option: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
 
-An example file can be found [here](../static/data/) (*Homo sapien* [1]).
+An example file can be found [here](../static/data/).
 
 < HOME >
 
