@@ -9,7 +9,9 @@ OmicsTIDE is based on HTML/JavaScript/CSS using the D3.js and jQuery libraries a
 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
-The tool can also directly be run at the [TueVis webserver](http://tuevis.informatik.uni-tuebingen.de/)
+The tool can directly be used for your analysis making use of the [TueVis webserver](http://tuevis.informatik.uni-tuebingen.de/).
+
+OmicsTIDE can also be downloaded and run locally by following the instructions below:
 
 ## Installation Guide
 The following steps are required to set up and run OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
