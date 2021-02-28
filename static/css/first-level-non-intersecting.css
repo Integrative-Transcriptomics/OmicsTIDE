@@ -1,0 +1,151 @@
+.first-level-non-intersecting-information{
+	background-color:#FFFFFF;
+    height:85vh;
+    position:relative;
+    display:flex;
+}
+
+.first-level-non-intersecting-information-data-wrapper{
+	height:100%;
+	width:77.5%;
+	position:relative;
+	border: 1px solid lightgrey;
+	padding: 1%;
+}
+
+.first-level-non-intersecting-information-data-header{
+	height:7.5%;
+	width:100%;
+	position:relative;
+	display:flex;
+}
+
+.first-level-non-intersecting-information-data-header-left{
+	height:100%;
+	width: 50%;
+	position:relative;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.first-level-non-intersecting-information-data-header-right{
+	height:100%;
+	width: 50%;
+	position:relative;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.first-level-non-intersecting-information-data{
+	height:92.5%;
+	width:100%;
+	position:relative;
+	display:flex;
+	padding: 2%;
+}
+
+.first-level-non-intersecting-information-spacer{
+	height:100%;
+	width:1%;
+	position:relative;
+}
+
+
+
+.first-level-non-intersecting-information-controls{
+	position:relative;
+	height:100%;
+	width:21.5%;
+	border: 1px solid lightgrey;
+	padding: 1%;
+}
+
+.first-level-non-intersecting-information-data-left{
+	position:relative;
+	height:100%;
+	width:50%;
+}
+
+.first-level-non-intersecting-information-data-right{
+	position:relative;
+	height:100%;
+	width:50%;
+}
+
+.first-level-non-intersecting-information-controls-header{
+	position:relative;
+	height:7.5%;
+	width:100%;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.first-level-non-intersecting-information-controls-content{
+	position: relative;
+	padding-top: 10%;
+	height:92.5%;
+	width:100%;
+}
+
+
+
+.first-level-non-intersecting-information-controls-selection{
+	position:relative;
+	height:10%;
+	width:80%;
+	margin:2%;
+}
+
+.first-level-non-intersecting-information-controls-expression{
+	position:relative;
+	height:15%;
+	width:80%;
+	margin:2%;
+}
+
+.first-level-non-intersecting-information-controls-genes{
+	position:relative;
+	height:25%;
+	width:80%;
+}
+
+.first-level-non-intersecting-information-controls-table{
+	position:relative;
+	height:100%;
+	width:100%;
+}
+
+
+.first-level-non-intersecting-detail {
+	border : 5px solid transparent;
+}
+
+.first-level-non-intersecting-detail:hover{
+	border : 5px solid red;	
+	cursor: pointer;
+}
+
+.first-level-non-intersecting-detail.matrix_nonIntersecting {
+	border : 5px solid transparent;
+}
+
+.first-level-non-intersecting-detail.matrix_nonIntersecting:hover{
+	border : 5px solid transparent;	
+	cursor: pointer;
+}
+
+
+
+
+
+
+

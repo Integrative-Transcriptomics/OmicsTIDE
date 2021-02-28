@@ -1,0 +1,335 @@
+.first-level-intersecting-information{
+	background-color:#FFFFFF;
+    height:85vh;
+    position:relative;
+    display:flex;
+}
+
+.first-level-intersecting-information-data-wrapper{
+	height:100%;
+	width:77.5%;
+	position:relative;
+	border: 1px solid lightgrey;
+	padding: 1%;
+}
+
+.first-level-intersecting-information-data-header{
+	height:12.5%;
+	width:100%;
+	position:relative;
+	display:flex;
+}
+
+.first-level-intersecting-information-data-header-left{
+	height:100%;
+	width: 25%;
+	position:relative;
+	/* font-size: 20px; */
+	font-size: 2vh;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.first-level-intersecting-information-data-header-sankey{
+	height:100%;
+	width: 50%;
+	position:relative;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.first-level-intersecting-information-data-header-right{
+	height:100%;
+	width: 25%;
+	position:relative;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+
+
+.first-level-intersecting-information-data{
+	height:87.5%;
+	width:100%;
+	position:relative;
+	display:flex;
+	padding: 2%;
+}
+
+.first-level-intersecting-information-spacer{
+	height:100%;
+	width:1%;
+	position:relative;
+}
+
+.first-level-intersecting-information-controls{
+	position:relative;
+	height:100%;
+	width:21.5%;
+	border: 1px solid lightgrey;
+	padding: 1%;
+}
+
+.first-level-intersecting-information-controls-header{
+	position:relative;
+	height:7.5%;
+	width:100%;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.first-level-intersecting-information-controls-content{
+	position: relative;
+	padding-top: 1%;
+	height:92.5%;
+	width:100%;
+}
+
+
+.first-level-intersecting-information-data-profiles-left{
+	position:relative;
+	height:100%;
+	width:25%;
+	padding-right:2%;
+}
+
+.first-level-intersecting-information-data-sankey{
+	position:relative;
+	height:100%;
+	width:50%;
+}
+
+.first-level-intersecting-information-data-profiles-right{
+	position:relative;
+	height:100%;
+	width:25%;
+	padding-left: 2%;
+}
+
+.first-level-intersecting-information-controls-selection{
+	position:relative;
+	height:10%;
+	width:80%;
+	margin:2%;
+}
+
+.first-level-intersecting-information-controls-expression{
+	position:relative;
+	height:15%;
+	width:80%;
+	margin:2%;
+}
+
+.first-level-intersecting-information-controls-abundance{
+	position:relative;
+	height:15%;
+	width:80%;
+	margin:2%;
+}
+
+.first-level-intersecting-information-controls-genes{
+	position:relative;
+	height:25%;
+	width:80%;
+}
+
+.intersecting-information-controls-table{
+	position:relative;
+	height:100%;
+	width:100%;
+}
+
+.btn-group{
+	font-size: 12.5px;
+	font-weight: 400;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.ds1_slider_input_wrapper{
+	position:relative;
+	display:flex;
+	margin-top:7.5%;
+    margin-bottom:10%;
+}
+
+.ds1_abundance_slider_input_wrapper{
+	position:relative;
+	display:flex;
+	margin-top:7.5%;
+    margin-bottom:10%;
+}
+
+
+.ds1_slider_input1{
+	width:50%;
+}
+
+.ds1_slider_input2{
+	width:50%;
+}
+
+.ds1_abundance_slider_input1{
+	width:50%;
+}
+
+.ds1_abundance_slider_input2{
+	width:50%;
+}
+
+
+.ds2_slider_input_wrapper{
+	position:relative;
+	display:flex;
+	margin-top:7.5%;
+    margin-bottom:10%;
+}
+
+.ds2_slider_input1{
+	width:50%;
+}
+
+.ds2_slider_input2{
+	width:50%;
+}
+
+.ds2_abundance_slider_input_wrapper{
+	position:relative;
+	display:flex;
+	margin-top:7.5%;
+    margin-bottom:10%;
+}
+
+.ds2_abundance_slider_input1{
+	width:50%;
+}
+
+.ds2_abundance_slider_input2{
+	width:50%;
+}
+
+.slider_box_ds1{
+	margin-top:2%;
+}
+
+.slider_box_ds1_abundance{
+	margin-top:2%;
+}
+
+.slider_box_ds2{
+	margin-top:2%;
+}
+
+.slider_box_ds2_abundance{
+	margin-top:2%;
+}
+
+.ds1_wrapper{
+	font-size: 1.5vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.ds2_wrapper{
+	font-size: 1.5vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.ds2_abundance_wrapper{
+	font-size: 1.5vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.ds1_abundance_wrapper{
+	font-size: 1.5vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.ds2_abundance_wrapper{
+	font-size: 1.5vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+
+.goi_text{
+	margin:5%;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+}
+
+.goi_file{
+	margin:7.5%;
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+}
+
+.goi_label{
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+
+}
+
+.file_label{
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+}
+
+.centroid-button{
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+}
+
+.profile-button{
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+}
+
+.box-button{
+	font-size: 2vh;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative
+}

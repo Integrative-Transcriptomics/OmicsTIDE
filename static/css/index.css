@@ -512,7 +512,7 @@
 	position:relative;
 	height:7.5%;
 	width:100%;
-	font-size: 20px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -534,7 +534,7 @@
 	position:relative;
 	height:7.5%;
 	width:100%;
-	font-size: 20px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -608,7 +608,7 @@
 	position: relative;
 	height: 7.5%;
 	width: 100%;
-	font-size: 20px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -658,7 +658,7 @@
 }
 
 #files-for-clustering-h2{
-	font-size: 12.5pt;
+	font-size: 2vh;
 	color: grey;
 }
 
@@ -688,7 +688,7 @@
 	width:100%;
 	height:10%;
 	position: relative;
-	font-size: 20px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -703,7 +703,7 @@
 #dashboard-header-h2{
 	background: linear-gradient(to right, #08306b 0%, #c6dbef 100%);
 	color: white;
-	font-size: 17.5pt;
+	font-size: 2vh;
 	font-weight: 500;
 	padding-left: 2.5%;
 	padding-top: 0.5%;
@@ -749,19 +749,19 @@
 }
 
 #variance-slider-h2{
-	font-size: 12.5pt;
+	font-size: 1.5vh;
 	color: grey;
 }
 
 #k-slider-h2{
-	font-size: 12.5pt;
+	font-size: 1.5vh;
 	color: grey;
 }
 
 
 
 #loading-h2{
-	font-size: 15pt;
+	font-size: 2vh;
 	color: grey;
 }
 
@@ -780,7 +780,7 @@
 }
 
 #clustered-file-h2{
-	font-size: 12.5pt;
+	font-size: 2vh;
 	color: grey;
 }
 
@@ -861,13 +861,13 @@
 
 #omicstide-header{
 	font-style: "Josefin Sans";
-	font-size: 30px;
+	font-size: 3vh;
 	font-weight: 400;
 }
 
 #omicstide-description{
 	font-style: "Josefin Sans";
-	font-size: 15px;
+	font-size: 2vh;
 	font-weight: 400;
 }
 
@@ -924,7 +924,7 @@
 	padding: 1.5%;
 	cursor: pointer;
 	user-select: none;
-	font-size: 20px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -936,7 +936,7 @@
 	padding: 0%;
 	cursor: pointer;
 	user-select: none;
-	font-size: 15px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -947,7 +947,7 @@
 	padding: 0%;
 	cursor: pointer;
 	user-select: none;
-	font-size: 15px;
+	font-size: 2vh;
 	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -979,7 +979,7 @@
 }
 
 .accordion.active.abundance{
-	 height: 42.5%;
+	 height: 50%;
 	 position: relative;
 }
 
@@ -1088,13 +1088,13 @@
 .accordion .accordion_content .accordion_item p.item_title{
   font-weight: 600;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 2vh;
   color: #6adda2;
 }
 
 .accordion .accordion_content .accordion_item p:last-child{
   color: #9a9b9f;
-  font-size: 14px;
+  font-size: 2vh;
   line-height: 20px;
 } 
 

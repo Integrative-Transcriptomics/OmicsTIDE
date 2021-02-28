@@ -1,5 +1,5 @@
 # Welcome to OmicsTIDE!
-The ***Omics** **T**rend-comparing **I**nteractive **D**ata **E**xplorer* (OmicsTIDE) is a web-based application to study the concordance and the discordance in the regulatory trends between omics data sets. You can explore OmicsTIDE directly at [TueVis](http://omicstide-tuevis.informatik.uni-tuebingen.de/)!
+The ***Omics** **T**rend-comparing **I**nteractive **D**ata **E**xplorer* (OmicsTIDE) is a web-based application to study the concordance and the discordance in the regulatory trends between omics data sets. 
 
 OmicsTIDE combines the benefits of data- and hypothesis-driven analysis by using partitioning algorithms to detect regulatory trends between two data sets on the one hand and by allowing the user to contribute to the analysis based on prior knowledge in an interactive and exploratory manner on the other hand.
 
@@ -9,7 +9,9 @@ OmicsTIDE is based on HTML/JavaScript/CSS using the D3.js and jQuery libraries a
 
 A detailed description of the tool can be found in the [tutorial](doc/TUTORIAL.md).
 
-OmicsTIDE can also be downloaded and run locally by following the instructions below:
+<p align="center">
+  <img src="images/combined.svg" />
+</p>
 
 ## Installation Guide
 The following steps are required to set up and run OmicsTIDE. The installation process includes python libraries for the back-end implementation. Scripts required for the front-end functions are all loaded directly from the web. 
@@ -43,9 +45,9 @@ user@example:~$ source <your-venv>/bin/activate
 ```
 
 ## Running OmicsTIDE
-Activate venv and run the python file which will open the web application in a new browser window. 
+Activate venv and run OmicsTIDE.py which will open the web application in a new browser window. 
 ```console
 user@example:~$ source <your-venv>/bin/activate
-(<your-venv>) user@example:~$ python <path/to/omicsTIDE>/__init__.py
+(<your-venv>) user@example:~$ python <path/to/omicsTIDE>/OmicsTIDE.py
 ```
 OmicsTIDE requires a stable internet connection to load the front-end libraries and frameworks (D3.js, Bootstrap, jQuery) and to request data from [NCBI](https://www.ncbi.nlm.nih.gov/) and [Panther](http://www.pantherdb.org/). 

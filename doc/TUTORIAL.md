@@ -2,37 +2,34 @@
 This tutorial will guide the user through OmicsTIDE from the data loading, over the customized analysis to the final data export.
 
 ## Data 
-OmicsTIDE comma- or tab-separated text files following given formats. Detailed information on the data formats used by OmicsTIDE is [provided](DATAFORMATS.md).
+OmicsTIDE uses CSV files following given formats. Detailed information on the data formats used by OmicsTIDE is [provided](DATAFORMATS.md).
 
 ## Data Loading (Home Tab)
-The user has two options for data loading. Either between two and four [abundance data files](DATAFORMATS.md/###-Abundance-Data) can be loaded to determine and compare trends and to subsequenty explore the trend comparison. Alternatively, an already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
+The user has two options for data loading. Either [abundance files](DATAFORMATS.md/###-Abundance-Data) can be loaded to calculate trends first and then explore the corresponding trend comparison or already created trend comparisons in form of a custom [PTCF](DATAFORMATS.md/###-Pairwise-Trend-Comparison-Format-(PTCF)) can directly be loaded and explored.
 
 ### First option: Loading up to four abundance files for pairwise trend comparisons
-The user can select between two and four abundance data files to compute the pairwise trend comparisons. 
+The user can select between two and four abundance file for pairwise comparisons. The number of files is restricted to four to ensure a clear overview in the Data Matrix tab with max. four pairwise combinations - i.e. six comparisons. 
 
 If required, the data set can be filtered by adjusting the **range slider** to keep only a given percentile range of genes to e.g. remove low-variant genes. The removal of low-variant genes will speed up the downstream analysis steps, as the number of genes decreases. 
 
 By adjusting the **slider** for the initial clusters, the user can determine the further k-Means clustering step. 
 
-Examples files can be found [here](../static/data/) (see [1], [2]). This data can also directly be loaded via the "test data" drop-down menu. 
+Examples files can be found [here](../static/data/test_data/qnorm_log2) (*Streptomyces coelicolor*).
 
-### Second option: Loading a PTCF file to explore a pairwise trend comparison
+### Second option: Loading PTCF file to explore a pairwise trend comparison
 The user can directly upload one PTCF file and explore the trend comparisons. 
 
-An example file can be found [here](../static/data/).
+An example file can be found [here](../static/data/test_data/ptcf) (*Streptomyces coelicolor*).
 
 <p align="center">
-  <img src="../images/Loading_.png" />
+  <img src="../images/home.png" />
 </p>
 
-## Choose your pairwise trend comparison (comparison Tab)
-
-Once the data is loaded, the user is presented an overview of the analysis, containing the chosen parameter and the basic informations of the derived trend comparison. This includes an horizontal stacked bar chart which shows the number of genes following a concordant or discordant trend. Furthermore, also the genes are shown that are only found in one two files in the explored comparison. 
-
-The interactive table provides information on the files selected for the pairwise trend comparison. Hovering the single rows in the table will highlight the corresponding bar chart. Furthermore, a preview of the trend comparison visualization is created. If the user clicks the cell corresponding to the intersecting genes or the non-intersecting genes, the first-level analysis will be started.
+## Choose your pairwise trend comparison (Data Matrix Tab)
+Hovering the single comparisons in this tab will put color to the greyscaled graphs to allow the focus on one single pairwise comparison. Per default, the tab corresponding to the trend comparison of the **intersecting genes** is activated. The user can click on the **non-Intersecting** tab to show the trend comparison of the non-intersecting genes, alternatively. 
 
 <p align="center">
-  <img src="../images/Overview_NEW_.png" />
+  <img src="../images/One.svg" />
 </p>
 
 ## Explore pairwise trend comparison (1st Level Analysis Tab)
@@ -41,20 +38,17 @@ If the pairwise comparison on the intersecting genes was chosen, the user can ho
 
 In the controls section on the right, the user can choose three different types of **diagrams** to study the data in more detail. The unfiltered data is studied best using the default activated centroid diagrams the box plots. Depending on the number of genes in the corresponding graph, unfiltered single profile diagrams might be to overloaded.
 
-The user can customize the analysis - and thereby reducing the number of genes - by performing **filtering** either based on the variance or base on the median abundance of the genes. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. If the non-intersecting genes are studied, the filtering of the abundance is performed on each data set individually. *NOTE* that the filterings should applied prior to the selection of trends. Activating the abundance filtering will clear the current selection table.
+The user can customize the analysis - and thereby reducing the number of genes - by performing **abundance filtering**. Both, Sankey diagrams and the adjacent diagrams are updated after the handle is released. If the non-intersecting genes are studied, the filtering of the abundance is performed on each data set indivudually. *NOTE* that the abundance filtering step should be done prior to the sub selection in the workflow. Activating the abundance filtering will empty the current selection table (see below).
 
-In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene highlighting** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. The highlighting can also be turned off by clicking the button again.
+In the most cases, the user might have already a given gene or a bundle of genes of interest in mind. Hence, the **gene search** section allows to highlight one or more genes by either using a text search, where single gene IDs can be added in a comma-separated fashion or by uploading a text file containing gene IDs separated by line breaks. The highlighting can also be turned off by clicking the button again.
 
-An example text files for known reguatory bundles of genes in *Streptomyces coelicolor* (respiration.txt) is [provided](../static/data/). The gene list is based on [a recent study in Streptomyces coelicolor](https://www.nature.com/articles/s41598-020-65087-w).
+Example text files for known reguatory bundles of genes in *Streptomyces coelicolor* are [provided](../static/data/genelist_Streptomyces_coelicolor/). The gene lists are based on [a recent study in Streptomyces coelicolor](https://www.nature.com/articles/s41598-020-65087-w).
 
 Once a given trend or pattern of interest was found by filtering and hovering the data, a click on the corresponding node or link will adds the genes corresponding to the clicked element to the **current selection table**. Another click on an already selected element will remove it from the selection again. If the non-intersecting genes are studied, diagrams can be directly clicked to add the respective genes to the current selection table.
 
-If the user wants to retrieve the current analysis in the form of a PTCF, the file can be **downloaded** in the first-level analysis. This file can later be loaded directly in OmicsTIDE by choosing the corresponding option in the home tab.
-
 If an selection of a subset of genes is done, a **new analysis tab** can be opened by clicking the corresponding tab and the **2nd Level analysis** is activated. 
-
 <p align="center">
-  <img src="../images/First_NEW_.png" />
+  <img src="../images/Two.svg" />
 </p>
 
 ## Explore subselection (2nd Level Analysis Tab)
@@ -65,17 +59,5 @@ Finding the similarities within a given selection can be done e.g. by performing
 The **data export** section allows the user to download a zip-compressed folder containing the two profile diagrams as PDF, the current selection in PTCF as a CSV file and - if chosen - the results of the GO term enrichment ordered by the main category and by the significance of the hits as a CSV file. 
 
 <p align="center">
-  <img src="../images/Second_NEW_.png" />
+  <img src="../images/Three.svg" />
 </p>
-
-
-
----
-[1] Hoogendijk, Arie J., et al. "Dynamic transcriptome-proteome correlation networks reveal human myeloid differentiation and neutrophil-specific programming." Cell reports 29.8 (2019): 2505-2519. --> https://www.sciencedirect.com/science/article/pii/S2211124719314044
-
-Data: https://ars.els-cdn.com/content/image/1-s2.0-S2211124719314044-mmc2.csv (The FPKM and LQF values were used for transcriptome and proteome, respectively. We used the mean value across all biological replicates per transcriptome and proteome --> [see here](../static/data/BloodCell))
-
-
-[2] Sulheim, Snorre, et al. "Enzyme-constrained models and omics analysis of Streptomyces coelicolor reveal metabolic changes that enhance heterologous production." Iscience 23.9 (2020): 101525. --> https://www.sciencedirect.com/science/article/pii/S2589004220307173
-
-Data: https://ars.els-cdn.com/content/image/1-s2.0-S2589004220307173-mmc4.xlsx (The data were normalized and the replicates were combined by using the mean value per time point and per strain)
